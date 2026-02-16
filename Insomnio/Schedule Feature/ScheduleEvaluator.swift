@@ -15,10 +15,10 @@ protocol ScheduleEvaluator: AnyObject {
 @Observable
 final class ScheduleEvaluatorImpl: ScheduleEvaluator {
 	private let dateProvider: DateProvider
-	private let store: ScheduleStore
+	private let store: any RuleStore<ScheduleRule>
 	var rules: [ScheduleRule]
 
-	init(dateProvider: DateProvider, store: ScheduleStore) {
+	init(dateProvider: DateProvider, store: any RuleStore<ScheduleRule>) {
 		self.dateProvider = dateProvider
 		self.store = store
 		rules = store.loadRules()

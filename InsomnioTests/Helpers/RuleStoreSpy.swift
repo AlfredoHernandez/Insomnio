@@ -5,21 +5,21 @@
 @testable import Insomnio
 
 @MainActor
-final class ScheduleStoreSpy: ScheduleStore {
+final class RuleStoreSpy<Rule: Codable>: RuleStore {
 	enum ReceivedMessage: Equatable {
 		case loadRules
 		case saveRules
 	}
 
 	private(set) var receivedMessages = [ReceivedMessage]()
-	var stubbedRules: [ScheduleRule] = []
+	var stubbedRules: [Rule] = []
 
-	func loadRules() -> [ScheduleRule] {
+	func loadRules() -> [Rule] {
 		receivedMessages.append(.loadRules)
 		return stubbedRules
 	}
 
-	func saveRules(_ rules: [ScheduleRule]) {
+	func saveRules(_ rules: [Rule]) {
 		receivedMessages.append(.saveRules)
 		stubbedRules = rules
 	}

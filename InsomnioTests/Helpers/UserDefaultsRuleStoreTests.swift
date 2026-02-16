@@ -7,8 +7,8 @@ import Foundation
 import Testing
 
 @MainActor
-@Suite("UserDefaultsAppRulesStore")
-struct UserDefaultsAppRulesStoreTests {
+@Suite("UserDefaultsRuleStore")
+struct UserDefaultsRuleStoreTests {
 	@Test("Load returns empty array when no data stored")
 	func load_returnsEmptyArrayWhenNoDataStored() {
 		let sut = makeSUT()
@@ -20,8 +20,8 @@ struct UserDefaultsAppRulesStoreTests {
 	func saveAndLoad_roundTripsRules() {
 		let sut = makeSUT()
 		let rules = [
-			AppRule(bundleIdentifier: "com.example.app", displayName: "Example"),
-			AppRule(bundleIdentifier: "com.apple.safari", displayName: "Safari", isEnabled: false),
+			ScheduleRule(weekdays: [.monday, .friday], startHour: 9, endHour: 18),
+			ScheduleRule(weekdays: [.saturday], startHour: 10, startMinute: 30, endHour: 14),
 		]
 
 		sut.saveRules(rules)
@@ -32,8 +32,8 @@ struct UserDefaultsAppRulesStoreTests {
 	@Test("Save overwrites previous rules")
 	func save_overwritesPreviousRules() {
 		let sut = makeSUT()
-		let first = [AppRule(bundleIdentifier: "com.first.app", displayName: "First")]
-		let second = [AppRule(bundleIdentifier: "com.second.app", displayName: "Second")]
+		let first = [ScheduleRule(weekdays: [.monday])]
+		let second = [ScheduleRule(weekdays: [.tuesday, .wednesday])]
 
 		sut.saveRules(first)
 		sut.saveRules(second)
@@ -44,7 +44,7 @@ struct UserDefaultsAppRulesStoreTests {
 	@Test("Save empty array clears rules")
 	func save_emptyArrayClearsRules() {
 		let sut = makeSUT()
-		sut.saveRules([AppRule(bundleIdentifier: "com.example.app", displayName: "Example")])
+		sut.saveRules([ScheduleRule(weekdays: [.monday])])
 
 		sut.saveRules([])
 
@@ -53,8 +53,8 @@ struct UserDefaultsAppRulesStoreTests {
 
 	// MARK: - Helpers
 
-	private func makeSUT() -> UserDefaultsAppRulesStore {
-		let defaults = UserDefaults(suiteName: "test.apprules.\(UUID().uuidString)")!
-		return UserDefaultsAppRulesStore(defaults: defaults)
+	private func makeSUT() -> UserDefaultsRuleStore<ScheduleRule> {
+		let defaults = UserDefaults(suiteName: "test.rulestore.\(UUID().uuidString)")!
+		return UserDefaultsRuleStore<ScheduleRule>(key: "testRules", defaults: defaults)
 	}
 }

@@ -15,10 +15,10 @@ protocol AppRulesEvaluator: AnyObject {
 @Observable
 final class AppRulesEvaluatorImpl: AppRulesEvaluator {
 	private let runningAppProvider: RunningAppProvider
-	private let store: AppRulesStore
+	private let store: any RuleStore<AppRule>
 	var rules: [AppRule]
 
-	init(runningAppProvider: RunningAppProvider, store: AppRulesStore) {
+	init(runningAppProvider: RunningAppProvider, store: any RuleStore<AppRule>) {
 		self.runningAppProvider = runningAppProvider
 		self.store = store
 		rules = store.loadRules()

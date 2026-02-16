@@ -28,12 +28,12 @@ struct AppDependencies {
 
 		let scheduleEvaluator = ScheduleEvaluatorImpl(
 			dateProvider: FoundationDateProvider(),
-			store: UserDefaultsScheduleStore(),
+			store: UserDefaultsRuleStore<ScheduleRule>(key: "io.alfredohdz.Insomnio.scheduleRules"),
 		)
 
 		let appRulesEvaluator = AppRulesEvaluatorImpl(
 			runningAppProvider: NSWorkspaceRunningAppProvider(),
-			store: UserDefaultsAppRulesStore(),
+			store: UserDefaultsRuleStore<AppRule>(key: "io.alfredohdz.Insomnio.appRules"),
 		)
 
 		let automationCoordinator = AutomationCoordinator(
