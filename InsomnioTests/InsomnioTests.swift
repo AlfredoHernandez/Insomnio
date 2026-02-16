@@ -2,32 +2,108 @@
 // Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-import XCTest
+import CoreGraphics
+import Testing
 @testable import Insomnio
 
-final class InsomnioTests: XCTestCase {
+@MainActor
+@Suite("MouseJiggler")
+struct MouseJigglerTests {
+    @Test("Init is not active")
+    func init_isNotActive() {
+        let (sut, _) = makeSUT()
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        #expect(sut.isActive == false)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    @Test("Init default interval is 30 seconds")
+    func init_defaultIntervalIs30Seconds() {
+        let (sut, _) = makeSUT()
+
+        #expect(sut.interval == 30.0)
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    @Test("Start sets isActive to true")
+    func start_setsIsActiveToTrue() {
+        let (sut, _) = makeSUT()
+
+        sut.start()
+
+        #expect(sut.isActive == true)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    @Test("Stop sets isActive to false")
+    func stop_setsIsActiveToFalse() {
+        let (sut, _) = makeSUT()
+
+        sut.start()
+        sut.stop()
+
+        #expect(sut.isActive == false)
+    }
+
+    @Test("Toggle starts when inactive")
+    func toggle_startsWhenInactive() {
+        let (sut, _) = makeSUT()
+
+        sut.toggle()
+
+        #expect(sut.isActive == true)
+    }
+
+    @Test("Toggle stops when active")
+    func toggle_stopsWhenActive() {
+        let (sut, _) = makeSUT()
+
+        sut.start()
+        sut.toggle()
+
+        #expect(sut.isActive == false)
+    }
+
+    @Test("Jiggle moves cursor right then back to original")
+    func jiggle_movesCursorRightThenBackToOriginal() {
+        let (sut, mover) = makeSUT()
+        mover.currentLocation = CGPoint(x: 50, y: 75)
+
+        sut.jiggle()
+
+        #expect(mover.movedToPoints.count == 2)
+        #expect(mover.movedToPoints[0] == CGPoint(x: 51, y: 75))
+        #expect(mover.movedToPoints[1] == CGPoint(x: 50, y: 75))
+    }
+
+    @Test("Start does not start twice")
+    func start_doesNotStartTwice() {
+        let (sut, _) = makeSUT()
+
+        sut.start()
+        sut.start()
+
+        #expect(sut.isActive == true)
+    }
+
+    // MARK: - Helpers
+
+    private func makeSUT() -> (sut: MouseJiggler, mover: MouseMoverSpy) {
+        let mover = MouseMoverSpy()
+        let sut = MouseJiggler(mouseMover: mover)
+        return (sut, mover)
+    }
+
+    // MARK: - Test Doubles
+
+    private final class MouseMoverSpy: MouseMoving {
+        var currentLocation: CGPoint = CGPoint(x: 100, y: 100)
+        var movedToPoints: [CGPoint] = []
+
+        func moveMouseTo(_ point: CGPoint) -> Bool {
+            movedToPoints.append(point)
+            return true
+        }
+
+        func currentMouseLocation() -> CGPoint {
+            return currentLocation
         }
     }
-
 }
