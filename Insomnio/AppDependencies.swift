@@ -2,7 +2,7 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-import SwiftUI
+import Foundation
 
 @MainActor
 struct AppDependencies {
@@ -12,7 +12,6 @@ struct AppDependencies {
 	let appRulesEvaluator: any AppRulesEvaluator
 	let automationCoordinator: AutomationCoordinator
 	let shortcutManager: any GlobalShortcutManager
-	let menuBarController: MenuBarPopoverController
 
 	static func create() -> AppDependencies {
 		let insomniac = Insomniac(
@@ -47,14 +46,6 @@ struct AppDependencies {
 			#endif
 		}()
 
-		let menuBarController = MenuBarPopoverController(icon: "moon.zzz") {
-			MenuBarView(
-				insomniac: insomniac,
-				onManualToggle: { automationCoordinator.notifyManualToggle() },
-			)
-		}
-		menuBarController.observeActive(insomniac)
-
 		return AppDependencies(
 			insomniac: insomniac,
 			premiumManager: premiumManager,
@@ -62,7 +53,6 @@ struct AppDependencies {
 			appRulesEvaluator: appRulesEvaluator,
 			automationCoordinator: automationCoordinator,
 			shortcutManager: NSEventGlobalShortcutManager(),
-			menuBarController: menuBarController,
 		)
 	}
 }

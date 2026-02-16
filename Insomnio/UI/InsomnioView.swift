@@ -9,7 +9,6 @@ struct InsomnioView: View {
 	let premiumManager: any PremiumManager
 	let scheduleEvaluator: any ScheduleEvaluator
 	let appRulesEvaluator: any AppRulesEvaluator
-	var onManualToggle: (() -> Void)?
 	@State private var showingPaywall = false
 
 	private var appVersion: String {
@@ -21,7 +20,6 @@ struct InsomnioView: View {
 			VStack(alignment: .leading, spacing: 12) {
 				StatusSection(isActive: insomniac.isActive, onToggle: {
 					insomniac.toggle()
-					onManualToggle?()
 				})
 
 				ModeSection(mode: $insomniac.mode, isDisabled: insomniac.isActive)

@@ -6,7 +6,6 @@ import SwiftUI
 
 struct MenuBarView: View {
 	@Bindable var insomniac: Insomniac
-	var onManualToggle: (() -> Void)?
 	@Environment(\.openWindow) private var openWindow
 
 	private var modeLabel: LocalizedStringKey {
@@ -44,7 +43,6 @@ struct MenuBarView: View {
 
 				Button {
 					insomniac.toggle()
-					onManualToggle?()
 				} label: {
 					Text(insomniac.isActive ? "button_stop" : "button_start")
 						.frame(maxWidth: .infinity)

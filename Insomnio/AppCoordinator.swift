@@ -8,6 +8,7 @@ import SwiftUI
 final class AppCoordinator {
 	let dependencies: AppDependencies
 	private var hasStarted = false
+	private var menuBarController: MenuBarPopoverController?
 
 	init(dependencies: AppDependencies) {
 		self.dependencies = dependencies
@@ -19,12 +20,17 @@ final class AppCoordinator {
 
 		dependencies.shortcutManager.registerShortcut { [dependencies] in
 			dependencies.insomniac.toggle()
-			dependencies.automationCoordinator.notifyManualToggle()
 		}
 		dependencies.automationCoordinator.startMonitoring()
 		Task {
 			await dependencies.premiumManager.loadProducts()
 		}
+
+		let controller = MenuBarPopoverController(icon: "moon.zzz") {
+			MenuBarView(insomniac: dependencies.insomniac)
+		}
+		controller.observeActive(dependencies.insomniac)
+		menuBarController = controller
 	}
 
 	func makeMainView() -> some View {
@@ -33,9 +39,6 @@ final class AppCoordinator {
 			premiumManager: dependencies.premiumManager,
 			scheduleEvaluator: dependencies.scheduleEvaluator,
 			appRulesEvaluator: dependencies.appRulesEvaluator,
-			onManualToggle: { [dependencies] in
-				dependencies.automationCoordinator.notifyManualToggle()
-			},
 		)
 	}
 }

@@ -23,6 +23,7 @@ final class AutomationCoordinator {
 		self.appRulesEvaluator = appRulesEvaluator
 		self.insomniac = insomniac
 		self.timerScheduler = timerScheduler
+		insomniac.onToggle = { [weak self] in self?.notifyManualToggle() }
 	}
 
 	func startMonitoring() {

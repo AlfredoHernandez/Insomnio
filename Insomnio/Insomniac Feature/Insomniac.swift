@@ -31,6 +31,7 @@ final class Insomniac {
 	var autoStopEnabled: Bool = false
 	var autoStopDuration: AutoStopDuration = .oneHour
 	var cursorPattern: CursorPattern = .nudge
+	var onToggle: (() -> Void)?
 	private(set) var activationCount: Int = 0
 	private(set) var lastActivation: Date?
 
@@ -60,6 +61,7 @@ final class Insomniac {
 
 	func toggle() {
 		isActive ? stop() : start()
+		onToggle?()
 	}
 
 	func start() {
