@@ -9,6 +9,8 @@ struct InsomnioView: View {
 	let premiumManager: any PremiumManager
 	let scheduleEvaluator: any ScheduleEvaluator
 	let appRulesEvaluator: any AppRulesEvaluator
+	let launchAtLoginManager: any LaunchAtLoginManager
+	let availableApps: () -> [AppPickerView.AppInfo]
 	@State private var showingPaywall = false
 
 	private var appVersion: String {
@@ -40,6 +42,7 @@ struct InsomnioView: View {
 					onlyWhenIdle: $insomniac.onlyWhenIdle,
 					pauseOnBattery: $insomniac.pauseOnBattery,
 					isPreventSleepMode: insomniac.mode == .preventSleep,
+					launchAtLoginManager: launchAtLoginManager,
 				)
 
 				AutoStopSection(
@@ -57,7 +60,7 @@ struct InsomnioView: View {
 						showingPaywall = true
 					}
 
-				AppRulesSection(appRulesEvaluator: appRulesEvaluator)
+				AppRulesSection(appRulesEvaluator: appRulesEvaluator, availableApps: availableApps)
 					.premiumGated(isPremium: premiumManager.isPremium) {
 						showingPaywall = true
 					}
@@ -109,5 +112,7 @@ struct InsomnioView: View {
 		premiumManager: PreviewPremiumManager(),
 		scheduleEvaluator: PreviewScheduleEvaluator(),
 		appRulesEvaluator: PreviewAppRulesEvaluator(),
+		launchAtLoginManager: PreviewLaunchAtLoginManager(),
+		availableApps: { [] },
 	)
 }

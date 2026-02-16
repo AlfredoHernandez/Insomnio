@@ -27,7 +27,11 @@ final class AppCoordinator {
 		}
 
 		let controller = MenuBarPopoverController(icon: "moon.zzz") {
-			MenuBarView(insomniac: dependencies.insomniac)
+			MenuBarView(
+				insomniac: dependencies.insomniac,
+				activateApp: { NSApplication.shared.activate(ignoringOtherApps: true) },
+				quitApp: { NSApplication.shared.terminate(nil) },
+			)
 		}
 		controller.observeActive(dependencies.insomniac)
 		menuBarController = controller
@@ -39,6 +43,20 @@ final class AppCoordinator {
 			premiumManager: dependencies.premiumManager,
 			scheduleEvaluator: dependencies.scheduleEvaluator,
 			appRulesEvaluator: dependencies.appRulesEvaluator,
+			launchAtLoginManager: dependencies.launchAtLoginManager,
+			availableApps: {
+				NSWorkspace.shared.runningApplications
+					.filter { $0.activationPolicy == .regular }
+					.compactMap { app in
+						guard let bundleID = app.bundleIdentifier else { return nil }
+						let name = app.localizedName ?? bundleID
+						let icon = app.icon ?? NSImage(
+							systemSymbolName: "app",
+							accessibilityDescription: nil,
+						) ?? NSImage()
+						return AppPickerView.AppInfo(bundleID: bundleID, name: name, icon: icon)
+					}
+			},
 		)
 	}
 }

@@ -38,4 +38,10 @@ class PreviewAppRulesEvaluator: AppRulesEvaluator {
 	func updateRule(_: AppRule) {}
 }
 
+class PreviewLaunchAtLoginManager: LaunchAtLoginManager {
+	var isEnabled = false
+	func enable() throws {}
+	func disable() throws {}
+}
+
 #endif

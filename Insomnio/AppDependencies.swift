@@ -12,6 +12,7 @@ struct AppDependencies {
 	let appRulesEvaluator: any AppRulesEvaluator
 	let automationCoordinator: AutomationCoordinator
 	let shortcutManager: any GlobalShortcutManager
+	let launchAtLoginManager: any LaunchAtLoginManager
 
 	static func create() -> AppDependencies {
 		let insomniac = Insomniac(
@@ -53,6 +54,7 @@ struct AppDependencies {
 			appRulesEvaluator: appRulesEvaluator,
 			automationCoordinator: automationCoordinator,
 			shortcutManager: NSEventGlobalShortcutManager(),
+			launchAtLoginManager: SMAppServiceLaunchAtLoginManager(),
 		)
 	}
 }

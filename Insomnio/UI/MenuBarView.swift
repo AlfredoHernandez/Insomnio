@@ -6,6 +6,8 @@ import SwiftUI
 
 struct MenuBarView: View {
 	@Bindable var insomniac: Insomniac
+	var activateApp: () -> Void = {}
+	var quitApp: () -> Void = {}
 	@Environment(\.openWindow) private var openWindow
 
 	private var modeLabel: LocalizedStringKey {
@@ -58,7 +60,7 @@ struct MenuBarView: View {
 			HStack {
 				Button("menu_open_insomnio") {
 					openWindow(id: "main")
-					NSApplication.shared.activate(ignoringOtherApps: true)
+					activateApp()
 				}
 				.buttonStyle(.plain)
 				.foregroundStyle(.secondary)
@@ -68,7 +70,7 @@ struct MenuBarView: View {
 				Spacer()
 
 				Button("quit_button") {
-					NSApplication.shared.terminate(nil)
+					quitApp()
 				}
 				.buttonStyle(.plain)
 				.foregroundStyle(.secondary)

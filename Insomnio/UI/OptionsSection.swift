@@ -2,13 +2,13 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-import ServiceManagement
 import SwiftUI
 
 struct OptionsSection: View {
 	@Binding var onlyWhenIdle: Bool
 	@Binding var pauseOnBattery: Bool
 	let isPreventSleepMode: Bool
+	let launchAtLoginManager: any LaunchAtLoginManager
 
 	var body: some View {
 		CardView {
@@ -33,11 +33,11 @@ struct OptionsSection: View {
 				}
 
 				Toggle("launch_at_login_label", isOn: Binding(
-					get: { SMAppService.mainApp.status == .enabled },
+					get: { launchAtLoginManager.isEnabled },
 					set: { newValue in
 						try? newValue
-							? SMAppService.mainApp.register()
-							: SMAppService.mainApp.unregister()
+							? launchAtLoginManager.enable()
+							: launchAtLoginManager.disable()
 					},
 				))
 			}
@@ -46,10 +46,17 @@ struct OptionsSection: View {
 	}
 }
 
+#if DEBUG
 #Preview {
 	@Previewable @State var idle = true
 	@Previewable @State var battery = false
-	OptionsSection(onlyWhenIdle: $idle, pauseOnBattery: $battery, isPreventSleepMode: false)
-		.padding()
-		.frame(width: 420)
+	OptionsSection(
+		onlyWhenIdle: $idle,
+		pauseOnBattery: $battery,
+		isPreventSleepMode: false,
+		launchAtLoginManager: PreviewLaunchAtLoginManager(),
+	)
+	.padding()
+	.frame(width: 420)
 }
+#endif

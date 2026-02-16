@@ -6,6 +6,7 @@ import SwiftUI
 
 struct AppRulesSection: View {
 	let appRulesEvaluator: any AppRulesEvaluator
+	let availableApps: () -> [AppPickerView.AppInfo]
 	@State private var showingAppPicker = false
 
 	var body: some View {
@@ -43,6 +44,7 @@ struct AppRulesSection: View {
 		}
 		.sheet(isPresented: $showingAppPicker) {
 			AppPickerView(
+				availableApps: availableApps,
 				onSelect: { bundleID, name in
 					appRulesEvaluator.addRule(AppRule(bundleIdentifier: bundleID, displayName: name))
 					showingAppPicker = false
