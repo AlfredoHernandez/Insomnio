@@ -6,6 +6,7 @@ import SwiftUI
 
 @main
 struct InsomnioApp: App {
+	@NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 	@State private var coordinator = AppCoordinator(dependencies: .create())
 
 	var body: some Scene {
