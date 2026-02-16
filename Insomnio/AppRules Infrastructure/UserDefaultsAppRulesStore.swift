@@ -4,11 +4,6 @@
 
 import Foundation
 
-protocol AppRulesStore {
-	func loadRules() -> [AppRule]
-	func saveRules(_ rules: [AppRule])
-}
-
 final class UserDefaultsAppRulesStore: AppRulesStore {
 	private let defaults: UserDefaults
 	private let key = "io.alfredohdz.Insomnio.appRules"

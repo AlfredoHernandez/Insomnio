@@ -4,11 +4,6 @@
 
 import Foundation
 
-protocol ScheduleStore {
-	func loadRules() -> [ScheduleRule]
-	func saveRules(_ rules: [ScheduleRule])
-}
-
 final class UserDefaultsScheduleStore: ScheduleStore {
 	private let defaults: UserDefaults
 	private let key = "io.alfredohdz.Insomnio.scheduleRules"
