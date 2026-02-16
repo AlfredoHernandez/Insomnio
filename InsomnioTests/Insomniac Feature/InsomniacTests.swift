@@ -1,5 +1,5 @@
 //
-// Copyright © 2026 Jesus Alfredo Hernandez Alarcon. All rights reserved.
+// Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
 import CoreGraphics
@@ -7,8 +7,8 @@ import Testing
 @testable import Insomnio
 
 @MainActor
-@Suite("MouseJiggler")
-struct MouseJigglerTests {
+@Suite("Insomniac")
+struct InsomniacTests {
     @Test("Init does not message mouse mover upon creation")
     func init_doesNotMessageMouseMoverUponCreation() {
         let (_, mover) = makeSUT()
@@ -68,12 +68,12 @@ struct MouseJigglerTests {
         #expect(sut.isActive == false)
     }
 
-    @Test("Jiggle moves cursor right then back to original")
-    func jiggle_movesCursorRightThenBackToOriginal() {
+    @Test("Keep awake moves cursor right then back to original")
+    func keepAwake_movesCursorRightThenBackToOriginal() {
         let (sut, mover) = makeSUT()
         mover.stubbedLocation = CGPoint(x: 50, y: 75)
 
-        sut.jiggle()
+        sut.keepAwake()
 
         #expect(mover.receivedMessages == [
             .currentLocation,
@@ -94,9 +94,9 @@ struct MouseJigglerTests {
 
     // MARK: - Helpers
 
-    private func makeSUT() -> (sut: MouseJiggler, mover: MouseMoverSpy) {
+    private func makeSUT() -> (sut: Insomniac, mover: MouseMoverSpy) {
         let mover = MouseMoverSpy()
-        let sut = MouseJiggler(mouseMover: mover)
+        let sut = Insomniac(mouseMover: mover)
         return (sut, mover)
     }
 }

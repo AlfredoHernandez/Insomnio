@@ -5,7 +5,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var jiggler: MouseJiggler
+    @State var insomniac: Insomniac
 
     private static let tickMarks: [(label: LocalizedStringKey, seconds: TimeInterval)] = [
         ("tick_5sec", 5),
@@ -24,7 +24,7 @@ struct ContentView: View {
             statusSection
             Divider()
             intervalSection
-                .disabled(jiggler.isActive)
+                .disabled(insomniac.isActive)
         }
         .padding(32)
         .frame(width: 420)
@@ -37,26 +37,26 @@ struct ContentView: View {
         VStack(spacing: 16) {
             ZStack {
                 Circle()
-                    .fill(jiggler.isActive ? Color.green.opacity(0.15) : Color.secondary.opacity(0.08))
+                    .fill(insomniac.isActive ? Color.green.opacity(0.15) : Color.secondary.opacity(0.08))
                     .frame(width: 80, height: 80)
 
-                Image(systemName: jiggler.isActive ? "cursorarrow.motionlines" : "cursorarrow")
+                Image(systemName: insomniac.isActive ? "cursorarrow.motionlines" : "cursorarrow")
                     .font(.system(size: 32, weight: .medium))
-                    .foregroundStyle(jiggler.isActive ? .green : .secondary)
+                    .foregroundStyle(insomniac.isActive ? .green : .secondary)
             }
 
-            Text(jiggler.isActive ? "status_active" : "status_inactive")
+            Text(insomniac.isActive ? "status_active" : "status_inactive")
                 .font(.title3.weight(.medium))
 
             Button {
-                jiggler.toggle()
+                insomniac.toggle()
             } label: {
-                Text(jiggler.isActive ? "button_stop" : "button_start")
+                Text(insomniac.isActive ? "button_stop" : "button_start")
                     .frame(maxWidth: .infinity)
             }
             .controlSize(.large)
             .buttonStyle(.borderedProminent)
-            .tint(jiggler.isActive ? .red : .green)
+            .tint(insomniac.isActive ? .red : .green)
         }
     }
 
@@ -70,8 +70,8 @@ struct ContentView: View {
 
             Slider(
                 value: Binding(
-                    get: { secondsToSlider(jiggler.interval) },
-                    set: { jiggler.interval = sliderToSeconds($0) }
+                    get: { secondsToSlider(insomniac.interval) },
+                    set: { insomniac.interval = sliderToSeconds($0) }
                 ),
                 in: 0...1
             )
@@ -92,7 +92,7 @@ struct ContentView: View {
     // MARK: - Helpers
 
     private var formattedInterval: String {
-        let seconds = jiggler.interval
+        let seconds = insomniac.interval
         if seconds < 60 {
             let value = Int(round(seconds))
             return value == 1
@@ -126,5 +126,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(jiggler: MouseJiggler(mouseMover: CGMouseMover()))
+    ContentView(insomniac: Insomniac(mouseMover: CGMouseMover()))
 }

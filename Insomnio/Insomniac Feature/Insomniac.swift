@@ -5,7 +5,7 @@
 import Foundation
 
 @Observable
-final class MouseJiggler {
+final class Insomniac {
     private let mouseMover: MouseMover
     private var timer: Timer?
 
@@ -32,17 +32,17 @@ final class MouseJiggler {
         timer = nil
     }
 
-    func jiggle() {
+    func keepAwake() {
         let currentPosition = mouseMover.currentMouseLocation()
-        let jiggled = CGPoint(x: currentPosition.x + 1, y: currentPosition.y)
-        _ = mouseMover.moveMouseTo(jiggled)
+        let nudged = CGPoint(x: currentPosition.x + 1, y: currentPosition.y)
+        _ = mouseMover.moveMouseTo(nudged)
         _ = mouseMover.moveMouseTo(currentPosition)
     }
 
     private func scheduleTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
-            self?.jiggle()
+            self?.keepAwake()
         }
     }
 }

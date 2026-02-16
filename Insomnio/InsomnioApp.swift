@@ -6,11 +6,11 @@ import SwiftUI
 
 @main
 struct InsomnioApp: App {
-    @State private var jiggler = MouseJiggler(mouseMover: CGMouseMover())
+    @State private var insomniac = Insomniac(mouseMover: CGMouseMover())
 
     var body: some Scene {
         WindowGroup {
-            ContentView(jiggler: jiggler)
+            ContentView(insomniac: insomniac)
         }
     }
 }
