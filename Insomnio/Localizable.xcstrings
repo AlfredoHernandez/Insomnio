@@ -1,38 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "status_active" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Insomnio Active"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Insomnio Activo"
-          }
-        }
-      }
-    },
-    "status_inactive" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Inactive"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Inactivo"
-          }
-        }
-      }
-    },
     "button_start" : {
       "localizations" : {
         "en" : {
@@ -65,6 +33,57 @@
         }
       }
     },
+    "feedback_count %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activations: %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activaciones: %lld"
+          }
+        }
+      }
+    },
+    "feedback_last %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Última: %@"
+          }
+        }
+      }
+    },
+    "Insomnio" : {
+
+    },
+    "menu_open_insomnio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Insomnio…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Insomnio…"
+          }
+        }
+      }
+    },
     "interval_label %@" : {
       "localizations" : {
         "en" : {
@@ -81,50 +100,162 @@
         }
       }
     },
-    "tick_5sec" : {
+    "launch_at_login_label" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5 sec"
+            "value" : "Launch at login"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5 seg"
+            "value" : "Iniciar con el sistema"
           }
         }
       }
     },
-    "tick_1min" : {
+    "mode_label" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1 min"
+            "value" : "Mode"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1 min"
+            "value" : "Modo"
           }
         }
       }
     },
-    "tick_5min" : {
+    "mode_move_cursor" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5 min"
+            "value" : "Move Cursor"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5 min"
+            "value" : "Mover Cursor"
+          }
+        }
+      }
+    },
+    "mode_prevent_sleep" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prevent Sleep"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prevenir Suspensión"
+          }
+        }
+      }
+    },
+    "only_when_idle_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only activate when idle"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar solo en inactividad"
+          }
+        }
+      }
+    },
+    "options_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Options"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opciones"
+          }
+        }
+      }
+    },
+    "pause_on_battery_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause on battery"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausar con batería"
+          }
+        }
+      }
+    },
+    "quit_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quit Insomnio"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salir de Insomnio"
+          }
+        }
+      }
+    },
+    "status_active" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insomnio Active"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insomnio Activo"
+          }
+        }
+      }
+    },
+    "status_inactive" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inactive"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inactivo"
           }
         }
       }
@@ -145,6 +276,22 @@
         }
       }
     },
+    "tick_1min" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 min"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 min"
+          }
+        }
+      }
+    },
     "tick_5hours" : {
       "localizations" : {
         "en" : {
@@ -157,6 +304,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "5 horas"
+          }
+        }
+      }
+    },
+    "tick_5min" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 min"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 min"
+          }
+        }
+      }
+    },
+    "tick_5sec" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 sec"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 seg"
           }
         }
       }
@@ -177,34 +356,18 @@
         }
       }
     },
-    "time_1_second" : {
+    "time_1_hour" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1 second"
+            "value" : "1 hour"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1 segundo"
-          }
-        }
-      }
-    },
-    "time_n_seconds %lld" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld seconds"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld segundos"
+            "value" : "1 hora"
           }
         }
       }
@@ -225,34 +388,34 @@
         }
       }
     },
-    "time_n_minutes %lld" : {
+    "time_1_second" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld minutes"
+            "value" : "1 second"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld minutos"
+            "value" : "1 segundo"
           }
         }
       }
     },
-    "time_1_hour" : {
+    "time_decimal_hours %lf" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1 hour"
+            "value" : "%.1f hours"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1 hora"
+            "value" : "%.1f horas"
           }
         }
       }
@@ -273,18 +436,34 @@
         }
       }
     },
-    "time_decimal_hours %lf" : {
+    "time_n_minutes %lld" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%.1f hours"
+            "value" : "%lld minutes"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%.1f horas"
+            "value" : "%lld minutos"
+          }
+        }
+      }
+    },
+    "time_n_seconds %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld seconds"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld segundos"
           }
         }
       }

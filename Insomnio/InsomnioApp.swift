@@ -1,16 +1,27 @@
 //
-// Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
+//  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
 import SwiftUI
 
 @main
 struct InsomnioApp: App {
-    @State private var insomniac = Insomniac(mouseMover: CGMouseMover())
+	@State private var insomniac = Insomniac(
+		mouseMover: CGMouseMover(),
+		sleepPreventer: IOKitSleepPreventer(),
+		idleTimeProvider: CGIdleTimeProvider(),
+		powerSourceProvider: IOKitPowerSourceProvider(),
+	)
 
-    var body: some Scene {
-        WindowGroup {
-            ContentView(insomniac: insomniac)
-        }
-    }
+	var body: some Scene {
+		Window("Insomnio", id: "main") {
+			InsomnioView(insomniac: insomniac)
+		}
+		.defaultSize(width: 420, height: 600)
+		.windowResizability(.contentSize)
+
+		MenuBarExtra("Insomnio", systemImage: insomniac.isActive ? "moon.zzz.fill" : "moon.zzz") {
+			MenuBarView(insomniac: insomniac)
+		}
+	}
 }
