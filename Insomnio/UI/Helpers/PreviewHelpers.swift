@@ -2,6 +2,7 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+import CoreGraphics
 import Foundation
 
 #if DEBUG
@@ -58,6 +59,34 @@ class StubLaunchAtLoginManager: LaunchAtLoginManager {
 	var isEnabled = false
 	func enable() throws {}
 	func disable() throws {}
+}
+
+class StubMouseMover: MouseMover {
+	func moveMouseTo(_: CGPoint) -> Bool {
+		true
+	}
+
+	func currentMouseLocation() -> CGPoint {
+		.zero
+	}
+}
+
+class StubSleepPreventer: SleepPreventer {
+	func createAssertion() -> Bool {
+		true
+	}
+
+	func releaseAssertion() {}
+}
+
+class StubTimerCancellable: TimerCancellable {
+	func invalidate() {}
+}
+
+class StubTimerScheduler: TimerScheduler {
+	func schedule(interval _: TimeInterval, repeats _: Bool, block _: @escaping () -> Void) -> TimerCancellable {
+		StubTimerCancellable()
+	}
 }
 
 #endif
