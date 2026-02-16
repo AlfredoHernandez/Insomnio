@@ -17,7 +17,7 @@ struct InsomnioApp: App {
 		Window("Insomnio", id: "main") {
 			InsomnioView(insomniac: insomniac)
 		}
-		.defaultSize(width: 420, height: 600)
+		.defaultSize(width: 420, height: 560)
 		.windowResizability(.contentSize)
 
 		MenuBarExtra("Insomnio", systemImage: insomniac.isActive ? "moon.zzz.fill" : "moon.zzz") {

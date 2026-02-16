@@ -7,15 +7,19 @@ import SwiftUI
 struct InsomnioView: View {
 	@Bindable var insomniac: Insomniac
 
-	var body: some View {
-		VStack(spacing: 24) {
-			StatusSection(isActive: insomniac.isActive, onToggle: insomniac.toggle)
+	private var appVersion: String {
+		Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+	}
 
-			Divider()
+	var body: some View {
+		VStack(alignment: .leading, spacing: 12) {
+			StatusSection(isActive: insomniac.isActive, onToggle: insomniac.toggle)
 
 			ModeSection(mode: $insomniac.mode, isDisabled: insomniac.isActive)
 
-			Divider()
+			if insomniac.mode == .moveCursor {
+				IntervalSection(interval: $insomniac.interval, isDisabled: insomniac.isActive)
+			}
 
 			OptionsSection(
 				onlyWhenIdle: $insomniac.onlyWhenIdle,
@@ -23,29 +27,24 @@ struct InsomnioView: View {
 				isPreventSleepMode: insomniac.mode == .preventSleep,
 			)
 
-			if insomniac.mode == .moveCursor {
-				Divider()
-
-				IntervalSection(interval: $insomniac.interval, isDisabled: insomniac.isActive)
-			}
-
 			if insomniac.activationCount > 0 {
-				Divider()
-
 				FeedbackSection(
-					isActive: insomniac.isActive,
 					activationCount: insomniac.activationCount,
 					lastActivation: insomniac.lastActivation,
 				)
 			}
 
-			Divider()
+			Spacer()
 
-			SettingsSection()
+			Text("version_label \(appVersion)")
+				.font(.caption)
+				.foregroundStyle(.tertiary)
+				.frame(maxWidth: .infinity)
 		}
-		.padding(32)
+		.padding(20)
 		.frame(width: 420)
-		.fixedSize()
+		.fixedSize(horizontal: true, vertical: false)
+		.animation(.default, value: insomniac.mode)
 	}
 }
 

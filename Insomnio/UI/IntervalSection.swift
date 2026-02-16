@@ -8,47 +8,134 @@ struct IntervalSection: View {
 	@Binding var interval: TimeInterval
 	let isDisabled: Bool
 
-	private static let tickMarks: [(label: LocalizedStringKey, seconds: TimeInterval)] = [
-		("tick_5sec", 5),
-		("tick_1min", 60),
-		("tick_5min", 300),
-		("tick_1hour", 3600),
-		("tick_5hours", 18000),
-		("tick_24hours", 86400),
-	]
+	private enum TimeUnit: CaseIterable {
+		case seconds, minutes, hours
 
-	private static let minSeconds: TimeInterval = 5
-	private static let maxSeconds: TimeInterval = 86400
+		var label: LocalizedStringKey {
+			switch self {
+			case .seconds: "unit_seconds"
 
-	var body: some View {
-		VStack(alignment: .leading, spacing: 8) {
-			Text("interval_label \(formattedInterval)")
-				.font(.subheadline)
-				.foregroundStyle(.secondary)
+			case .minutes: "unit_minutes"
 
-			Slider(
-				value: Binding(
-					get: { secondsToSlider(interval) },
-					set: { interval = sliderToSeconds($0) },
-				),
-				in: 0 ... 1,
-			)
-
-			HStack {
-				ForEach(Array(Self.tickMarks.enumerated()), id: \.offset) { _, tick in
-					Text(tick.label)
-						.font(.caption2)
-						.foregroundStyle(.tertiary)
-					if tick.seconds != Self.maxSeconds {
-						Spacer()
-					}
-				}
+			case .hours: "unit_hours"
 			}
 		}
-		.disabled(isDisabled)
+
+		var divisor: TimeInterval {
+			switch self {
+			case .seconds: 1
+
+			case .minutes: 60
+
+			case .hours: 3600
+			}
+		}
+	}
+
+	private static let steps: [TimeInterval] = [
+		5, 10, 15, 30, 60, 120, 300, 600, 900, 1800, 3600, 7200, 18000, 43200, 86400,
+	]
+
+	private static let tickLabels: [(label: LocalizedStringKey, index: Int)] = [
+		("tick_5sec", 0),
+		("tick_1min", 4),
+		("tick_5min", 6),
+		("tick_1hour", 10),
+		("tick_5hours", 12),
+		("tick_24hours", 14),
+	]
+
+	@State private var unit: TimeUnit = .seconds
+
+	private var stepIndex: Binding<Double> {
+		Binding(
+			get: {
+				let idx = Self.steps.enumerated()
+					.min(by: { abs($0.element - interval) < abs($1.element - interval) })?
+					.offset ?? 0
+				return Double(idx)
+			},
+			set: {
+				interval = Self.steps[Int(round($0))]
+				unit = bestUnit(for: interval)
+			},
+		)
+	}
+
+	private var displayValue: Binding<Double> {
+		Binding(
+			get: { interval / unit.divisor },
+			set: { interval = min(86400, max(5, $0 * unit.divisor)) },
+		)
+	}
+
+	var body: some View {
+		CardView {
+			VStack(alignment: .leading, spacing: 4) {
+				Text("interval_title")
+
+				Text("interval_hint \(formattedInterval)")
+					.foregroundStyle(.secondary)
+
+				Slider(
+					value: stepIndex,
+					in: 0 ... Double(Self.steps.count - 1),
+					step: 1,
+				)
+
+				GeometryReader { geo in
+					let inset: CGFloat = 20
+					let usableWidth = geo.size.width - 2 * inset
+					let maxIndex = Double(Self.steps.count - 1)
+					ForEach(Self.tickLabels, id: \.index) { tick in
+						Text(tick.label)
+							.font(.system(size: 10))
+							.foregroundStyle(.tertiary)
+							.fixedSize()
+							.position(
+								x: inset + usableWidth * Double(tick.index) / maxIndex,
+								y: 6,
+							)
+					}
+				}
+				.frame(height: 14)
+
+				HStack(spacing: 8) {
+					Text("custom_interval_label")
+						.font(.system(size: 11))
+						.foregroundStyle(.secondary)
+
+					TextField("", value: displayValue, format: .number)
+						.textFieldStyle(.roundedBorder)
+						.frame(width: 70)
+						.monospacedDigit()
+						.onSubmit { unit = bestUnit(for: interval) }
+
+					Picker("", selection: $unit) {
+						ForEach(TimeUnit.allCases, id: \.self) { u in
+							Text(u.label).tag(u)
+						}
+					}
+					.labelsHidden()
+					.fixedSize()
+				}
+				.padding(.top, 4)
+			}
+			.disabled(isDisabled)
+			.onAppear { unit = bestUnit(for: interval) }
+		}
 	}
 
 	// MARK: - Helpers
+
+	private func bestUnit(for seconds: TimeInterval) -> TimeUnit {
+		if seconds >= 3600, seconds.truncatingRemainder(dividingBy: 3600) == 0 {
+			return .hours
+		} else if seconds >= 60, seconds.truncatingRemainder(dividingBy: 60) == 0 {
+			return .minutes
+		}
+		return .seconds
+	}
 
 	private var formattedInterval: String {
 		let seconds = interval
@@ -72,14 +159,5 @@ struct IntervalSection: View {
 				return String(localized: "time_decimal_hours \(value)")
 			}
 		}
-	}
-
-	private func secondsToSlider(_ seconds: TimeInterval) -> Double {
-		let clamped = min(max(seconds, Self.minSeconds), Self.maxSeconds)
-		return log(clamped / Self.minSeconds) / log(Self.maxSeconds / Self.minSeconds)
-	}
-
-	private func sliderToSeconds(_ value: Double) -> TimeInterval {
-		Self.minSeconds * pow(Self.maxSeconds / Self.minSeconds, value)
 	}
 }

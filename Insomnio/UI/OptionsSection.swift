@@ -2,6 +2,7 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+import ServiceManagement
 import SwiftUI
 
 struct OptionsSection: View {
@@ -10,16 +11,37 @@ struct OptionsSection: View {
 	let isPreventSleepMode: Bool
 
 	var body: some View {
-		VStack(alignment: .leading, spacing: 8) {
-			Text("options_label")
-				.font(.subheadline)
-				.foregroundStyle(.secondary)
+		CardView {
+			VStack(alignment: .leading, spacing: 10) {
+				VStack(alignment: .leading, spacing: 2) {
+					Toggle("only_when_idle_label", isOn: $onlyWhenIdle)
+						.disabled(isPreventSleepMode)
 
-			Toggle("only_when_idle_label", isOn: $onlyWhenIdle)
-				.disabled(isPreventSleepMode)
-				.opacity(isPreventSleepMode ? 0.4 : 1)
+					Text("only_when_idle_desc")
+						.font(.system(size: 11))
+						.foregroundStyle(.tertiary)
+						.padding(.leading, 20)
+				}
 
-			Toggle("pause_on_battery_label", isOn: $pauseOnBattery)
+				VStack(alignment: .leading, spacing: 2) {
+					Toggle("pause_on_battery_label", isOn: $pauseOnBattery)
+
+					Text("pause_on_battery_desc")
+						.font(.system(size: 11))
+						.foregroundStyle(.tertiary)
+						.padding(.leading, 20)
+				}
+
+				Toggle("launch_at_login_label", isOn: Binding(
+					get: { SMAppService.mainApp.status == .enabled },
+					set: { newValue in
+						try? newValue
+							? SMAppService.mainApp.register()
+							: SMAppService.mainApp.unregister()
+					},
+				))
+			}
+			.toggleStyle(.checkbox)
 		}
 	}
 }

@@ -1,6 +1,29 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "·" : {
+
+    },
+    "app_description" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keeps your Mac awake by simulating activity. Choose a mode and interval shorter than your screensaver or display sleep settings."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantiene tu Mac despierta simulando actividad. Elige un modo e intervalo menor al tiempo de protector de pantalla o suspensión de pantalla."
+          }
+        }
+      }
+    },
     "button_start" : {
       "localizations" : {
         "en" : {
@@ -29,6 +52,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Detener"
+          }
+        }
+      }
+    },
+    "custom_interval_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Or set a custom time:"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O define un tiempo personalizado:"
+          }
+        }
+      }
+    },
+    "enable_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Insomnio"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar Insomnio"
           }
         }
       }
@@ -68,23 +123,24 @@
     "Insomnio" : {
 
     },
-    "menu_open_insomnio" : {
+    "interval_hint %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open Insomnio…"
+            "value" : "(Set to %@)"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abrir Insomnio…"
+            "value" : "(Configurado a %@)"
           }
         }
       }
     },
     "interval_label %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -96,6 +152,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Intervalo: %@"
+          }
+        }
+      }
+    },
+    "interval_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time between activations:"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiempo entre activaciones:"
           }
         }
       }
@@ -116,7 +188,24 @@
         }
       }
     },
+    "menu_open_insomnio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Insomnio…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Insomnio…"
+          }
+        }
+      }
+    },
     "mode_label" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -148,6 +237,39 @@
         }
       }
     },
+    "mode_move_cursor_desc" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moves the pointer periodically to simulate activity"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mueve el puntero periódicamente para simular actividad"
+          }
+        }
+      }
+    },
+    "mode_move_cursor_full" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move Cursor — moves the pointer periodically to simulate activity"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mover Cursor — mueve el puntero periódicamente para simular actividad"
+          }
+        }
+      }
+    },
     "mode_prevent_sleep" : {
       "localizations" : {
         "en" : {
@@ -160,6 +282,55 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prevenir Suspensión"
+          }
+        }
+      }
+    },
+    "mode_prevent_sleep_desc" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keeps your Mac awake without moving the cursor"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantiene tu Mac despierta sin mover el cursor"
+          }
+        }
+      }
+    },
+    "mode_prevent_sleep_full" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prevent Sleep — keeps your Mac awake without moving the cursor"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prevenir Suspensión — mantiene tu Mac despierta sin mover el cursor"
+          }
+        }
+      }
+    },
+    "only_when_idle_desc" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Won't interfere while you're using your Mac"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No interferirá mientras uses tu Mac"
           }
         }
       }
@@ -181,6 +352,7 @@
       }
     },
     "options_label" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -192,6 +364,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opciones"
+          }
+        }
+      }
+    },
+    "pause_on_battery_desc" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saves battery by pausing when not plugged in"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahorra batería al pausar cuando no está conectada"
           }
         }
       }
@@ -464,6 +652,70 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld segundos"
+          }
+        }
+      }
+    },
+    "unit_hours" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "hours"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "horas"
+          }
+        }
+      }
+    },
+    "unit_minutes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "minutes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "minutos"
+          }
+        }
+      }
+    },
+    "unit_seconds" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "seconds"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "segundos"
+          }
+        }
+      }
+    },
+    "version_label %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión %@"
           }
         }
       }
