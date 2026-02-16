@@ -144,13 +144,13 @@ struct AutomationCoordinatorTests {
 	private func makeSUT()
 		-> (
 			sut: AutomationCoordinator,
-			schedule: ScheduleEvaluatorSpy,
-			appRules: AppRulesEvaluatorSpy,
+			schedule: StubScheduleEvaluator,
+			appRules: StubAppRulesEvaluator,
 			insomniac: Insomniac,
 		)
 	{
-		let schedule = ScheduleEvaluatorSpy()
-		let appRules = AppRulesEvaluatorSpy()
+		let schedule = StubScheduleEvaluator()
+		let appRules = StubAppRulesEvaluator()
 		let insomniac = Insomniac(
 			mouseMover: MouseMoverSpy(),
 			sleepPreventer: SleepPreventerSpy(),
@@ -166,14 +166,14 @@ struct AutomationCoordinatorTests {
 	private func makeSUTWithTimerScheduler()
 		-> (
 			sut: AutomationCoordinator,
-			schedule: ScheduleEvaluatorSpy,
-			appRules: AppRulesEvaluatorSpy,
+			schedule: StubScheduleEvaluator,
+			appRules: StubAppRulesEvaluator,
 			insomniac: Insomniac,
 			timerScheduler: TimerSchedulerSpy,
 		)
 	{
-		let schedule = ScheduleEvaluatorSpy()
-		let appRules = AppRulesEvaluatorSpy()
+		let schedule = StubScheduleEvaluator()
+		let appRules = StubAppRulesEvaluator()
 		let insomniac = Insomniac(
 			mouseMover: MouseMoverSpy(),
 			sleepPreventer: SleepPreventerSpy(),
