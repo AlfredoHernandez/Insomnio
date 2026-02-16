@@ -5,7 +5,7 @@
 import Foundation
 
 protocol AppRulesEvaluator: AnyObject {
-	var rules: [AppRule] { get set }
+	var rules: [AppRule] { get }
 	func shouldBeActive() -> Bool
 	func addRule(_ rule: AppRule)
 	func removeRule(id: UUID)

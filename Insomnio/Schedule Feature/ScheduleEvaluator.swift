@@ -5,7 +5,7 @@
 import Foundation
 
 protocol ScheduleEvaluator: AnyObject {
-	var rules: [ScheduleRule] { get set }
+	var rules: [ScheduleRule] { get }
 	func shouldBeActive() -> Bool
 	func addRule(_ rule: ScheduleRule)
 	func removeRule(id: UUID)

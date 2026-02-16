@@ -15,15 +15,20 @@ enum CursorPattern: CaseIterable, Hashable {
 	case zigzag
 	case random
 
+	private static let nudgeStrategy: CursorPatternStrategy = NudgeCursorPatternStrategy()
+	private static let circleStrategy: CursorPatternStrategy = CircleCursorPatternStrategy()
+	private static let zigzagStrategy: CursorPatternStrategy = ZigzagCursorPatternStrategy()
+	private static let randomStrategy: CursorPatternStrategy = RandomCursorPatternStrategy()
+
 	var strategy: CursorPatternStrategy {
 		switch self {
-		case .nudge: NudgeCursorPatternStrategy()
+		case .nudge: Self.nudgeStrategy
 
-		case .circle: CircleCursorPatternStrategy()
+		case .circle: Self.circleStrategy
 
-		case .zigzag: ZigzagCursorPatternStrategy()
+		case .zigzag: Self.zigzagStrategy
 
-		case .random: RandomCursorPatternStrategy()
+		case .random: Self.randomStrategy
 		}
 	}
 
