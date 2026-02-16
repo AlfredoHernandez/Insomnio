@@ -21,6 +21,7 @@ struct InsomnioApp: App {
 	@State private var scheduleEvaluator: ScheduleEvaluatorImpl
 	@State private var appRulesEvaluator: AppRulesEvaluatorImpl
 	@State private var automationCoordinator: AutomationCoordinator
+	@State private var hasAppeared = false
 
 	init() {
 		let autoStop = FoundationAutoStopTimer()
@@ -61,6 +62,8 @@ struct InsomnioApp: App {
 				onManualToggle: { automationCoordinator.notifyManualToggle() },
 			)
 			.onAppear {
+				guard !hasAppeared else { return }
+				hasAppeared = true
 				shortcutManager.registerShortcut { [insomniac] in
 					insomniac.toggle()
 					automationCoordinator.notifyManualToggle()
@@ -75,7 +78,7 @@ struct InsomnioApp: App {
 		.windowResizability(.contentSize)
 
 		MenuBarExtra("Insomnio", systemImage: insomniac.isActive ? "moon.zzz.fill" : "moon.zzz") {
-			MenuBarView(insomniac: insomniac)
+			MenuBarView(insomniac: insomniac, onManualToggle: { automationCoordinator.notifyManualToggle() })
 		}
 	}
 }

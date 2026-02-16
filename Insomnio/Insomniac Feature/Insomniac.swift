@@ -91,6 +91,7 @@ final class Insomniac {
 		timer = nil
 		powerCheckTimer?.invalidate()
 		powerCheckTimer = nil
+		wasOnBattery = false
 		sleepPreventer.releaseAssertion()
 		autoStopTimer?.cancel()
 	}

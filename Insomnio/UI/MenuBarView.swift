@@ -7,6 +7,7 @@ import SwiftUI
 struct MenuBarView: View {
 	@Bindable var insomniac: Insomniac
 	@Environment(\.openWindow) private var openWindow
+	var onManualToggle: (() -> Void)?
 
 	private var modeLabel: LocalizedStringKey {
 		insomniac.mode == .moveCursor ? "mode_move_cursor" : "mode_prevent_sleep"
@@ -21,6 +22,7 @@ struct MenuBarView: View {
 
 		Button(insomniac.isActive ? "button_stop" : "button_start") {
 			insomniac.toggle()
+			onManualToggle?()
 		}
 		.keyboardShortcut("s")
 
