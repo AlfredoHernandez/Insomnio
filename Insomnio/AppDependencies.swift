@@ -8,8 +8,8 @@ import SwiftUI
 struct AppDependencies {
 	let insomniac: Insomniac
 	let premiumManager: any PremiumManager
-	let scheduleEvaluator: ScheduleEvaluatorImpl
-	let appRulesEvaluator: AppRulesEvaluatorImpl
+	let scheduleEvaluator: any ScheduleEvaluator
+	let appRulesEvaluator: any AppRulesEvaluator
 	let automationCoordinator: AutomationCoordinator
 	let shortcutManager: any GlobalShortcutManager
 	let menuBarController: MenuBarPopoverController

@@ -113,35 +113,3 @@ struct InsomnioView: View {
 		appRulesEvaluator: PreviewAppRulesEvaluator(),
 	)
 }
-
-private class PreviewPremiumManager: PremiumManager {
-	var isPremium = false
-	func loadProducts() async {}
-	func purchase(_: PremiumProduct) async throws -> Bool {
-		true
-	}
-
-	func restorePurchases() async {}
-}
-
-private class PreviewScheduleEvaluator: ScheduleEvaluator {
-	var rules: [ScheduleRule] = []
-	func shouldBeActive() -> Bool {
-		false
-	}
-
-	func addRule(_: ScheduleRule) {}
-	func removeRule(id _: UUID) {}
-	func updateRule(_: ScheduleRule) {}
-}
-
-private class PreviewAppRulesEvaluator: AppRulesEvaluator {
-	var rules: [AppRule] = []
-	func shouldBeActive() -> Bool {
-		false
-	}
-
-	func addRule(_: AppRule) {}
-	func removeRule(id _: UUID) {}
-	func updateRule(_: AppRule) {}
-}
