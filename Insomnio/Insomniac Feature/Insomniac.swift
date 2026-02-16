@@ -24,7 +24,7 @@ final class Insomniac {
 
 	static let idleThreshold: TimeInterval = 5.0
 
-	var isActive: Bool = false
+	private(set) var isActive: Bool = false
 	var mode: Mode = .moveCursor
 	var interval: TimeInterval = 30.0
 	var onlyWhenIdle: Bool = false
