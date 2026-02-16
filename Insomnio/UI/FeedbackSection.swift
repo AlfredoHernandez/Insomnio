@@ -23,3 +23,9 @@ struct FeedbackSection: View {
 		.foregroundStyle(.secondary)
 	}
 }
+
+#Preview {
+	FeedbackSection(activationCount: 42, lastActivation: .now)
+		.padding()
+		.frame(width: 420)
+}

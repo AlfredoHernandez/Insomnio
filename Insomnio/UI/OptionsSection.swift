@@ -45,3 +45,11 @@ struct OptionsSection: View {
 		}
 	}
 }
+
+#Preview {
+	@Previewable @State var idle = true
+	@Previewable @State var battery = false
+	OptionsSection(onlyWhenIdle: $idle, pauseOnBattery: $battery, isPreventSleepMode: false)
+		.padding()
+		.frame(width: 420)
+}

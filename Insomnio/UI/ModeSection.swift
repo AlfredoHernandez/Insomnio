@@ -38,3 +38,10 @@ struct ModeSection: View {
 		}
 	}
 }
+
+#Preview {
+	@Previewable @State var mode: Insomniac.Mode = .moveCursor
+	ModeSection(mode: $mode, isDisabled: false)
+		.padding()
+		.frame(width: 420)
+}

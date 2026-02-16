@@ -40,3 +40,7 @@ struct MenuBarView: View {
 		.keyboardShortcut("q")
 	}
 }
+
+#Preview {
+	MenuBarView(insomniac: Insomniac(mouseMover: CGMouseMover(), sleepPreventer: IOKitSleepPreventer()))
+}

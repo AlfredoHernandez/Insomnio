@@ -14,3 +14,11 @@ struct CardView<Content: View>: View {
 			.background(.fill.tertiary, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
 	}
 }
+
+#Preview {
+	CardView {
+		Text("Card content")
+	}
+	.padding()
+	.frame(width: 420)
+}

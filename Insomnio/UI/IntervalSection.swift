@@ -137,6 +137,8 @@ struct IntervalSection: View {
 		return .seconds
 	}
 
+	// MARK: - Helpers
+
 	private var formattedInterval: String {
 		let seconds = interval
 		if seconds < 60 {
@@ -160,4 +162,11 @@ struct IntervalSection: View {
 			}
 		}
 	}
+}
+
+#Preview {
+	@Previewable @State var interval: TimeInterval = 30
+	IntervalSection(interval: $interval, isDisabled: false)
+		.padding()
+		.frame(width: 420)
 }

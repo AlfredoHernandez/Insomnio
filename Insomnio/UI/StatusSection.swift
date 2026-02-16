@@ -39,3 +39,15 @@ struct StatusSection: View {
 		}
 	}
 }
+
+#Preview("Active") {
+	StatusSection(isActive: true, onToggle: {})
+		.padding()
+		.frame(width: 420)
+}
+
+#Preview("Inactive") {
+	StatusSection(isActive: false, onToggle: {})
+		.padding()
+		.frame(width: 420)
+}
