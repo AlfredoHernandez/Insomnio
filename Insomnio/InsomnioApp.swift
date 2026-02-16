@@ -7,7 +7,14 @@ import SwiftUI
 @main
 struct InsomnioApp: App {
 	@State private var autoStopTimer = FoundationAutoStopTimer()
-	@State private var premiumManager = StoreKitPremiumManager()
+	@State private var premiumManager: any PremiumManager = {
+		#if DEBUG
+		DebugPremiumManager()
+		#else
+		StoreKitPremiumManager()
+		#endif
+	}()
+
 	private let shortcutManager = NSEventGlobalShortcutManager()
 
 	@State private var insomniac: Insomniac

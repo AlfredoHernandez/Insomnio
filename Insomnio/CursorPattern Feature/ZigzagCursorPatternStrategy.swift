@@ -7,7 +7,7 @@ import CoreGraphics
 struct ZigzagCursorPatternStrategy: CursorPatternStrategy {
 	let offset: CGFloat
 
-	init(offset: CGFloat = 2) {
+	init(offset: CGFloat = 30) {
 		self.offset = offset
 	}
 

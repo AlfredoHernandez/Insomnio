@@ -8,7 +8,7 @@ struct RandomCursorPatternStrategy: CursorPatternStrategy {
 	let radius: CGFloat
 	let randomSource: () -> CGFloat
 
-	init(radius: CGFloat = 5, randomSource: @escaping @Sendable () -> CGFloat = { CGFloat.random(in: -1 ... 1) }) {
+	init(radius: CGFloat = 50, randomSource: @escaping @Sendable () -> CGFloat = { CGFloat.random(in: -1 ... 1) }) {
 		self.radius = radius
 		self.randomSource = randomSource
 	}

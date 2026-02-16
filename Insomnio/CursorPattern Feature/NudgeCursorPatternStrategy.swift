@@ -5,7 +5,13 @@
 import CoreGraphics
 
 struct NudgeCursorPatternStrategy: CursorPatternStrategy {
+	let offset: CGFloat
+
+	init(offset: CGFloat = 20) {
+		self.offset = offset
+	}
+
 	func points(from origin: CGPoint) -> [CGPoint] {
-		[CGPoint(x: origin.x + 1, y: origin.y)]
+		[CGPoint(x: origin.x + offset, y: origin.y)]
 	}
 }

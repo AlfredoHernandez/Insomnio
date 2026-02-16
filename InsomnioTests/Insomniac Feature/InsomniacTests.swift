@@ -166,7 +166,7 @@ struct InsomniacTests {
 
 		#expect(mover.receivedMessages == [
 			.currentLocation,
-			.moveTo(CGPoint(x: 51, y: 75)),
+			.moveTo(CGPoint(x: 70, y: 75)),
 			.moveTo(CGPoint(x: 50, y: 75)),
 		])
 	}
@@ -221,7 +221,7 @@ struct InsomniacTests {
 
 		#expect(mover.receivedMessages == [
 			.currentLocation,
-			.moveTo(CGPoint(x: 51, y: 75)),
+			.moveTo(CGPoint(x: 70, y: 75)),
 			.moveTo(CGPoint(x: 50, y: 75)),
 		])
 	}
@@ -237,7 +237,7 @@ struct InsomniacTests {
 
 		#expect(mover.receivedMessages == [
 			.currentLocation,
-			.moveTo(CGPoint(x: 51, y: 75)),
+			.moveTo(CGPoint(x: 70, y: 75)),
 			.moveTo(CGPoint(x: 50, y: 75)),
 		])
 	}
@@ -284,7 +284,7 @@ struct InsomniacTests {
 
 		#expect(mover.receivedMessages == [
 			.currentLocation,
-			.moveTo(CGPoint(x: 51, y: 75)),
+			.moveTo(CGPoint(x: 70, y: 75)),
 			.moveTo(CGPoint(x: 50, y: 75)),
 		])
 	}
@@ -300,7 +300,7 @@ struct InsomniacTests {
 
 		#expect(mover.receivedMessages == [
 			.currentLocation,
-			.moveTo(CGPoint(x: 51, y: 75)),
+			.moveTo(CGPoint(x: 70, y: 75)),
 			.moveTo(CGPoint(x: 50, y: 75)),
 		])
 	}

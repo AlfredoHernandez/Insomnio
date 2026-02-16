@@ -8,7 +8,7 @@ struct CircleCursorPatternStrategy: CursorPatternStrategy {
 	let radius: CGFloat
 	let steps: Int
 
-	init(radius: CGFloat = 3, steps: Int = 8) {
+	init(radius: CGFloat = 50, steps: Int = 8) {
 		self.radius = radius
 		self.steps = steps
 	}
