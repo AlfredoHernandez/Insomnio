@@ -4,6 +4,44 @@
 
 import SwiftUI
 
+extension CursorPattern {
+	var label: LocalizedStringKey {
+		switch self {
+		case .nudge: "pattern_nudge"
+
+		case .circle: "pattern_circle"
+
+		case .zigzag: "pattern_zigzag"
+
+		case .random: "pattern_random"
+		}
+	}
+
+	var description: LocalizedStringKey {
+		switch self {
+		case .nudge: "pattern_nudge_desc"
+
+		case .circle: "pattern_circle_desc"
+
+		case .zigzag: "pattern_zigzag_desc"
+
+		case .random: "pattern_random_desc"
+		}
+	}
+
+	var icon: String {
+		switch self {
+		case .nudge: "arrow.right.and.line.vertical.and.arrow.left"
+
+		case .circle: "arrow.trianglehead.2.clockwise"
+
+		case .zigzag: "point.bottomleft.forward.to.point.topright.scurvepath"
+
+		case .random: "dice"
+		}
+	}
+}
+
 struct CursorPatternSection: View {
 	@Binding var cursorPattern: CursorPattern
 	let isDisabled: Bool
