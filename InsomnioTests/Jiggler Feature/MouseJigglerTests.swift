@@ -1,5 +1,5 @@
 //
-// Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
+// Copyright © 2026 Jesus Alfredo Hernandez Alarcon. All rights reserved.
 //
 
 import CoreGraphics
@@ -9,6 +9,13 @@ import Testing
 @MainActor
 @Suite("MouseJiggler")
 struct MouseJigglerTests {
+    @Test("Init does not message mouse mover upon creation")
+    func init_doesNotMessageMouseMoverUponCreation() {
+        let (_, mover) = makeSUT()
+
+        #expect(mover.receivedMessages == [])
+    }
+
     @Test("Init is not active")
     func init_isNotActive() {
         let (sut, _) = makeSUT()
@@ -64,13 +71,15 @@ struct MouseJigglerTests {
     @Test("Jiggle moves cursor right then back to original")
     func jiggle_movesCursorRightThenBackToOriginal() {
         let (sut, mover) = makeSUT()
-        mover.currentLocation = CGPoint(x: 50, y: 75)
+        mover.stubbedLocation = CGPoint(x: 50, y: 75)
 
         sut.jiggle()
 
-        #expect(mover.movedToPoints.count == 2)
-        #expect(mover.movedToPoints[0] == CGPoint(x: 51, y: 75))
-        #expect(mover.movedToPoints[1] == CGPoint(x: 50, y: 75))
+        #expect(mover.receivedMessages == [
+            .currentLocation,
+            .moveTo(CGPoint(x: 51, y: 75)),
+            .moveTo(CGPoint(x: 50, y: 75)),
+        ])
     }
 
     @Test("Start does not start twice")
@@ -89,21 +98,5 @@ struct MouseJigglerTests {
         let mover = MouseMoverSpy()
         let sut = MouseJiggler(mouseMover: mover)
         return (sut, mover)
-    }
-
-    // MARK: - Test Doubles
-
-    private final class MouseMoverSpy: MouseMoving {
-        var currentLocation: CGPoint = CGPoint(x: 100, y: 100)
-        var movedToPoints: [CGPoint] = []
-
-        func moveMouseTo(_ point: CGPoint) -> Bool {
-            movedToPoints.append(point)
-            return true
-        }
-
-        func currentMouseLocation() -> CGPoint {
-            return currentLocation
-        }
     }
 }

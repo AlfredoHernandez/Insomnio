@@ -6,13 +6,13 @@ import Foundation
 
 @Observable
 final class MouseJiggler {
-    private let mouseMover: MouseMoving
+    private let mouseMover: MouseMover
     private var timer: Timer?
 
     var isActive: Bool = false
     var interval: TimeInterval = 30.0
 
-    init(mouseMover: MouseMoving) {
+    init(mouseMover: MouseMover) {
         self.mouseMover = mouseMover
     }
 

@@ -5,7 +5,7 @@
 import AppKit
 import CoreGraphics
 
-struct CGMouseMover: MouseMoving {
+struct CGMouseMover: MouseMover {
     func moveMouseTo(_ point: CGPoint) -> Bool {
         CGWarpMouseCursorPosition(point) == .success
     }
