@@ -15,6 +15,7 @@ final class Insomniac {
 	private let sleepPreventer: SleepPreventer
 	private let idleTimeProvider: IdleTimeProvider?
 	private let powerSourceProvider: PowerSourceProvider?
+	private let autoStopTimer: AutoStopTimerProtocol?
 	private var timer: Timer?
 	private var powerCheckTimer: Timer?
 	private var wasOnBattery = false
@@ -26,19 +27,31 @@ final class Insomniac {
 	var interval: TimeInterval = 30.0
 	var onlyWhenIdle: Bool = false
 	var pauseOnBattery: Bool = false
+	var autoStopEnabled: Bool = false
+	var autoStopDuration: AutoStopDuration = .oneHour
 	private(set) var activationCount: Int = 0
 	private(set) var lastActivation: Date?
+
+	var autoStopRemainingTime: TimeInterval {
+		autoStopTimer?.remainingTime ?? 0
+	}
+
+	var autoStopIsRunning: Bool {
+		autoStopTimer?.isRunning ?? false
+	}
 
 	init(
 		mouseMover: MouseMover,
 		sleepPreventer: SleepPreventer,
 		idleTimeProvider: IdleTimeProvider? = nil,
 		powerSourceProvider: PowerSourceProvider? = nil,
+		autoStopTimer: AutoStopTimerProtocol? = nil,
 	) {
 		self.mouseMover = mouseMover
 		self.sleepPreventer = sleepPreventer
 		self.idleTimeProvider = idleTimeProvider
 		self.powerSourceProvider = powerSourceProvider
+		self.autoStopTimer = autoStopTimer
 	}
 
 	func toggle() {
@@ -64,6 +77,11 @@ final class Insomniac {
 				}
 			}
 		}
+		if autoStopEnabled {
+			autoStopTimer?.start(duration: autoStopDuration) { [weak self] in
+				self?.stop()
+			}
+		}
 	}
 
 	func stop() {
@@ -73,6 +91,7 @@ final class Insomniac {
 		powerCheckTimer?.invalidate()
 		powerCheckTimer = nil
 		sleepPreventer.releaseAssertion()
+		autoStopTimer?.cancel()
 	}
 
 	func keepAwake() {

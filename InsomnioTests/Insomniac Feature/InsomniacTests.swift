@@ -329,6 +329,101 @@ struct InsomniacTests {
 		#expect(sleepPreventer.receivedMessages == [.createAssertion])
 	}
 
+	// MARK: - Auto-Stop Tests
+
+	@Test("Init autoStopEnabled defaults to false")
+	func init_autoStopEnabledDefaultsToFalse() {
+		let (sut, _, _) = makeSUT()
+
+		#expect(sut.autoStopEnabled == false)
+	}
+
+	@Test("Init autoStopDuration defaults to oneHour")
+	func init_autoStopDurationDefaultsToOneHour() {
+		let (sut, _, _) = makeSUT()
+
+		#expect(sut.autoStopDuration == .oneHour)
+	}
+
+	@Test("Start with autoStop enabled starts auto-stop timer")
+	func start_withAutoStopEnabled_startsAutoStopTimer() {
+		let (sut, autoStopTimer) = makeSUTWithAutoStopTimer()
+		sut.autoStopEnabled = true
+		sut.autoStopDuration = .twoHours
+
+		sut.start()
+
+		#expect(autoStopTimer.receivedMessages == [.start(7200)])
+	}
+
+	@Test("Start with autoStop disabled does not start auto-stop timer")
+	func start_withAutoStopDisabled_doesNotStartAutoStopTimer() {
+		let (sut, autoStopTimer) = makeSUTWithAutoStopTimer()
+		sut.autoStopEnabled = false
+
+		sut.start()
+
+		#expect(autoStopTimer.receivedMessages == [])
+	}
+
+	@Test("Stop cancels auto-stop timer")
+	func stop_cancelsAutoStopTimer() {
+		let (sut, autoStopTimer) = makeSUTWithAutoStopTimer()
+		sut.autoStopEnabled = true
+
+		sut.start()
+		sut.stop()
+
+		#expect(autoStopTimer.receivedMessages == [.start(3600), .cancel])
+	}
+
+	@Test("Auto-stop timer expiration stops insomniac")
+	func autoStopTimerExpiration_stopsInsomniac() {
+		let (sut, autoStopTimer) = makeSUTWithAutoStopTimer()
+		sut.autoStopEnabled = true
+
+		sut.start()
+		#expect(sut.isActive == true)
+
+		autoStopTimer.simulateExpiration()
+
+		#expect(sut.isActive == false)
+	}
+
+	@Test("AutoStop remaining time delegates to timer")
+	func autoStopRemainingTime_delegatesToTimer() {
+		let (sut, autoStopTimer) = makeSUTWithAutoStopTimer()
+		sut.autoStopEnabled = true
+
+		sut.start()
+
+		#expect(sut.autoStopRemainingTime == autoStopTimer.remainingTime)
+	}
+
+	@Test("AutoStop isRunning delegates to timer")
+	func autoStopIsRunning_delegatesToTimer() {
+		let (sut, autoStopTimer) = makeSUTWithAutoStopTimer()
+		sut.autoStopEnabled = true
+
+		sut.start()
+
+		#expect(sut.autoStopIsRunning == autoStopTimer.isRunning)
+	}
+
+	@Test("AutoStop remaining time returns zero when no timer")
+	func autoStopRemainingTime_returnsZeroWhenNoTimer() {
+		let (sut, _, _) = makeSUT()
+
+		#expect(sut.autoStopRemainingTime == 0)
+	}
+
+	@Test("AutoStop isRunning returns false when no timer")
+	func autoStopIsRunning_returnsFalseWhenNoTimer() {
+		let (sut, _, _) = makeSUT()
+
+		#expect(sut.autoStopIsRunning == false)
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT() -> (sut: Insomniac, mover: MouseMoverSpy, sleepPreventer: SleepPreventerSpy) {
@@ -371,5 +466,13 @@ struct InsomniacTests {
 		let powerSourceProvider = PowerSourceProviderSpy()
 		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer, idleTimeProvider: idleTimeProvider, powerSourceProvider: powerSourceProvider)
 		return (sut, mover, sleepPreventer, idleTimeProvider, powerSourceProvider)
+	}
+
+	private func makeSUTWithAutoStopTimer() -> (sut: Insomniac, autoStopTimer: AutoStopTimerSpy) {
+		let mover = MouseMoverSpy()
+		let sleepPreventer = SleepPreventerSpy()
+		let autoStopTimer = AutoStopTimerSpy()
+		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer, autoStopTimer: autoStopTimer)
+		return (sut, autoStopTimer)
 	}
 }
