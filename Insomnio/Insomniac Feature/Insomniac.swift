@@ -5,6 +5,7 @@
 import Foundation
 
 @Observable
+@MainActor
 final class Insomniac {
 	enum Mode: CaseIterable {
 		case moveCursor

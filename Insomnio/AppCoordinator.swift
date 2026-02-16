@@ -5,6 +5,7 @@
 import SwiftUI
 
 @Observable
+@MainActor
 final class AppCoordinator {
 	let dependencies: AppDependencies
 	private var hasStarted = false

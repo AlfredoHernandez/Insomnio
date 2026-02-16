@@ -5,6 +5,7 @@
 import Foundation
 
 @Observable
+@MainActor
 final class AutomationCoordinator {
 	private let scheduleEvaluator: ScheduleEvaluator
 	private let appRulesEvaluator: AppRulesEvaluator
