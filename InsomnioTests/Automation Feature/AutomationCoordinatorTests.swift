@@ -104,6 +104,41 @@ struct AutomationCoordinatorTests {
 		#expect(insomniac.activationCount == firstActivation)
 	}
 
+	// MARK: - Timer Scheduler Tests
+
+	@Test("Start monitoring schedules timer every 60 seconds")
+	func startMonitoring_schedulesTimerEvery60Seconds() {
+		let (sut, _, _, _, timerScheduler) = makeSUTWithTimerScheduler()
+
+		sut.startMonitoring()
+
+		#expect(timerScheduler.receivedMessages == [.schedule(interval: 60)])
+	}
+
+	@Test("Start monitoring timer fire calls evaluate")
+	func startMonitoring_timerFireCallsEvaluate() {
+		let (sut, schedule, _, insomniac, timerScheduler) = makeSUTWithTimerScheduler()
+		schedule.stubbedShouldBeActive = true
+
+		sut.startMonitoring()
+		#expect(insomniac.isActive == true)
+
+		insomniac.stop()
+		timerScheduler.fire(at: 0)
+
+		#expect(insomniac.isActive == true)
+	}
+
+	@Test("Stop monitoring invalidates timer")
+	func stopMonitoring_invalidatesTimer() {
+		let (sut, _, _, _, timerScheduler) = makeSUTWithTimerScheduler()
+
+		sut.startMonitoring()
+		sut.stopMonitoring()
+
+		#expect(timerScheduler.receivedMessages.contains(.invalidate))
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT()
@@ -126,5 +161,30 @@ struct AutomationCoordinatorTests {
 			insomniac: insomniac,
 		)
 		return (sut, schedule, appRules, insomniac)
+	}
+
+	private func makeSUTWithTimerScheduler()
+		-> (
+			sut: AutomationCoordinator,
+			schedule: ScheduleEvaluatorSpy,
+			appRules: AppRulesEvaluatorSpy,
+			insomniac: Insomniac,
+			timerScheduler: TimerSchedulerSpy,
+		)
+	{
+		let schedule = ScheduleEvaluatorSpy()
+		let appRules = AppRulesEvaluatorSpy()
+		let insomniac = Insomniac(
+			mouseMover: MouseMoverSpy(),
+			sleepPreventer: SleepPreventerSpy(),
+		)
+		let timerScheduler = TimerSchedulerSpy()
+		let sut = AutomationCoordinator(
+			scheduleEvaluator: schedule,
+			appRulesEvaluator: appRules,
+			insomniac: insomniac,
+			timerScheduler: timerScheduler,
+		)
+		return (sut, schedule, appRules, insomniac, timerScheduler)
 	}
 }

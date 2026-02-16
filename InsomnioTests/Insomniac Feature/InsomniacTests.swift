@@ -463,6 +463,58 @@ struct InsomniacTests {
 		#expect(sut.autoStopIsRunning == false)
 	}
 
+	// MARK: - Timer Scheduler Tests
+
+	@Test("Start in moveCursor mode schedules timer with configured interval")
+	func start_moveCursor_schedulesTimerWithConfiguredInterval() {
+		let (sut, _, _, timerScheduler) = makeSUTWithTimerScheduler()
+		sut.interval = 45
+
+		sut.start()
+
+		#expect(timerScheduler.receivedMessages == [.schedule(interval: 45)])
+	}
+
+	@Test("Start in moveCursor mode timer fire calls keepAwake")
+	func start_moveCursor_timerFireCallsKeepAwake() {
+		let (sut, mover, _, timerScheduler) = makeSUTWithTimerScheduler()
+		mover.stubbedLocation = CGPoint(x: 50, y: 75)
+
+		sut.start()
+		timerScheduler.fire(at: 0)
+
+		#expect(mover.receivedMessages.contains(.currentLocation))
+	}
+
+	@Test("Stop invalidates scheduled timer")
+	func stop_invalidatesScheduledTimer() {
+		let (sut, _, _, timerScheduler) = makeSUTWithTimerScheduler()
+
+		sut.start()
+		sut.stop()
+
+		#expect(timerScheduler.receivedMessages.contains(.invalidate))
+	}
+
+	@Test("Start in preventSleep with pauseOnBattery schedules power check timer")
+	func start_preventSleep_pauseOnBattery_schedulesPowerCheckTimer() {
+		let powerSourceProvider = PowerSourceProviderSpy()
+		powerSourceProvider.stubbedIsOnBattery = false
+		let timerScheduler = TimerSchedulerSpy()
+		let sut = Insomniac(
+			mouseMover: MouseMoverSpy(),
+			sleepPreventer: SleepPreventerSpy(),
+			powerSourceProvider: powerSourceProvider,
+			timerScheduler: timerScheduler,
+		)
+		sut.mode = .preventSleep
+		sut.pauseOnBattery = true
+
+		sut.start()
+
+		#expect(timerScheduler.receivedMessages == [.schedule(interval: 30)])
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT() -> (sut: Insomniac, mover: MouseMoverSpy, sleepPreventer: SleepPreventerSpy) {
@@ -513,5 +565,15 @@ struct InsomniacTests {
 		let autoStopTimer = AutoStopTimerSpy()
 		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer, autoStopTimer: autoStopTimer)
 		return (sut, autoStopTimer)
+	}
+
+	private func makeSUTWithTimerScheduler()
+		-> (sut: Insomniac, mover: MouseMoverSpy, sleepPreventer: SleepPreventerSpy, timerScheduler: TimerSchedulerSpy)
+	{
+		let mover = MouseMoverSpy()
+		let sleepPreventer = SleepPreventerSpy()
+		let timerScheduler = TimerSchedulerSpy()
+		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer, timerScheduler: timerScheduler)
+		return (sut, mover, sleepPreventer, timerScheduler)
 	}
 }

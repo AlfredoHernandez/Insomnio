@@ -9,22 +9,25 @@ final class AutomationCoordinator {
 	private let scheduleEvaluator: ScheduleEvaluator
 	private let appRulesEvaluator: AppRulesEvaluator
 	private let insomniac: Insomniac
-	private var timer: Timer?
+	private let timerScheduler: TimerScheduler
+	private var timer: TimerCancellable?
 	private var manualOverrideActive = false
 
 	init(
 		scheduleEvaluator: ScheduleEvaluator,
 		appRulesEvaluator: AppRulesEvaluator,
 		insomniac: Insomniac,
+		timerScheduler: TimerScheduler = FoundationTimerScheduler(),
 	) {
 		self.scheduleEvaluator = scheduleEvaluator
 		self.appRulesEvaluator = appRulesEvaluator
 		self.insomniac = insomniac
+		self.timerScheduler = timerScheduler
 	}
 
 	func startMonitoring() {
 		timer?.invalidate()
-		timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
+		timer = timerScheduler.schedule(interval: 60, repeats: true) { [weak self] in
 			self?.evaluate()
 		}
 		evaluate()

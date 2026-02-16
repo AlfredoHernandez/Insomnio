@@ -1,0 +1,43 @@
+//
+//  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
+//
+
+@testable import Insomnio
+import Foundation
+
+@MainActor
+final class TimerSchedulerSpy: TimerScheduler {
+	enum ReceivedMessage: Equatable {
+		case schedule(interval: TimeInterval)
+		case invalidate
+	}
+
+	private(set) var receivedMessages = [ReceivedMessage]()
+	private var blocks: [() -> Void] = []
+
+	func schedule(interval: TimeInterval, repeats _: Bool, block: @escaping () -> Void) -> TimerCancellable {
+		receivedMessages.append(.schedule(interval: interval))
+		blocks.append(block)
+		return SpyCancellable(spy: self)
+	}
+
+	func fire(at index: Int) {
+		blocks[index]()
+	}
+
+	func recordInvalidation() {
+		receivedMessages.append(.invalidate)
+	}
+}
+
+final class SpyCancellable: TimerCancellable {
+	private let spy: TimerSchedulerSpy
+
+	init(spy: TimerSchedulerSpy) {
+		self.spy = spy
+	}
+
+	func invalidate() {
+		spy.recordInvalidation()
+	}
+}

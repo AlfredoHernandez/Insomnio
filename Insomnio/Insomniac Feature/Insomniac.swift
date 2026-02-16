@@ -16,8 +16,9 @@ final class Insomniac {
 	private let idleTimeProvider: IdleTimeProvider?
 	private let powerSourceProvider: PowerSourceProvider?
 	private let autoStopTimer: AutoStopTimer?
-	private var timer: Timer?
-	private var powerCheckTimer: Timer?
+	private let timerScheduler: TimerScheduler
+	private var timer: TimerCancellable?
+	private var powerCheckTimer: TimerCancellable?
 	private var wasOnBattery = false
 
 	static let idleThreshold: TimeInterval = 5.0
@@ -47,12 +48,14 @@ final class Insomniac {
 		idleTimeProvider: IdleTimeProvider? = nil,
 		powerSourceProvider: PowerSourceProvider? = nil,
 		autoStopTimer: AutoStopTimer? = nil,
+		timerScheduler: TimerScheduler = FoundationTimerScheduler(),
 	) {
 		self.mouseMover = mouseMover
 		self.sleepPreventer = sleepPreventer
 		self.idleTimeProvider = idleTimeProvider
 		self.powerSourceProvider = powerSourceProvider
 		self.autoStopTimer = autoStopTimer
+		self.timerScheduler = timerScheduler
 	}
 
 	func toggle() {
@@ -118,14 +121,14 @@ final class Insomniac {
 
 	private func scheduleTimer() {
 		timer?.invalidate()
-		timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
+		timer = timerScheduler.schedule(interval: interval, repeats: true) { [weak self] in
 			self?.keepAwake()
 		}
 	}
 
 	private func schedulePowerCheckTimer() {
 		powerCheckTimer?.invalidate()
-		powerCheckTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
+		powerCheckTimer = timerScheduler.schedule(interval: 30, repeats: true) { [weak self] in
 			self?.checkPowerSource()
 		}
 	}
