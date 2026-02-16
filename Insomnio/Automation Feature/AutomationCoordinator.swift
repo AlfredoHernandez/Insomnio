@@ -17,7 +17,7 @@ final class AutomationCoordinator {
 		scheduleEvaluator: ScheduleEvaluator,
 		appRulesEvaluator: AppRulesEvaluator,
 		insomniac: Insomniac,
-		timerScheduler: TimerScheduler = FoundationTimerScheduler(),
+		timerScheduler: TimerScheduler,
 	) {
 		self.scheduleEvaluator = scheduleEvaluator
 		self.appRulesEvaluator = appRulesEvaluator

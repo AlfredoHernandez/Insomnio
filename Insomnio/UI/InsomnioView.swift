@@ -108,7 +108,7 @@ struct InsomnioView: View {
 
 #Preview {
 	InsomnioView(
-		insomniac: Insomniac(mouseMover: CGMouseMover(), sleepPreventer: IOKitSleepPreventer()),
+		insomniac: Insomniac(mouseMover: CGMouseMover(), sleepPreventer: IOKitSleepPreventer(), timerScheduler: FoundationTimerScheduler()),
 		premiumManager: StubPremiumManager(),
 		scheduleEvaluator: StubScheduleEvaluator(),
 		appRulesEvaluator: StubAppRulesEvaluator(),

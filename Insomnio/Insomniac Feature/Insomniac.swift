@@ -50,7 +50,7 @@ final class Insomniac {
 		idleTimeProvider: IdleTimeProvider? = nil,
 		powerSourceProvider: PowerSourceProvider? = nil,
 		autoStopTimer: AutoStopTimer? = nil,
-		timerScheduler: TimerScheduler = FoundationTimerScheduler(),
+		timerScheduler: TimerScheduler,
 	) {
 		self.mouseMover = mouseMover
 		self.sleepPreventer = sleepPreventer

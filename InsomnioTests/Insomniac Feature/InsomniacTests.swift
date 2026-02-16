@@ -520,7 +520,7 @@ struct InsomniacTests {
 	private func makeSUT() -> (sut: Insomniac, mover: MouseMoverSpy, sleepPreventer: SleepPreventerSpy) {
 		let mover = MouseMoverSpy()
 		let sleepPreventer = SleepPreventerSpy()
-		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer)
+		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer, timerScheduler: TimerSchedulerSpy())
 		return (sut, mover, sleepPreventer)
 	}
 
@@ -528,7 +528,7 @@ struct InsomniacTests {
 		let mover = MouseMoverSpy()
 		let sleepPreventer = SleepPreventerSpy()
 		let idleTimeProvider = IdleTimeProviderSpy()
-		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer, idleTimeProvider: idleTimeProvider)
+		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer, idleTimeProvider: idleTimeProvider, timerScheduler: TimerSchedulerSpy())
 		return (sut, mover, idleTimeProvider)
 	}
 
@@ -538,7 +538,7 @@ struct InsomniacTests {
 		let mover = MouseMoverSpy()
 		let sleepPreventer = SleepPreventerSpy()
 		let powerSourceProvider = PowerSourceProviderSpy()
-		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer, powerSourceProvider: powerSourceProvider)
+		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer, powerSourceProvider: powerSourceProvider, timerScheduler: TimerSchedulerSpy())
 		return (sut, mover, sleepPreventer, powerSourceProvider)
 	}
 
@@ -555,7 +555,13 @@ struct InsomniacTests {
 		let sleepPreventer = SleepPreventerSpy()
 		let idleTimeProvider = IdleTimeProviderSpy()
 		let powerSourceProvider = PowerSourceProviderSpy()
-		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer, idleTimeProvider: idleTimeProvider, powerSourceProvider: powerSourceProvider)
+		let sut = Insomniac(
+			mouseMover: mover,
+			sleepPreventer: sleepPreventer,
+			idleTimeProvider: idleTimeProvider,
+			powerSourceProvider: powerSourceProvider,
+			timerScheduler: TimerSchedulerSpy(),
+		)
 		return (sut, mover, sleepPreventer, idleTimeProvider, powerSourceProvider)
 	}
 
@@ -563,7 +569,7 @@ struct InsomniacTests {
 		let mover = MouseMoverSpy()
 		let sleepPreventer = SleepPreventerSpy()
 		let autoStopTimer = AutoStopTimerSpy()
-		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer, autoStopTimer: autoStopTimer)
+		let sut = Insomniac(mouseMover: mover, sleepPreventer: sleepPreventer, autoStopTimer: autoStopTimer, timerScheduler: TimerSchedulerSpy())
 		return (sut, autoStopTimer)
 	}
 

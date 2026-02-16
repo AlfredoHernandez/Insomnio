@@ -154,11 +154,13 @@ struct AutomationCoordinatorTests {
 		let insomniac = Insomniac(
 			mouseMover: MouseMoverSpy(),
 			sleepPreventer: SleepPreventerSpy(),
+			timerScheduler: TimerSchedulerSpy(),
 		)
 		let sut = AutomationCoordinator(
 			scheduleEvaluator: schedule,
 			appRulesEvaluator: appRules,
 			insomniac: insomniac,
+			timerScheduler: TimerSchedulerSpy(),
 		)
 		return (sut, schedule, appRules, insomniac)
 	}
@@ -177,6 +179,7 @@ struct AutomationCoordinatorTests {
 		let insomniac = Insomniac(
 			mouseMover: MouseMoverSpy(),
 			sleepPreventer: SleepPreventerSpy(),
+			timerScheduler: TimerSchedulerSpy(),
 		)
 		let timerScheduler = TimerSchedulerSpy()
 		let sut = AutomationCoordinator(

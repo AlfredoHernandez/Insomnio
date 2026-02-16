@@ -15,12 +15,15 @@ struct AppDependencies {
 	let launchAtLoginManager: any LaunchAtLoginManager
 
 	static func create() -> AppDependencies {
+		let timerScheduler = FoundationTimerScheduler()
+
 		let insomniac = Insomniac(
 			mouseMover: CGMouseMover(),
 			sleepPreventer: IOKitSleepPreventer(),
 			idleTimeProvider: CGIdleTimeProvider(),
 			powerSourceProvider: IOKitPowerSourceProvider(),
 			autoStopTimer: FoundationAutoStopTimer(),
+			timerScheduler: timerScheduler,
 		)
 
 		let scheduleEvaluator = ScheduleEvaluatorImpl(
@@ -37,6 +40,7 @@ struct AppDependencies {
 			scheduleEvaluator: scheduleEvaluator,
 			appRulesEvaluator: appRulesEvaluator,
 			insomniac: insomniac,
+			timerScheduler: timerScheduler,
 		)
 
 		let premiumManager: any PremiumManager = {

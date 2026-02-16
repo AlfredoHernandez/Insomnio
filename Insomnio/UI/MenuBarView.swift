@@ -85,5 +85,5 @@ struct MenuBarView: View {
 }
 
 #Preview {
-	MenuBarView(insomniac: Insomniac(mouseMover: CGMouseMover(), sleepPreventer: IOKitSleepPreventer()))
+	MenuBarView(insomniac: Insomniac(mouseMover: CGMouseMover(), sleepPreventer: IOKitSleepPreventer(), timerScheduler: FoundationTimerScheduler()))
 }
