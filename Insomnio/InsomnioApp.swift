@@ -80,5 +80,6 @@ struct InsomnioApp: App {
 		MenuBarExtra("Insomnio", systemImage: insomniac.isActive ? "moon.zzz.fill" : "moon.zzz") {
 			MenuBarView(insomniac: insomniac, onManualToggle: { automationCoordinator.notifyManualToggle() })
 		}
+		.menuBarExtraStyle(.window)
 	}
 }
