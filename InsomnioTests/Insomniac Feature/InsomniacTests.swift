@@ -329,6 +329,45 @@ struct InsomniacTests {
 		#expect(sleepPreventer.receivedMessages == [.createAssertion])
 	}
 
+	// MARK: - Cursor Pattern Tests
+
+	@Test("Init default cursorPattern is nudge")
+	func init_defaultCursorPatternIsNudge() {
+		let (sut, _, _) = makeSUT()
+
+		#expect(sut.cursorPattern == .nudge)
+	}
+
+	@Test("Keep awake with circle pattern moves cursor through circle points then back")
+	func keepAwake_withCirclePattern_movesCursorThroughCirclePointsThenBack() {
+		let (sut, mover, _) = makeSUT()
+		mover.stubbedLocation = CGPoint(x: 100, y: 100)
+		sut.cursorPattern = .circle
+
+		sut.keepAwake()
+
+		let messages = mover.receivedMessages
+		#expect(messages.first == .currentLocation)
+		#expect(messages.last == .moveTo(CGPoint(x: 100, y: 100)))
+		// 1 currentLocation + 8 circle points + 1 return = 10 messages
+		#expect(messages.count == 10)
+	}
+
+	@Test("Keep awake with zigzag pattern moves cursor through zigzag points then back")
+	func keepAwake_withZigzagPattern_movesCursorThroughZigzagPointsThenBack() {
+		let (sut, mover, _) = makeSUT()
+		mover.stubbedLocation = CGPoint(x: 50, y: 50)
+		sut.cursorPattern = .zigzag
+
+		sut.keepAwake()
+
+		let messages = mover.receivedMessages
+		#expect(messages.first == .currentLocation)
+		#expect(messages.last == .moveTo(CGPoint(x: 50, y: 50)))
+		// 1 currentLocation + 4 zigzag points + 1 return = 6 messages
+		#expect(messages.count == 6)
+	}
+
 	// MARK: - Auto-Stop Tests
 
 	@Test("Init autoStopEnabled defaults to false")

@@ -28,6 +28,14 @@ struct InsomnioView: View {
 
 				if insomniac.mode == .moveCursor {
 					IntervalSection(interval: $insomniac.interval, isDisabled: insomniac.isActive)
+
+					CursorPatternSection(
+						cursorPattern: $insomniac.cursorPattern,
+						isDisabled: insomniac.isActive,
+					)
+					.premiumGated(isPremium: premiumManager.isPremium) {
+						showingPaywall = true
+					}
 				}
 
 				OptionsSection(

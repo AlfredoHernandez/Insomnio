@@ -29,6 +29,7 @@ final class Insomniac {
 	var pauseOnBattery: Bool = false
 	var autoStopEnabled: Bool = false
 	var autoStopDuration: AutoStopDuration = .oneHour
+	var cursorPattern: CursorPattern = .nudge
 	private(set) var activationCount: Int = 0
 	private(set) var lastActivation: Date?
 
@@ -103,8 +104,10 @@ final class Insomniac {
 			guard idleTime >= Self.idleThreshold else { return }
 		}
 		let currentPosition = mouseMover.currentMouseLocation()
-		let nudged = CGPoint(x: currentPosition.x + 1, y: currentPosition.y)
-		_ = mouseMover.moveMouseTo(nudged)
+		let waypoints = cursorPattern.strategy.points(from: currentPosition)
+		for point in waypoints {
+			_ = mouseMover.moveMouseTo(point)
+		}
 		_ = mouseMover.moveMouseTo(currentPosition)
 		activationCount += 1
 		lastActivation = Date()
