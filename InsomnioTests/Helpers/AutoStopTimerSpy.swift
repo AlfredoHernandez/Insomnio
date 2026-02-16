@@ -6,7 +6,7 @@
 import Foundation
 
 @MainActor
-final class AutoStopTimerSpy: AutoStopTimerProtocol {
+final class AutoStopTimerSpy: AutoStopTimer {
 	enum ReceivedMessage: Equatable {
 		case start(TimeInterval)
 		case cancel

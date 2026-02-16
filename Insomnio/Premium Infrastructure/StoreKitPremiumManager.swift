@@ -16,6 +16,10 @@ final class StoreKitPremiumManager: PremiumManager {
 		Task { await checkEntitlements() }
 	}
 
+	deinit {
+		transactionListener?.cancel()
+	}
+
 	func loadProducts() async {
 		do {
 			products = try await Product.products(for: PremiumProduct.allCases.map(\.rawValue))

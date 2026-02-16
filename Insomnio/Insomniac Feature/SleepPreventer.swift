@@ -3,6 +3,7 @@
 //
 
 protocol SleepPreventer {
+	@discardableResult
 	func createAssertion() -> Bool
 	func releaseAssertion()
 }

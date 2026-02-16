@@ -5,7 +5,7 @@
 import Foundation
 
 @Observable
-final class FoundationAutoStopTimer: AutoStopTimerProtocol {
+final class FoundationAutoStopTimer: AutoStopTimer {
 	private(set) var isRunning: Bool = false
 	private(set) var remainingTime: TimeInterval = 0
 

@@ -30,7 +30,7 @@ enum AutoStopDuration: Hashable {
 	}
 }
 
-protocol AutoStopTimerProtocol: AnyObject {
+protocol AutoStopTimer: AnyObject {
 	var isRunning: Bool { get }
 	var remainingTime: TimeInterval { get }
 	func start(duration: AutoStopDuration, onExpired: @escaping () -> Void)

@@ -8,6 +8,7 @@ final class IOKitSleepPreventer: SleepPreventer {
 	private var assertionID: IOPMAssertionID = 0
 	private var isHolding = false
 
+	@discardableResult
 	func createAssertion() -> Bool {
 		guard !isHolding else { return true }
 		let result = IOPMAssertionCreateWithName(

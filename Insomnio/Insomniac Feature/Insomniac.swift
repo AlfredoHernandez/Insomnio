@@ -15,7 +15,7 @@ final class Insomniac {
 	private let sleepPreventer: SleepPreventer
 	private let idleTimeProvider: IdleTimeProvider?
 	private let powerSourceProvider: PowerSourceProvider?
-	private let autoStopTimer: AutoStopTimerProtocol?
+	private let autoStopTimer: AutoStopTimer?
 	private var timer: Timer?
 	private var powerCheckTimer: Timer?
 	private var wasOnBattery = false
@@ -46,7 +46,7 @@ final class Insomniac {
 		sleepPreventer: SleepPreventer,
 		idleTimeProvider: IdleTimeProvider? = nil,
 		powerSourceProvider: PowerSourceProvider? = nil,
-		autoStopTimer: AutoStopTimerProtocol? = nil,
+		autoStopTimer: AutoStopTimer? = nil,
 	) {
 		self.mouseMover = mouseMover
 		self.sleepPreventer = sleepPreventer
@@ -70,7 +70,7 @@ final class Insomniac {
 			if pauseOnBattery, let powerSourceProvider, powerSourceProvider.isOnBatteryPower() {
 				schedulePowerCheckTimer()
 			} else {
-				_ = sleepPreventer.createAssertion()
+				sleepPreventer.createAssertion()
 				activationCount += 1
 				lastActivation = Date()
 				if pauseOnBattery {
@@ -136,7 +136,7 @@ final class Insomniac {
 		if onBattery, !wasOnBattery {
 			sleepPreventer.releaseAssertion()
 		} else if !onBattery, wasOnBattery {
-			_ = sleepPreventer.createAssertion()
+			sleepPreventer.createAssertion()
 			activationCount += 1
 			lastActivation = Date()
 		}
