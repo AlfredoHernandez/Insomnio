@@ -4,7 +4,6 @@
 
 import SwiftUI
 
-@Observable
 @MainActor
 final class AppCoordinator {
 	let dependencies: AppDependencies
