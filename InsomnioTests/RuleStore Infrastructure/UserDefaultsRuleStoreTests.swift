@@ -55,6 +55,21 @@ struct UserDefaultsRuleStoreTests {
 		#expect(sut.loadRules() == [])
 	}
 
+	// MARK: - Memory Leak Tracking
+
+	@Test("makeSUT does not leak after save and load")
+	func makeSUT_doesNotLeakAfterSaveAndLoad() {
+		assertNoLeaks {
+			let suiteName = "test.rulestore.leak.\(UUID().uuidString)"
+			let defaults = UserDefaults(suiteName: suiteName)!
+			let sut = UserDefaultsRuleStore<ScheduleRule>(key: "testRules", defaults: defaults)
+			sut.saveRules([ScheduleRule(weekdays: [.monday])])
+			_ = sut.loadRules()
+			defaults.removePersistentDomain(forName: suiteName)
+			return [sut]
+		}
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT() -> (sut: UserDefaultsRuleStore<ScheduleRule>, cleanup: () -> Void) {

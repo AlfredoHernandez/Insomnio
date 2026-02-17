@@ -158,6 +158,18 @@ struct ScheduleEvaluatorTests {
 		#expect(store.receivedMessages == [.loadRules, .saveRules])
 	}
 
+	// MARK: - Memory Leak Tracking
+
+	@Test("makeSUT does not leak after rule operations")
+	func makeSUT_doesNotLeakAfterRuleOperations() {
+		assertNoLeaks {
+			let (sut, dateProvider, store) = makeSUT()
+			sut.addRule(ScheduleRule(weekdays: [.monday]))
+			_ = sut.shouldBeActive()
+			return [sut, dateProvider, store]
+		}
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(initialRules: [ScheduleRule] = [])

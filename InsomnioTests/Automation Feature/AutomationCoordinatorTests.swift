@@ -139,6 +139,20 @@ struct AutomationCoordinatorTests {
 		#expect(timerScheduler.receivedMessages.contains(.invalidate))
 	}
 
+	// MARK: - Memory Leak Tracking
+
+	@Test("makeSUT does not leak after evaluate cycle")
+	func makeSUT_doesNotLeakAfterEvaluateCycle() {
+		assertNoLeaks {
+			let (sut, schedule, appRules, insomniac, timerScheduler) = makeSUT()
+			schedule.stubbedShouldBeActive = true
+			sut.evaluate()
+			sut.startMonitoring()
+			sut.stopMonitoring()
+			return [sut, schedule, appRules, insomniac, timerScheduler]
+		}
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT() -> (

@@ -114,6 +114,18 @@ struct FoundationAutoStopTimerTests {
 		#expect(firstExpiredCalled == false)
 	}
 
+	// MARK: - Memory Leak Tracking
+
+	@Test("makeSUT does not leak after start and cancel")
+	func makeSUT_doesNotLeakAfterStartAndCancel() {
+		assertNoLeaks {
+			let (sut, _) = makeSUT()
+			sut.start(duration: .oneHour) {}
+			sut.cancel()
+			return [sut]
+		}
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(now: @escaping () -> Date = { Date() }) -> (sut: FoundationAutoStopTimer, now: () -> Date) {

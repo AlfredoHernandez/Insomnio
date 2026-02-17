@@ -533,6 +533,18 @@ struct InsomniacTests {
 		#expect(timerScheduler.receivedMessages == [.schedule(interval: 30)])
 	}
 
+	// MARK: - Memory Leak Tracking
+
+	@Test("makeSUT does not leak after start and stop")
+	func makeSUT_doesNotLeakAfterStartAndStop() {
+		assertNoLeaks {
+			let (sut, mover, sleepPreventer) = makeSUT()
+			sut.start()
+			sut.stop()
+			return [sut, mover, sleepPreventer]
+		}
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(

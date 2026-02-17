@@ -107,6 +107,18 @@ struct AppRulesEvaluatorTests {
 		#expect(store.receivedMessages == [.loadRules, .saveRules])
 	}
 
+	// MARK: - Memory Leak Tracking
+
+	@Test("makeSUT does not leak after rule operations")
+	func makeSUT_doesNotLeakAfterRuleOperations() {
+		assertNoLeaks {
+			let (sut, provider, store) = makeSUT()
+			sut.addRule(AppRule(bundleIdentifier: "com.test", displayName: "Test"))
+			_ = sut.shouldBeActive()
+			return [sut, provider, store]
+		}
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(initialRules: [AppRule] = [])
