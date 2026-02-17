@@ -161,12 +161,12 @@ struct ScheduleEvaluatorTests {
 	// MARK: - Helpers
 
 	private func makeSUT(initialRules: [ScheduleRule] = [])
-		-> (sut: ScheduleEvaluatorImpl, dateProvider: DateProviderSpy, store: RuleStoreSpy<ScheduleRule>)
+		-> (sut: RuleBasedScheduleEvaluator, dateProvider: DateProviderSpy, store: RuleStoreSpy<ScheduleRule>)
 	{
 		let dateProvider = DateProviderSpy()
 		let store = RuleStoreSpy<ScheduleRule>()
 		store.stubbedRules = initialRules
-		let sut = ScheduleEvaluatorImpl(dateProvider: dateProvider, store: store)
+		let sut = RuleBasedScheduleEvaluator(dateProvider: dateProvider, store: store)
 		return (sut, dateProvider, store)
 	}
 }

@@ -110,12 +110,12 @@ struct AppRulesEvaluatorTests {
 	// MARK: - Helpers
 
 	private func makeSUT(initialRules: [AppRule] = [])
-		-> (sut: AppRulesEvaluatorImpl, provider: RunningAppProviderSpy, store: RuleStoreSpy<AppRule>)
+		-> (sut: RunningAppRulesEvaluator, provider: RunningAppProviderSpy, store: RuleStoreSpy<AppRule>)
 	{
 		let provider = RunningAppProviderSpy()
 		let store = RuleStoreSpy<AppRule>()
 		store.stubbedRules = initialRules
-		let sut = AppRulesEvaluatorImpl(runningAppProvider: provider, store: store)
+		let sut = RunningAppRulesEvaluator(runningAppProvider: provider, store: store)
 		return (sut, provider, store)
 	}
 }

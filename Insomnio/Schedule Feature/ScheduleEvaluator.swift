@@ -13,7 +13,7 @@ protocol ScheduleEvaluator: AnyObject {
 }
 
 @Observable
-final class ScheduleEvaluatorImpl: ScheduleEvaluator {
+final class RuleBasedScheduleEvaluator: ScheduleEvaluator {
 	private let dateProvider: DateProvider
 	private let store: any RuleStore<ScheduleRule>
 	var rules: [ScheduleRule]

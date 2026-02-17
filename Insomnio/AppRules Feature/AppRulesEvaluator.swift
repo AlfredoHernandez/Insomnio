@@ -13,7 +13,7 @@ protocol AppRulesEvaluator: AnyObject {
 }
 
 @Observable
-final class AppRulesEvaluatorImpl: AppRulesEvaluator {
+final class RunningAppRulesEvaluator: AppRulesEvaluator {
 	private let runningAppProvider: RunningAppProvider
 	private let store: any RuleStore<AppRule>
 	var rules: [AppRule]
