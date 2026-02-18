@@ -9,6 +9,7 @@ import Foundation
 
 class StubPremiumManager: PremiumManager {
 	var isPremium = false
+	var lifetimeDisplayPrice: String? = "$39.99"
 	func loadProducts() async {}
 	func purchase(_: PremiumProduct) async throws -> Bool {
 		true

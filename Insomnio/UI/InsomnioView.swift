@@ -87,12 +87,6 @@ struct InsomnioView: View {
 						.font(.caption)
 						.foregroundStyle(.tertiary)
 				}
-
-				#if DEBUG
-				if let debugManager = premiumManager as? DebugPremiumManager {
-					DebugSection(premiumManager: debugManager)
-				}
-				#endif
 			}
 			.padding(20)
 		}

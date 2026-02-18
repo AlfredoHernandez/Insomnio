@@ -51,7 +51,7 @@ final class StoreKitPremiumManager: PremiumManager {
 		await checkEntitlements()
 	}
 
-	var priceForLifetime: String? {
+	var lifetimeDisplayPrice: String? {
 		products.first { $0.id == PremiumProduct.lifetime.rawValue }?.displayPrice
 	}
 

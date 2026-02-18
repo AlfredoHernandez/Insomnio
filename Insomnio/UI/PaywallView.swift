@@ -2,6 +2,7 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+import StoreKit
 import SwiftUI
 
 struct PaywallView: View {
@@ -10,58 +11,95 @@ struct PaywallView: View {
 	@State private var isPurchasing = false
 
 	var body: some View {
-		VStack(spacing: 20) {
-			Image(systemName: "star.circle.fill")
-				.font(.system(size: 48))
-				.foregroundStyle(.yellow)
+		ScrollView {
+			VStack(spacing: 0) {
+				subscriptionSection
 
-			Text("premium_unlock_title")
-				.font(.title2.bold())
-
-			Text("premium_unlock_desc")
-				.font(.subheadline)
-				.foregroundStyle(.secondary)
-				.multilineTextAlignment(.center)
-
-			VStack(alignment: .leading, spacing: 8) {
-				featureRow("clock.badge.checkmark", "premium_feature_autostop")
-				featureRow("calendar.badge.clock", "premium_feature_schedule")
-				featureRow("app.badge", "premium_feature_apprules")
-				featureRow("cursorarrow.motionlines", "premium_feature_patterns")
+				lifetimeSection
 			}
-			.padding(.vertical, 8)
+		}
+		.frame(width: 380, height: 520)
+		.onChange(of: premiumManager.isPremium) {
+			if premiumManager.isPremium {
+				dismiss()
+			}
+		}
+	}
+
+	private var subscriptionSection: some View {
+		SubscriptionStoreView(groupID: PremiumProduct.subscriptionGroupID) {
+			VStack(spacing: 16) {
+				Image(systemName: "star.circle.fill")
+					.font(.system(size: 48))
+					.foregroundStyle(.yellow)
+
+				Text("premium_unlock_title")
+					.font(.title2.bold())
+
+				Text("premium_unlock_desc")
+					.font(.subheadline)
+					.foregroundStyle(.secondary)
+					.multilineTextAlignment(.center)
+
+				VStack(alignment: .leading, spacing: 8) {
+					featureRow("clock.badge.checkmark", "premium_feature_autostop")
+					featureRow("calendar.badge.clock", "premium_feature_schedule")
+					featureRow("app.badge", "premium_feature_apprules")
+					featureRow("cursorarrow.motionlines", "premium_feature_patterns")
+				}
+				.padding(.vertical, 8)
+			}
+			.padding(.horizontal, 20)
+		}
+		.storeButton(.visible, for: .redeemCode)
+		.storeButton(.visible, for: .restorePurchases)
+		.subscriptionStoreControlStyle(.compactPicker)
+	}
+
+	private var lifetimeSection: some View {
+		VStack(spacing: 12) {
+			HStack {
+				Rectangle()
+					.frame(height: 1)
+					.foregroundStyle(.separator)
+				Text("premium_or_buy_once")
+					.font(.caption)
+					.foregroundStyle(.secondary)
+					.layoutPriority(1)
+				Rectangle()
+					.frame(height: 1)
+					.foregroundStyle(.separator)
+			}
 
 			Button {
 				isPurchasing = true
 				Task {
 					_ = try? await premiumManager.purchase(.lifetime)
 					isPurchasing = false
-					if premiumManager.isPremium {
-						dismiss()
-					}
 				}
 			} label: {
-				Text("premium_purchase")
-					.frame(maxWidth: .infinity)
-			}
-			.buttonStyle(.borderedProminent)
-			.controlSize(.large)
-			.disabled(isPurchasing)
-
-			Button("premium_restore") {
-				Task {
-					await premiumManager.restorePurchases()
-					if premiumManager.isPremium {
-						dismiss()
+				HStack {
+					VStack(alignment: .leading, spacing: 2) {
+						Text("premium_lifetime_title")
+							.font(.subheadline.bold())
+						Text("premium_lifetime_desc")
+							.font(.caption)
+							.foregroundStyle(.secondary)
+					}
+					Spacer()
+					if let price = premiumManager.lifetimeDisplayPrice {
+						Text(price)
+							.font(.subheadline.bold())
 					}
 				}
+				.padding(12)
+				.background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 8))
 			}
 			.buttonStyle(.plain)
-			.font(.caption)
-			.foregroundStyle(.secondary)
+			.disabled(isPurchasing)
 		}
-		.padding(30)
-		.frame(width: 320)
+		.padding(.horizontal, 20)
+		.padding(.bottom, 20)
 	}
 
 	private func featureRow(_ icon: String, _ text: LocalizedStringKey) -> some View {

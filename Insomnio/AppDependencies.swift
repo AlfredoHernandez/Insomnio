@@ -43,13 +43,7 @@ struct AppDependencies {
 			timerScheduler: timerScheduler,
 		)
 
-		let premiumManager: any PremiumManager = {
-			#if DEBUG
-			DebugPremiumManager()
-			#else
-			StoreKitPremiumManager()
-			#endif
-		}()
+		let premiumManager: any PremiumManager = StoreKitPremiumManager()
 
 		return AppDependencies(
 			insomniac: insomniac,
