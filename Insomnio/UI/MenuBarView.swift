@@ -43,6 +43,14 @@ struct MenuBarView: View {
 						.foregroundStyle(.secondary)
 				}
 
+				if insomniac.autoStopIsRunning {
+					Text("autostop_remaining \(formattedRemainingTime)")
+						.font(.caption)
+						.foregroundStyle(.secondary)
+						.monospacedDigit()
+						.frame(maxWidth: .infinity, alignment: .leading)
+				}
+
 				Button {
 					insomniac.toggle()
 				} label: {
@@ -81,6 +89,19 @@ struct MenuBarView: View {
 			.padding(.vertical, 10)
 		}
 		.frame(width: 260)
+	}
+
+	// MARK: - Helpers
+
+	private var formattedRemainingTime: String {
+		let totalSeconds = Int(insomniac.autoStopRemainingTime)
+		let hours = totalSeconds / 3600
+		let minutes = (totalSeconds % 3600) / 60
+		let seconds = totalSeconds % 60
+		if hours > 0 {
+			return String(format: "%d:%02d:%02d", hours, minutes, seconds)
+		}
+		return String(format: "%d:%02d", minutes, seconds)
 	}
 }
 
