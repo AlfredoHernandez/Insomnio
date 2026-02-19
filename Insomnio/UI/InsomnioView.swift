@@ -12,6 +12,7 @@ struct InsomnioView: View {
 	let launchAtLoginManager: any LaunchAtLoginManager
 	let availableApps: () -> [AppPickerView.AppInfo]
 	@State private var showingPaywall = false
+	@State private var isPremium = false
 
 	private var appVersion: String {
 		Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
@@ -33,7 +34,7 @@ struct InsomnioView: View {
 						cursorPattern: $insomniac.cursorPattern,
 						isDisabled: insomniac.isActive,
 					)
-					.premiumGated(isPremium: premiumManager.isPremium) {
+					.premiumGated(isPremium: isPremium) {
 						showingPaywall = true
 					}
 				}
@@ -51,17 +52,17 @@ struct InsomnioView: View {
 					isRunning: insomniac.autoStopIsRunning,
 					remainingTime: insomniac.autoStopRemainingTime,
 				)
-				.premiumGated(isPremium: premiumManager.isPremium) {
+				.premiumGated(isPremium: isPremium) {
 					showingPaywall = true
 				}
 
 				ScheduleSection(scheduleEvaluator: scheduleEvaluator)
-					.premiumGated(isPremium: premiumManager.isPremium) {
+					.premiumGated(isPremium: isPremium) {
 						showingPaywall = true
 					}
 
 				AppRulesSection(appRulesEvaluator: appRulesEvaluator, availableApps: availableApps)
-					.premiumGated(isPremium: premiumManager.isPremium) {
+					.premiumGated(isPremium: isPremium) {
 						showingPaywall = true
 					}
 
@@ -72,7 +73,7 @@ struct InsomnioView: View {
 					)
 				}
 
-				PremiumSection(isPremium: premiumManager.isPremium) {
+				PremiumSection(isPremium: isPremium) {
 					showingPaywall = true
 				}
 
@@ -94,7 +95,8 @@ struct InsomnioView: View {
 		.fixedSize(horizontal: true, vertical: false)
 		.animation(.default, value: insomniac.mode)
 		.animation(.default, value: insomniac.autoStopEnabled)
-		.sheet(isPresented: $showingPaywall) {
+		.onAppear { isPremium = premiumManager.isPremium }
+		.sheet(isPresented: $showingPaywall, onDismiss: { isPremium = premiumManager.isPremium }) {
 			PaywallView(premiumManager: premiumManager)
 		}
 	}
