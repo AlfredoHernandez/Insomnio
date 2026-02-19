@@ -95,7 +95,10 @@ struct InsomnioView: View {
 		.fixedSize(horizontal: true, vertical: false)
 		.animation(.default, value: insomniac.mode)
 		.animation(.default, value: insomniac.autoStopEnabled)
-		.onAppear { isPremium = premiumManager.isPremium }
+		.task {
+			await premiumManager.refreshStatus()
+			isPremium = premiumManager.isPremium
+		}
 		.sheet(isPresented: $showingPaywall, onDismiss: { isPremium = premiumManager.isPremium }) {
 			PaywallView(premiumManager: premiumManager)
 		}
