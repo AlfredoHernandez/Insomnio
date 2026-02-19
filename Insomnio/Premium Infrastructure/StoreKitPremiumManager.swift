@@ -6,12 +6,17 @@ import StoreKit
 
 @Observable
 final class StoreKitPremiumManager: PremiumManager {
-	private(set) var isPremium: Bool = false
+	private(set) var isPremium: Bool = false {
+		didSet { cache.isPremium = isPremium }
+	}
 
 	private var products: [Product] = []
 	private var transactionListener: Task<Void, Never>?
+	private var cache: any PremiumStatusCache
 
-	init() {
+	init(cache: any PremiumStatusCache = UserDefaultsPremiumStatusCache()) {
+		self.cache = cache
+		isPremium = cache.isPremium
 		transactionListener = listenForTransactions()
 		Task { await checkEntitlements() }
 	}
