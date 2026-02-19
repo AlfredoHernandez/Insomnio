@@ -5,8 +5,6 @@
 import CoreGraphics
 import Foundation
 
-#if DEBUG
-
 class StubPremiumManager: PremiumManager {
 	var isPremium = false
 	var lifetimeDisplayPrice: String? = "$39.99"
@@ -89,5 +87,3 @@ class StubTimerScheduler: TimerScheduler {
 		StubTimerCancellable()
 	}
 }
-
-#endif

@@ -19,11 +19,6 @@ struct PaywallView: View {
 			}
 		}
 		.frame(width: 380, height: 520)
-		.onChange(of: premiumManager.isPremium) {
-			if premiumManager.isPremium {
-				dismiss()
-			}
-		}
 	}
 
 	private var subscriptionSection: some View {
@@ -51,6 +46,11 @@ struct PaywallView: View {
 			}
 			.padding(.horizontal, 20)
 		}
+		.onInAppPurchaseCompletion { _, result in
+			if case .success(.success) = result {
+				dismissAfterPurchase()
+			}
+		}
 		.storeButton(.visible, for: .redeemCode)
 		.storeButton(.visible, for: .restorePurchases)
 		.subscriptionStoreControlStyle(.compactPicker)
@@ -76,6 +76,7 @@ struct PaywallView: View {
 				Task {
 					_ = try? await premiumManager.purchase(.lifetime)
 					isPurchasing = false
+					dismissAfterPurchase()
 				}
 			} label: {
 				HStack {
@@ -100,6 +101,15 @@ struct PaywallView: View {
 		}
 		.padding(.horizontal, 20)
 		.padding(.bottom, 20)
+	}
+
+	private func dismissAfterPurchase() {
+		Task {
+			await premiumManager.restorePurchases()
+			if premiumManager.isPremium {
+				dismiss()
+			}
+		}
 	}
 
 	private func featureRow(_ icon: String, _ text: LocalizedStringKey) -> some View {
