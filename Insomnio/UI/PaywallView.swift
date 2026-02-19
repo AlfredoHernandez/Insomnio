@@ -19,6 +19,7 @@ struct PaywallView: View {
 			}
 		}
 		.frame(width: 380, height: 520)
+		.task { await premiumManager.loadProducts() }
 	}
 
 	private var subscriptionSection: some View {

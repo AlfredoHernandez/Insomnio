@@ -296,9 +296,6 @@
         }
       }
     },
-    "DEBUG" : {
-
-    },
     "enable_label" : {
       "localizations" : {
         "en" : {
@@ -770,9 +767,6 @@
           }
         }
       }
-    },
-    "Premium enabled" : {
-
     },
     "premium_feature_apprules" : {
       "localizations" : {
