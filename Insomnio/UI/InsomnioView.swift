@@ -107,11 +107,11 @@ struct InsomnioView: View {
 
 #Preview {
 	InsomnioView(
-		insomniac: Insomniac(mouseMover: StubMouseMover(), sleepPreventer: StubSleepPreventer(), timerScheduler: StubTimerScheduler()),
-		premiumManager: StubPremiumManager(),
-		scheduleEvaluator: StubScheduleEvaluator(),
-		appRulesEvaluator: StubAppRulesEvaluator(),
-		launchAtLoginManager: StubLaunchAtLoginManager(),
+		insomniac: Insomniac(mouseMover: MouseMoverStub(), sleepPreventer: SleepPreventerStub(), timerScheduler: TimerSchedulerStub()),
+		premiumManager: PremiumManagerStub(),
+		scheduleEvaluator: ScheduleEvaluatorPreviewStub(),
+		appRulesEvaluator: AppRulesEvaluatorPreviewStub(),
+		launchAtLoginManager: LaunchAtLoginManagerStub(),
 		availableApps: { [] },
 	)
 }

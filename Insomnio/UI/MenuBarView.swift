@@ -85,5 +85,5 @@ struct MenuBarView: View {
 }
 
 #Preview {
-	MenuBarView(insomniac: Insomniac(mouseMover: StubMouseMover(), sleepPreventer: StubSleepPreventer(), timerScheduler: StubTimerScheduler()))
+	MenuBarView(insomniac: Insomniac(mouseMover: MouseMoverStub(), sleepPreventer: SleepPreventerStub(), timerScheduler: TimerSchedulerStub()))
 }

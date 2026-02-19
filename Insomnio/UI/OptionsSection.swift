@@ -54,7 +54,7 @@ struct OptionsSection: View {
 		onlyWhenIdle: $idle,
 		pauseOnBattery: $battery,
 		isPreventSleepMode: false,
-		launchAtLoginManager: StubLaunchAtLoginManager(),
+		launchAtLoginManager: LaunchAtLoginManagerStub(),
 	)
 	.padding()
 	.frame(width: 420)
