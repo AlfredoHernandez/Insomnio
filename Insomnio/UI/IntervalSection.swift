@@ -137,8 +137,6 @@ struct IntervalSection: View {
 		return .seconds
 	}
 
-	// MARK: - Helpers
-
 	private var formattedInterval: String {
 		let seconds = interval
 		if seconds < 60 {

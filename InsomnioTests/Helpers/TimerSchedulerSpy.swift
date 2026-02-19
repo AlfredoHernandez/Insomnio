@@ -18,7 +18,7 @@ final class TimerSchedulerSpy: TimerScheduler {
 	func schedule(interval: TimeInterval, repeats _: Bool, block: @escaping () -> Void) -> TimerCancellable {
 		receivedMessages.append(.schedule(interval: interval))
 		blocks.append(block)
-		return SpyCancellable(spy: self)
+		return Cancellable(spy: self)
 	}
 
 	func fire(at index: Int) {
@@ -28,16 +28,18 @@ final class TimerSchedulerSpy: TimerScheduler {
 	func recordInvalidation() {
 		receivedMessages.append(.invalidate)
 	}
-}
 
-final class SpyCancellable: TimerCancellable {
-	private let spy: TimerSchedulerSpy
+	// MARK: - Helpers
 
-	init(spy: TimerSchedulerSpy) {
-		self.spy = spy
-	}
+	private final class Cancellable: TimerCancellable {
+		private let spy: TimerSchedulerSpy
 
-	func invalidate() {
-		spy.recordInvalidation()
+		init(spy: TimerSchedulerSpy) {
+			self.spy = spy
+		}
+
+		func invalidate() {
+			spy.recordInvalidation()
+		}
 	}
 }

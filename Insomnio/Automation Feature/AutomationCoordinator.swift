@@ -6,18 +6,18 @@ import Foundation
 
 @MainActor
 final class AutomationCoordinator {
-	private let scheduleEvaluator: ScheduleEvaluator
-	private let appRulesEvaluator: AppRulesEvaluator
+	private let scheduleEvaluator: any ScheduleEvaluator
+	private let appRulesEvaluator: any AppRulesEvaluator
 	private let insomniac: Insomniac
-	private let timerScheduler: TimerScheduler
+	private let timerScheduler: any TimerScheduler
 	private var timer: TimerCancellable?
 	private var manualOverrideActive = false
 
 	init(
-		scheduleEvaluator: ScheduleEvaluator,
-		appRulesEvaluator: AppRulesEvaluator,
+		scheduleEvaluator: any ScheduleEvaluator,
+		appRulesEvaluator: any AppRulesEvaluator,
 		insomniac: Insomniac,
-		timerScheduler: TimerScheduler,
+		timerScheduler: any TimerScheduler,
 	) {
 		self.scheduleEvaluator = scheduleEvaluator
 		self.appRulesEvaluator = appRulesEvaluator

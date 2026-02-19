@@ -12,12 +12,12 @@ final class Insomniac {
 		case preventSleep
 	}
 
-	private let mouseMover: MouseMover
-	private let sleepPreventer: SleepPreventer
-	private let idleTimeProvider: IdleTimeProvider?
-	private let powerSourceProvider: PowerSourceProvider?
-	private let autoStopTimer: AutoStopTimer?
-	private let timerScheduler: TimerScheduler
+	private let mouseMover: any MouseMover
+	private let sleepPreventer: any SleepPreventer
+	private let idleTimeProvider: (any IdleTimeProvider)?
+	private let powerSourceProvider: (any PowerSourceProvider)?
+	private let autoStopTimer: (any AutoStopTimer)?
+	private let timerScheduler: any TimerScheduler
 	private var timer: TimerCancellable?
 	private var powerCheckTimer: TimerCancellable?
 	private var wasOnBattery = false
@@ -45,12 +45,12 @@ final class Insomniac {
 	}
 
 	init(
-		mouseMover: MouseMover,
-		sleepPreventer: SleepPreventer,
-		idleTimeProvider: IdleTimeProvider? = nil,
-		powerSourceProvider: PowerSourceProvider? = nil,
-		autoStopTimer: AutoStopTimer? = nil,
-		timerScheduler: TimerScheduler,
+		mouseMover: any MouseMover,
+		sleepPreventer: any SleepPreventer,
+		idleTimeProvider: (any IdleTimeProvider)? = nil,
+		powerSourceProvider: (any PowerSourceProvider)? = nil,
+		autoStopTimer: (any AutoStopTimer)? = nil,
+		timerScheduler: any TimerScheduler,
 	) {
 		self.mouseMover = mouseMover
 		self.sleepPreventer = sleepPreventer

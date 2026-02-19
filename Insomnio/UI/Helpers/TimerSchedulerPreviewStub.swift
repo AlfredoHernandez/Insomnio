@@ -4,12 +4,12 @@
 
 import Foundation
 
-class TimerCancellableStub: TimerCancellable {
+final class TimerCancellablePreviewStub: TimerCancellable {
 	func invalidate() {}
 }
 
-class TimerSchedulerStub: TimerScheduler {
+final class TimerSchedulerPreviewStub: TimerScheduler {
 	func schedule(interval _: TimeInterval, repeats _: Bool, block _: @escaping () -> Void) -> TimerCancellable {
-		TimerCancellableStub()
+		TimerCancellablePreviewStub()
 	}
 }

@@ -4,7 +4,7 @@
 
 import Foundation
 
-class ScheduleEvaluatorPreviewStub: ScheduleEvaluator {
+final class ScheduleEvaluatorPreviewStub: ScheduleEvaluator {
 	var rules: [ScheduleRule] = []
 	var stubbedShouldBeActive = false
 

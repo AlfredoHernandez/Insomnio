@@ -2,7 +2,7 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-class SleepPreventerStub: SleepPreventer {
+final class SleepPreventerPreviewStub: SleepPreventer {
 	func createAssertion() -> Bool {
 		true
 	}

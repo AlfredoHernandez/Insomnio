@@ -4,7 +4,7 @@
 
 import CoreGraphics
 
-class MouseMoverStub: MouseMover {
+final class MouseMoverPreviewStub: MouseMover {
 	func moveMouseTo(_: CGPoint) -> Bool {
 		true
 	}

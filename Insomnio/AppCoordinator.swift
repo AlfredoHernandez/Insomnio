@@ -6,7 +6,7 @@ import SwiftUI
 
 @MainActor
 final class AppCoordinator {
-	let dependencies: AppDependencies
+	private let dependencies: AppDependencies
 	private var hasStarted = false
 	private var menuBarController: MenuBarPopoverController?
 

@@ -1,10 +1,10 @@
 //
-// Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
+//  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
 import CoreGraphics
 
 protocol MouseMover {
-    func moveMouseTo(_ point: CGPoint) -> Bool
-    func currentMouseLocation() -> CGPoint
+	func moveMouseTo(_ point: CGPoint) -> Bool
+	func currentMouseLocation() -> CGPoint
 }

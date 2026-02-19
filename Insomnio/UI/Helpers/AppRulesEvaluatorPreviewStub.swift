@@ -4,7 +4,7 @@
 
 import Foundation
 
-class AppRulesEvaluatorPreviewStub: AppRulesEvaluator {
+final class AppRulesEvaluatorPreviewStub: AppRulesEvaluator {
 	var rules: [AppRule] = []
 	var stubbedShouldBeActive = false
 
