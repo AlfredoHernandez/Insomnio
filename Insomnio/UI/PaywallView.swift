@@ -18,7 +18,8 @@ struct PaywallView: View {
 				lifetimeSection
 			}
 		}
-		.frame(width: 380, height: 520)
+		.frame(width: 380)
+		.fixedSize(horizontal: false, vertical: true)
 		.task { await premiumManager.loadProducts() }
 	}
 
