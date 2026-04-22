@@ -7,6 +7,7 @@ import OSLog
 
 final class NSEventGlobalShortcutManager: GlobalShortcutManager {
 	private let logger = Logger(subsystem: "io.alfredohdz.Insomnio", category: "NSEventGlobalShortcutManager")
+	private let monitor: any KeyEventMonitor
 	// `globalMonitor` and `localMonitor` store opaque NSEvent monitor tokens
 	// (non-Sendable `Any?`). They are written/read from the MainActor during
 	// register/unregister and read from `deinit` (nonisolated in Swift 6).
@@ -20,10 +21,14 @@ final class NSEventGlobalShortcutManager: GlobalShortcutManager {
 	private let requiredFlags: NSEvent.ModifierFlags = [.control, .option, .command]
 	private let keyCode: UInt16 = 34
 
+	init(monitor: any KeyEventMonitor = NSEventKeyEventMonitor()) {
+		self.monitor = monitor
+	}
+
 	func registerShortcut(action: @escaping () -> Void) {
 		unregisterShortcut()
 
-		globalMonitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { [weak self] event in
+		globalMonitor = monitor.addGlobal { [weak self] event in
 			guard let self, matchesShortcut(event) else { return }
 			action()
 		}
@@ -31,7 +36,7 @@ final class NSEventGlobalShortcutManager: GlobalShortcutManager {
 			logger.error("Failed to register global key monitor for Insomnio shortcut")
 		}
 
-		localMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+		localMonitor = monitor.addLocal { [weak self] event in
 			guard let self, matchesShortcut(event) else { return event }
 			action()
 			return nil
@@ -43,12 +48,12 @@ final class NSEventGlobalShortcutManager: GlobalShortcutManager {
 
 	func unregisterShortcut() {
 		if let globalMonitor {
-			NSEvent.removeMonitor(globalMonitor)
+			monitor.remove(globalMonitor)
 		}
 		globalMonitor = nil
 
 		if let localMonitor {
-			NSEvent.removeMonitor(localMonitor)
+			monitor.remove(localMonitor)
 		}
 		localMonitor = nil
 	}
@@ -56,10 +61,14 @@ final class NSEventGlobalShortcutManager: GlobalShortcutManager {
 	deinit {
 		// `NSEvent.removeMonitor` must run on the main thread. `deinit` is
 		// nonisolated in Swift 6 and may fire wherever the last reference is
-		// released, so we capture the tokens and hop to the main queue.
+		// released, so we capture the tokens and hop to the main queue. The
+		// injected `monitor` is `Sendable`, letting us route cleanup through
+		// the same abstraction as the register/unregister path.
 		let tokens = [globalMonitor, localMonitor].compactMap(\.self)
+		let monitor = self.monitor
+		nonisolated(unsafe) let unsafeTokens = tokens
 		DispatchQueue.main.async {
-			tokens.forEach { NSEvent.removeMonitor($0) }
+			unsafeTokens.forEach { monitor.remove($0) }
 		}
 	}
 
