@@ -31,7 +31,7 @@ final class StoreKitPremiumManager: PremiumManager {
 		do {
 			products = try await Product.products(for: PremiumProduct.allCases.map(\.rawValue))
 		} catch {
-			logger.error("Failed to load products: \(error.localizedDescription, privacy: .public)")
+			logger.error("Failed to load products: \(error.localizedDescription, privacy: .private)")
 		}
 	}
 
@@ -59,7 +59,7 @@ final class StoreKitPremiumManager: PremiumManager {
 		do {
 			try await AppStore.sync()
 		} catch {
-			logger.error("AppStore.sync failed: \(error.localizedDescription, privacy: .public)")
+			logger.error("AppStore.sync failed: \(error.localizedDescription, privacy: .private)")
 		}
 		await checkEntitlements()
 	}
