@@ -7,6 +7,54 @@
     "·" : {
 
     },
+    "accessibility_banner_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open System Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Ajustes del Sistema"
+          }
+        }
+      }
+    },
+    "accessibility_banner_message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insomnio needs Accessibility permission to use the global keyboard shortcut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insomnio necesita permiso de Accesibilidad para usar el atajo de teclado global."
+          }
+        }
+      }
+    },
+    "accessibility_banner_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accessibility permission required"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se requiere permiso de Accesibilidad"
+          }
+        }
+      }
+    },
     "apprules_desc" : {
       "localizations" : {
         "en" : {

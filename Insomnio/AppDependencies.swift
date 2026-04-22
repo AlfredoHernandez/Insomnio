@@ -12,6 +12,7 @@ struct AppDependencies {
 	let automationCoordinator: any AutomationCoordinating
 	let shortcutManager: any GlobalShortcutManager
 	let launchAtLoginManager: any LaunchAtLoginManager
+	let accessibilityPermissionChecker: any AccessibilityPermissionChecker
 	let availableApps: () -> [AppInfo]
 
 	static func create() -> AppDependencies {
@@ -53,6 +54,7 @@ struct AppDependencies {
 			automationCoordinator: automationCoordinator,
 			shortcutManager: NSEventGlobalShortcutManager(),
 			launchAtLoginManager: SMAppServiceLaunchAtLoginManager(),
+			accessibilityPermissionChecker: AXAccessibilityPermissionChecker(),
 			availableApps: { NSWorkspaceAppInfoProvider.runningRegularApps() },
 		)
 	}

@@ -10,6 +10,7 @@ struct InsomnioView: View {
 	let scheduleEvaluator: any ScheduleEvaluator
 	let appRulesEvaluator: any AppRulesEvaluator
 	let launchAtLoginManager: any LaunchAtLoginManager
+	let accessibilityPermissionChecker: any AccessibilityPermissionChecker
 	let availableApps: () -> [AppInfo]
 	@State private var showingPaywall = false
 
@@ -20,6 +21,8 @@ struct InsomnioView: View {
 	var body: some View {
 		ScrollView {
 			VStack(alignment: .leading, spacing: 12) {
+				AccessibilityPermissionBanner(checker: accessibilityPermissionChecker)
+
 				StatusSection(isActive: insomniac.isActive, onToggle: {
 					insomniac.toggle()
 				})
@@ -110,6 +113,7 @@ struct InsomnioView: View {
 		scheduleEvaluator: ScheduleEvaluatorPreviewStub(),
 		appRulesEvaluator: AppRulesEvaluatorPreviewStub(),
 		launchAtLoginManager: LaunchAtLoginManagerPreviewStub(),
+		accessibilityPermissionChecker: AccessibilityPermissionCheckerPreviewStub(),
 		availableApps: { [] },
 	)
 }
