@@ -23,7 +23,7 @@ struct AppDependencies {
 			sleepPreventer: IOKitSleepPreventer(),
 			idleTimeProvider: CGIdleTimeProvider(),
 			powerSourceProvider: IOKitPowerSourceProvider(),
-			autoStopTimer: FoundationAutoStopTimer(),
+			autoStopTimer: FoundationAutoStopTimer(timerScheduler: timerScheduler),
 			timerScheduler: timerScheduler,
 		)
 

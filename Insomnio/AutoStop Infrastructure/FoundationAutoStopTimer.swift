@@ -9,12 +9,17 @@ final class FoundationAutoStopTimer: AutoStopTimer {
 	private(set) var isRunning: Bool = false
 	private(set) var remainingTime: TimeInterval = 0
 
-	private var timer: Timer?
+	private let timerScheduler: any TimerScheduler
+	private let now: () -> Date
+	private var timer: TimerCancellable?
 	private var expirationDate: Date?
 	private var onExpired: (() -> Void)?
-	private let now: () -> Date
 
-	init(now: @escaping () -> Date = { Date() }) {
+	init(
+		timerScheduler: any TimerScheduler = FoundationTimerScheduler(),
+		now: @escaping () -> Date = { Date() },
+	) {
+		self.timerScheduler = timerScheduler
 		self.now = now
 	}
 
@@ -25,10 +30,8 @@ final class FoundationAutoStopTimer: AutoStopTimer {
 		expirationDate = now().addingTimeInterval(duration.seconds)
 		isRunning = true
 
-		timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-			MainActor.assumeIsolated {
-				self?.tick()
-			}
+		timer = timerScheduler.schedule(interval: 1, repeats: true) { [weak self] in
+			self?.tick()
 		}
 	}
 
@@ -41,7 +44,7 @@ final class FoundationAutoStopTimer: AutoStopTimer {
 		onExpired = nil
 	}
 
-	func tick() {
+	private func tick() {
 		guard let expirationDate else { return }
 		remainingTime = max(0, expirationDate.timeIntervalSince(now()))
 		if remainingTime <= 0 {
