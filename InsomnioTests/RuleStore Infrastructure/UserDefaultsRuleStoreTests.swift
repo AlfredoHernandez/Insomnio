@@ -7,18 +7,17 @@ import Foundation
 import Testing
 
 @MainActor
-@Suite("UserDefaultsRuleStore")
 struct UserDefaultsRuleStoreTests {
-	@Test("Load returns empty array when no data stored")
-	func load_returnsEmptyArrayWhenNoDataStored() {
+	@Test
+	func `Load returns empty array when no data stored`() {
 		let (sut, cleanup) = makeSUT()
 		defer { cleanup() }
 
 		#expect(sut.loadRules() == [])
 	}
 
-	@Test("Save and load round-trips rules")
-	func saveAndLoad_roundTripsRules() {
+	@Test
+	func `Save and load round-trips rules`() {
 		let (sut, cleanup) = makeSUT()
 		defer { cleanup() }
 		let rules = [
@@ -31,8 +30,8 @@ struct UserDefaultsRuleStoreTests {
 		#expect(sut.loadRules() == rules)
 	}
 
-	@Test("Save overwrites previous rules")
-	func save_overwritesPreviousRules() {
+	@Test
+	func `Save overwrites previous rules`() {
 		let (sut, cleanup) = makeSUT()
 		defer { cleanup() }
 		let first = [ScheduleRule(weekdays: [.monday])]
@@ -44,8 +43,8 @@ struct UserDefaultsRuleStoreTests {
 		#expect(sut.loadRules() == second)
 	}
 
-	@Test("Save empty array clears rules")
-	func save_emptyArrayClearsRules() {
+	@Test
+	func `Save empty array clears rules`() {
 		let (sut, cleanup) = makeSUT()
 		defer { cleanup() }
 		sut.saveRules([ScheduleRule(weekdays: [.monday])])
@@ -57,8 +56,8 @@ struct UserDefaultsRuleStoreTests {
 
 	// MARK: - Memory Leak Tracking
 
-	@Test("makeSUT does not leak after save and load")
-	func makeSUT_doesNotLeakAfterSaveAndLoad() {
+	@Test
+	func `makeSUT does not leak after save and load`() {
 		assertNoLeaks {
 			let suiteName = "test.rulestore.leak.\(UUID().uuidString)"
 			let defaults = UserDefaults(suiteName: suiteName)!

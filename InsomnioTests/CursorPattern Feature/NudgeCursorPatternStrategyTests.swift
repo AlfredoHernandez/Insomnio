@@ -6,10 +6,9 @@
 import CoreGraphics
 import Testing
 
-@Suite("NudgeCursorPatternStrategy")
 struct NudgeCursorPatternStrategyTests {
-	@Test("Returns single point offset to the right")
-	func points_returnsSinglePointOffsetRight() {
+	@Test
+	func `Returns single point offset to the right`() {
 		let sut = NudgeCursorPatternStrategy()
 		let origin = CGPoint(x: 50, y: 75)
 
@@ -18,8 +17,8 @@ struct NudgeCursorPatternStrategyTests {
 		#expect(result == [CGPoint(x: 70, y: 75)])
 	}
 
-	@Test("Returns point relative to origin")
-	func points_returnsPointRelativeToOrigin() {
+	@Test
+	func `Returns point relative to origin`() {
 		let sut = NudgeCursorPatternStrategy(offset: 3)
 		let origin = CGPoint(x: 200, y: 300)
 

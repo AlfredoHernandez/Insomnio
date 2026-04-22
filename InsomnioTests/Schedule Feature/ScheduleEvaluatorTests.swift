@@ -6,24 +6,23 @@
 import Testing
 
 @MainActor
-@Suite("ScheduleEvaluator")
 struct ScheduleEvaluatorTests {
-	@Test("Init loads rules from store")
-	func init_loadsRulesFromStore() {
+	@Test
+	func `Init loads rules from store`() {
 		let (_, _, store) = makeSUT()
 
 		#expect(store.receivedMessages == [.loadRules])
 	}
 
-	@Test("shouldBeActive with no rules returns false")
-	func shouldBeActive_withNoRules_returnsFalse() {
+	@Test
+	func `shouldBeActive with no rules returns false`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.shouldBeActive() == false)
 	}
 
-	@Test("shouldBeActive with matching weekday and time in range returns true")
-	func shouldBeActive_withMatchingWeekdayAndTimeInRange_returnsTrue() {
+	@Test
+	func `shouldBeActive with matching weekday and time in range returns true`() {
 		let (sut, dateProvider, _) = makeSUT()
 		dateProvider.stubbedWeekday = .monday
 		dateProvider.stubbedHour = 10
@@ -33,8 +32,8 @@ struct ScheduleEvaluatorTests {
 		#expect(sut.shouldBeActive() == true)
 	}
 
-	@Test("shouldBeActive with matching weekday and time out of range returns false")
-	func shouldBeActive_withMatchingWeekdayAndTimeOutOfRange_returnsFalse() {
+	@Test
+	func `shouldBeActive with matching weekday and time out of range returns false`() {
 		let (sut, dateProvider, _) = makeSUT()
 		dateProvider.stubbedWeekday = .monday
 		dateProvider.stubbedHour = 19
@@ -44,8 +43,8 @@ struct ScheduleEvaluatorTests {
 		#expect(sut.shouldBeActive() == false)
 	}
 
-	@Test("shouldBeActive with non-matching weekday returns false")
-	func shouldBeActive_withNonMatchingWeekday_returnsFalse() {
+	@Test
+	func `shouldBeActive with non-matching weekday returns false`() {
 		let (sut, dateProvider, _) = makeSUT()
 		dateProvider.stubbedWeekday = .tuesday
 		dateProvider.stubbedHour = 10
@@ -55,8 +54,8 @@ struct ScheduleEvaluatorTests {
 		#expect(sut.shouldBeActive() == false)
 	}
 
-	@Test("shouldBeActive with disabled rule returns false")
-	func shouldBeActive_withDisabledRule_returnsFalse() {
+	@Test
+	func `shouldBeActive with disabled rule returns false`() {
 		let (sut, dateProvider, _) = makeSUT()
 		dateProvider.stubbedWeekday = .monday
 		dateProvider.stubbedHour = 10
@@ -66,8 +65,8 @@ struct ScheduleEvaluatorTests {
 		#expect(sut.shouldBeActive() == false)
 	}
 
-	@Test("shouldBeActive with overnight range before midnight returns true")
-	func shouldBeActive_withOvernightRange_beforeMidnight_returnsTrue() {
+	@Test
+	func `shouldBeActive with overnight range before midnight returns true`() {
 		let (sut, dateProvider, _) = makeSUT()
 		dateProvider.stubbedWeekday = .monday
 		dateProvider.stubbedHour = 23
@@ -77,8 +76,8 @@ struct ScheduleEvaluatorTests {
 		#expect(sut.shouldBeActive() == true)
 	}
 
-	@Test("shouldBeActive with overnight range after midnight returns true")
-	func shouldBeActive_withOvernightRange_afterMidnight_returnsTrue() {
+	@Test
+	func `shouldBeActive with overnight range after midnight returns true`() {
 		let (sut, dateProvider, _) = makeSUT()
 		dateProvider.stubbedWeekday = .tuesday
 		dateProvider.stubbedHour = 3
@@ -88,8 +87,8 @@ struct ScheduleEvaluatorTests {
 		#expect(sut.shouldBeActive() == true)
 	}
 
-	@Test("shouldBeActive with multiple rules any match returns true")
-	func shouldBeActive_withMultipleRules_anyMatchReturnsTrue() {
+	@Test
+	func `shouldBeActive with multiple rules any match returns true`() {
 		let (sut, dateProvider, _) = makeSUT()
 		dateProvider.stubbedWeekday = .friday
 		dateProvider.stubbedHour = 14
@@ -102,8 +101,8 @@ struct ScheduleEvaluatorTests {
 		#expect(sut.shouldBeActive() == true)
 	}
 
-	@Test("shouldBeActive at exact start time returns true")
-	func shouldBeActive_atExactStartTime_returnsTrue() {
+	@Test
+	func `shouldBeActive at exact start time returns true`() {
 		let (sut, dateProvider, _) = makeSUT()
 		dateProvider.stubbedWeekday = .monday
 		dateProvider.stubbedHour = 9
@@ -113,8 +112,8 @@ struct ScheduleEvaluatorTests {
 		#expect(sut.shouldBeActive() == true)
 	}
 
-	@Test("shouldBeActive at exact end time returns false")
-	func shouldBeActive_atExactEndTime_returnsFalse() {
+	@Test
+	func `shouldBeActive at exact end time returns false`() {
 		let (sut, dateProvider, _) = makeSUT()
 		dateProvider.stubbedWeekday = .monday
 		dateProvider.stubbedHour = 18
@@ -124,8 +123,8 @@ struct ScheduleEvaluatorTests {
 		#expect(sut.shouldBeActive() == false)
 	}
 
-	@Test("addRule appends and saves")
-	func addRule_appendsAndSaves() {
+	@Test
+	func `addRule appends and saves`() {
 		let (sut, _, store) = makeSUT()
 		let rule = ScheduleRule(weekdays: [.monday])
 
@@ -135,8 +134,8 @@ struct ScheduleEvaluatorTests {
 		#expect(store.receivedMessages == [.loadRules, .saveRules])
 	}
 
-	@Test("removeRule removes and saves")
-	func removeRule_removesAndSaves() {
+	@Test
+	func `removeRule removes and saves`() {
 		let rule = ScheduleRule(weekdays: [.monday])
 		let (sut, _, store) = makeSUT(initialRules: [rule])
 
@@ -146,8 +145,8 @@ struct ScheduleEvaluatorTests {
 		#expect(store.receivedMessages == [.loadRules, .saveRules])
 	}
 
-	@Test("updateRule updates and saves")
-	func updateRule_updatesAndSaves() {
+	@Test
+	func `updateRule updates and saves`() {
 		var rule = ScheduleRule(weekdays: [.monday], startHour: 9, endHour: 18)
 		let (sut, _, store) = makeSUT(initialRules: [rule])
 
@@ -160,8 +159,8 @@ struct ScheduleEvaluatorTests {
 
 	// MARK: - Memory Leak Tracking
 
-	@Test("makeSUT does not leak after rule operations")
-	func makeSUT_doesNotLeakAfterRuleOperations() {
+	@Test
+	func `makeSUT does not leak after rule operations`() {
 		assertNoLeaks {
 			let (sut, dateProvider, store) = makeSUT()
 			sut.addRule(ScheduleRule(weekdays: [.monday]))

@@ -6,24 +6,23 @@
 import Testing
 
 @MainActor
-@Suite("AppRulesEvaluator")
 struct AppRulesEvaluatorTests {
-	@Test("Init loads rules from store")
-	func init_loadsRulesFromStore() {
+	@Test
+	func `Init loads rules from store`() {
 		let (_, _, store) = makeSUT()
 
 		#expect(store.receivedMessages == [.loadRules])
 	}
 
-	@Test("shouldBeActive with no rules returns false")
-	func shouldBeActive_withNoRules_returnsFalse() {
+	@Test
+	func `shouldBeActive with no rules returns false`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.shouldBeActive() == false)
 	}
 
-	@Test("shouldBeActive with matching running app returns true")
-	func shouldBeActive_withMatchingRunningApp_returnsTrue() {
+	@Test
+	func `shouldBeActive with matching running app returns true`() {
 		let (sut, provider, _) = makeSUT()
 		sut.rules = [AppRule(bundleIdentifier: "com.example.app", displayName: "Example")]
 		provider.stubbedRunningApps = ["com.example.app", "com.apple.finder"]
@@ -31,8 +30,8 @@ struct AppRulesEvaluatorTests {
 		#expect(sut.shouldBeActive() == true)
 	}
 
-	@Test("shouldBeActive with non-matching running app returns false")
-	func shouldBeActive_withNonMatchingRunningApp_returnsFalse() {
+	@Test
+	func `shouldBeActive with non-matching running app returns false`() {
 		let (sut, provider, _) = makeSUT()
 		sut.rules = [AppRule(bundleIdentifier: "com.example.app", displayName: "Example")]
 		provider.stubbedRunningApps = ["com.apple.finder"]
@@ -40,8 +39,8 @@ struct AppRulesEvaluatorTests {
 		#expect(sut.shouldBeActive() == false)
 	}
 
-	@Test("shouldBeActive with disabled rule returns false")
-	func shouldBeActive_withDisabledRule_returnsFalse() {
+	@Test
+	func `shouldBeActive with disabled rule returns false`() {
 		let (sut, provider, _) = makeSUT()
 		sut.rules = [AppRule(bundleIdentifier: "com.example.app", displayName: "Example", isEnabled: false)]
 		provider.stubbedRunningApps = ["com.example.app"]
@@ -49,8 +48,8 @@ struct AppRulesEvaluatorTests {
 		#expect(sut.shouldBeActive() == false)
 	}
 
-	@Test("shouldBeActive with multiple rules any match returns true")
-	func shouldBeActive_withMultipleRules_anyMatchReturnsTrue() {
+	@Test
+	func `shouldBeActive with multiple rules any match returns true`() {
 		let (sut, provider, _) = makeSUT()
 		sut.rules = [
 			AppRule(bundleIdentifier: "com.example.app1", displayName: "App1"),
@@ -61,8 +60,8 @@ struct AppRulesEvaluatorTests {
 		#expect(sut.shouldBeActive() == true)
 	}
 
-	@Test("shouldBeActive with multiple rules none match returns false")
-	func shouldBeActive_withMultipleRules_noneMatchReturnsFalse() {
+	@Test
+	func `shouldBeActive with multiple rules none match returns false`() {
 		let (sut, provider, _) = makeSUT()
 		sut.rules = [
 			AppRule(bundleIdentifier: "com.example.app1", displayName: "App1"),
@@ -73,8 +72,8 @@ struct AppRulesEvaluatorTests {
 		#expect(sut.shouldBeActive() == false)
 	}
 
-	@Test("addRule appends and saves")
-	func addRule_appendsAndSaves() {
+	@Test
+	func `addRule appends and saves`() {
 		let (sut, _, store) = makeSUT()
 		let rule = AppRule(bundleIdentifier: "com.example.app", displayName: "Example")
 
@@ -84,8 +83,8 @@ struct AppRulesEvaluatorTests {
 		#expect(store.receivedMessages == [.loadRules, .saveRules])
 	}
 
-	@Test("removeRule removes and saves")
-	func removeRule_removesAndSaves() {
+	@Test
+	func `removeRule removes and saves`() {
 		let rule = AppRule(bundleIdentifier: "com.example.app", displayName: "Example")
 		let (sut, _, store) = makeSUT(initialRules: [rule])
 
@@ -95,8 +94,8 @@ struct AppRulesEvaluatorTests {
 		#expect(store.receivedMessages == [.loadRules, .saveRules])
 	}
 
-	@Test("updateRule updates and saves")
-	func updateRule_updatesAndSaves() {
+	@Test
+	func `updateRule updates and saves`() {
 		var rule = AppRule(bundleIdentifier: "com.example.app", displayName: "Example")
 		let (sut, _, store) = makeSUT(initialRules: [rule])
 
@@ -109,8 +108,8 @@ struct AppRulesEvaluatorTests {
 
 	// MARK: - Memory Leak Tracking
 
-	@Test("makeSUT does not leak after rule operations")
-	func makeSUT_doesNotLeakAfterRuleOperations() {
+	@Test
+	func `makeSUT does not leak after rule operations`() {
 		assertNoLeaks {
 			let (sut, provider, store) = makeSUT()
 			sut.addRule(AppRule(bundleIdentifier: "com.test", displayName: "Test"))

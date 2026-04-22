@@ -7,24 +7,23 @@ import Foundation
 import Testing
 
 @MainActor
-@Suite("FoundationAutoStopTimer")
 struct FoundationAutoStopTimerTests {
-	@Test("Init is not running")
-	func init_isNotRunning() {
+	@Test
+	func `Init is not running`() {
 		let (sut, _) = makeSUT()
 
 		#expect(sut.isRunning == false)
 	}
 
-	@Test("Init remaining time is zero")
-	func init_remainingTimeIsZero() {
+	@Test
+	func `Init remaining time is zero`() {
 		let (sut, _) = makeSUT()
 
 		#expect(sut.remainingTime == 0)
 	}
 
-	@Test("Start sets isRunning to true")
-	func start_setsIsRunningToTrue() {
+	@Test
+	func `Start sets isRunning to true`() {
 		let (sut, _) = makeSUT()
 
 		sut.start(duration: .oneHour) {}
@@ -32,8 +31,8 @@ struct FoundationAutoStopTimerTests {
 		#expect(sut.isRunning == true)
 	}
 
-	@Test("Start sets remaining time to duration seconds")
-	func start_setsRemainingTimeToDurationSeconds() {
+	@Test
+	func `Start sets remaining time to duration seconds`() {
 		let (sut, _) = makeSUT()
 
 		sut.start(duration: .thirtyMinutes) {}
@@ -41,8 +40,8 @@ struct FoundationAutoStopTimerTests {
 		#expect(sut.remainingTime == 1800)
 	}
 
-	@Test("Cancel sets isRunning to false")
-	func cancel_setsIsRunningToFalse() {
+	@Test
+	func `Cancel sets isRunning to false`() {
 		let (sut, _) = makeSUT()
 		sut.start(duration: .oneHour) {}
 
@@ -51,8 +50,8 @@ struct FoundationAutoStopTimerTests {
 		#expect(sut.isRunning == false)
 	}
 
-	@Test("Cancel resets remaining time to zero")
-	func cancel_resetsRemainingTimeToZero() {
+	@Test
+	func `Cancel resets remaining time to zero`() {
 		let (sut, _) = makeSUT()
 		sut.start(duration: .oneHour) {}
 
@@ -61,8 +60,8 @@ struct FoundationAutoStopTimerTests {
 		#expect(sut.remainingTime == 0)
 	}
 
-	@Test("Tick updates remaining time")
-	func tick_updatesRemainingTime() {
+	@Test
+	func `Tick updates remaining time`() {
 		var currentDate = Date()
 		let (sut, _) = makeSUT(now: { currentDate })
 
@@ -73,8 +72,8 @@ struct FoundationAutoStopTimerTests {
 		#expect(sut.remainingTime == 3590)
 	}
 
-	@Test("Tick at expiration calls onExpired and cancels")
-	func tick_atExpiration_callsOnExpiredAndCancels() {
+	@Test
+	func `Tick at expiration calls onExpired and cancels`() {
 		var currentDate = Date()
 		var expiredCalled = false
 		let (sut, _) = makeSUT(now: { currentDate })
@@ -88,8 +87,8 @@ struct FoundationAutoStopTimerTests {
 		#expect(sut.remainingTime == 0)
 	}
 
-	@Test("Tick before expiration does not call onExpired")
-	func tick_beforeExpiration_doesNotCallOnExpired() {
+	@Test
+	func `Tick before expiration does not call onExpired`() {
 		var currentDate = Date()
 		var expiredCalled = false
 		let (sut, _) = makeSUT(now: { currentDate })
@@ -102,8 +101,8 @@ struct FoundationAutoStopTimerTests {
 		#expect(sut.isRunning == true)
 	}
 
-	@Test("Start cancels previous timer before starting new one")
-	func start_cancelsPreviousTimerBeforeStartingNewOne() {
+	@Test
+	func `Start cancels previous timer before starting new one`() {
 		var firstExpiredCalled = false
 		let (sut, _) = makeSUT()
 
@@ -116,8 +115,8 @@ struct FoundationAutoStopTimerTests {
 
 	// MARK: - Memory Leak Tracking
 
-	@Test("makeSUT does not leak after start and cancel")
-	func makeSUT_doesNotLeakAfterStartAndCancel() {
+	@Test
+	func `makeSUT does not leak after start and cancel`() {
 		assertNoLeaks {
 			let (sut, _) = makeSUT()
 			sut.start(duration: .oneHour) {}

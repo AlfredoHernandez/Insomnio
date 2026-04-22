@@ -6,10 +6,9 @@
 import CoreGraphics
 import Testing
 
-@Suite("CircleCursorPatternStrategy")
 struct CircleCursorPatternStrategyTests {
-	@Test("Returns expected number of points")
-	func points_returnsCorrectCount() {
+	@Test
+	func `Returns expected number of points`() {
 		let sut = CircleCursorPatternStrategy(radius: 3, steps: 8)
 
 		let result = sut.points(from: .zero)
@@ -17,8 +16,8 @@ struct CircleCursorPatternStrategyTests {
 		#expect(result.count == 8)
 	}
 
-	@Test("First point is at 0 degrees (to the right)")
-	func points_firstPointIsAtZeroDegrees() {
+	@Test
+	func `First point is at 0 degrees (to the right)`() {
 		let sut = CircleCursorPatternStrategy(radius: 3, steps: 8)
 		let origin = CGPoint(x: 100, y: 100)
 
@@ -28,8 +27,8 @@ struct CircleCursorPatternStrategyTests {
 		#expect(result[0].y == 100)
 	}
 
-	@Test("All points are within radius of origin")
-	func points_allPointsWithinRadius() {
+	@Test
+	func `All points are within radius of origin`() {
 		let sut = CircleCursorPatternStrategy(radius: 3, steps: 8)
 		let origin = CGPoint(x: 100, y: 100)
 

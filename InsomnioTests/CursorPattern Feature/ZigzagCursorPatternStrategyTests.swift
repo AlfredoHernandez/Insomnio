@@ -6,10 +6,9 @@
 import CoreGraphics
 import Testing
 
-@Suite("ZigzagCursorPatternStrategy")
 struct ZigzagCursorPatternStrategyTests {
-	@Test("Returns four diagonal points")
-	func points_returnsFourPoints() {
+	@Test
+	func `Returns four diagonal points`() {
 		let sut = ZigzagCursorPatternStrategy(offset: 2)
 
 		let result = sut.points(from: CGPoint(x: 50, y: 50))
@@ -17,8 +16,8 @@ struct ZigzagCursorPatternStrategyTests {
 		#expect(result.count == 4)
 	}
 
-	@Test("Points alternate diagonally")
-	func points_alternatesDiagonally() {
+	@Test
+	func `Points alternate diagonally`() {
 		let sut = ZigzagCursorPatternStrategy(offset: 2)
 		let origin = CGPoint(x: 50, y: 50)
 
