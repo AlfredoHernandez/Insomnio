@@ -6,21 +6,15 @@ import OSLog
 import StoreKit
 
 @Observable
-@MainActor
 final class StoreKitPremiumManager: PremiumManager {
-	private(set) var isPremium: Bool = false {
-		didSet { cache.isPremium = isPremium }
-	}
+	private(set) var isPremium: Bool = false
 
 	private var products: [Product] = []
 	@ObservationIgnored
-	private nonisolated(unsafe) var transactionListener: Task<Void, Never>?
-	private var cache: any PremiumStatusCache
+	private var transactionListener: Task<Void, Never>?
 	private let logger = Logger(subsystem: "io.alfredohdz.Insomnio", category: "StoreKitPremiumManager")
 
-	init(cache: any PremiumStatusCache = UserDefaultsPremiumStatusCache()) {
-		self.cache = cache
-		isPremium = cache.isPremium
+	init() {
 		transactionListener = listenForTransactions()
 		Task { await checkEntitlements() }
 	}

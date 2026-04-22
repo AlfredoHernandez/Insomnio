@@ -6,35 +6,29 @@
 import Testing
 
 @MainActor
-@Suite("AutoStopDuration")
 struct AutoStopDurationTests {
-	@Test("thirtyMinutes returns 1800 seconds")
-	func thirtyMinutes_returns1800Seconds() {
+	@Test
+	func `thirtyMinutes returns 1800 seconds`() {
 		#expect(AutoStopDuration.thirtyMinutes.seconds == 1800)
 	}
 
-	@Test("oneHour returns 3600 seconds")
-	func oneHour_returns3600Seconds() {
+	@Test
+	func `oneHour returns 3600 seconds`() {
 		#expect(AutoStopDuration.oneHour.seconds == 3600)
 	}
 
-	@Test("twoHours returns 7200 seconds")
-	func twoHours_returns7200Seconds() {
+	@Test
+	func `twoHours returns 7200 seconds`() {
 		#expect(AutoStopDuration.twoHours.seconds == 7200)
 	}
 
-	@Test("fourHours returns 14400 seconds")
-	func fourHours_returns14400Seconds() {
+	@Test
+	func `fourHours returns 14400 seconds`() {
 		#expect(AutoStopDuration.fourHours.seconds == 14400)
 	}
 
-	@Test("custom returns specified seconds")
-	func custom_returnsSpecifiedSeconds() {
-		#expect(AutoStopDuration.custom(900).seconds == 900)
-	}
-
-	@Test("presets contains all preset durations")
-	func presets_containsAllPresetDurations() {
+	@Test
+	func `presets contains all preset durations`() {
 		#expect(AutoStopDuration.presets == [.thirtyMinutes, .oneHour, .twoHours, .fourHours])
 	}
 }

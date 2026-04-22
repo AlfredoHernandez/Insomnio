@@ -5,15 +5,6 @@
 import SwiftUI
 
 struct AppPickerView: View {
-	struct AppInfo: Identifiable {
-		let bundleID: String
-		let name: String
-		let icon: NSImage
-		var id: String {
-			bundleID
-		}
-	}
-
 	let availableApps: () -> [AppInfo]
 	let onSelect: (String, String) -> Void
 	let onCancel: () -> Void

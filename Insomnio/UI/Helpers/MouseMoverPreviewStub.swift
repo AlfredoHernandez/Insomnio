@@ -2,6 +2,7 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+#if DEBUG
 import CoreGraphics
 
 final class MouseMoverPreviewStub: MouseMover {
@@ -13,3 +14,4 @@ final class MouseMoverPreviewStub: MouseMover {
 		.zero
 	}
 }
+#endif

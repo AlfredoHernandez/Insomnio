@@ -4,6 +4,10 @@
 
 import Observation
 
+/// Refines `Observable` so SwiftUI views can observe `isPremium` changes
+/// through the existential `any PremiumManager`. `Observation` is a pure-Swift,
+/// UI-agnostic framework; the dependency does not couple this feature layer
+/// to AppKit/SwiftUI.
 protocol PremiumManager: AnyObject, Observable {
 	var isPremium: Bool { get }
 	var lifetimeDisplayPrice: String? { get }

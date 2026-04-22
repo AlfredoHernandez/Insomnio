@@ -2,6 +2,7 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+#if DEBUG
 import Foundation
 
 final class TimerSchedulerPreviewStub: TimerScheduler {
@@ -13,3 +14,4 @@ final class TimerSchedulerPreviewStub: TimerScheduler {
 		func invalidate() {}
 	}
 }
+#endif

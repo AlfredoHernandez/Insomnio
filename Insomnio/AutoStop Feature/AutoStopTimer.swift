@@ -9,7 +9,6 @@ enum AutoStopDuration: Hashable {
 	case oneHour
 	case twoHours
 	case fourHours
-	case custom(TimeInterval)
 
 	var seconds: TimeInterval {
 		switch self {
@@ -20,8 +19,6 @@ enum AutoStopDuration: Hashable {
 		case .twoHours: 7200
 
 		case .fourHours: 14400
-
-		case let .custom(t): t
 		}
 	}
 

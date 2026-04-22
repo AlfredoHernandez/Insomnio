@@ -5,7 +5,6 @@
 import Foundation
 
 @Observable
-@MainActor
 final class RunningAppRulesEvaluator: AppRulesEvaluator {
 	private let runningAppProvider: RunningAppProvider
 	private let store: any RuleStore<AppRule>

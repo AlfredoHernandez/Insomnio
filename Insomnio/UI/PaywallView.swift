@@ -9,6 +9,7 @@ struct PaywallView: View {
 	let premiumManager: any PremiumManager
 	@Environment(\.dismiss) private var dismiss
 	@State private var isPurchasing = false
+	@State private var purchaseError: String?
 
 	var body: some View {
 		ScrollView {
@@ -20,6 +21,18 @@ struct PaywallView: View {
 		}
 		.frame(width: 380)
 		.fixedSize(horizontal: false, vertical: true)
+		.alert(
+			"premium_purchase_error_title",
+			isPresented: Binding(
+				get: { purchaseError != nil },
+				set: { if !$0 { purchaseError = nil } },
+			),
+			presenting: purchaseError,
+		) { _ in
+			Button("ok") { purchaseError = nil }
+		} message: { message in
+			Text(message)
+		}
 	}
 
 	private var subscriptionSection: some View {
@@ -75,9 +88,13 @@ struct PaywallView: View {
 			Button {
 				isPurchasing = true
 				Task {
-					_ = try? await premiumManager.purchase(.lifetime)
+					do {
+						_ = try await premiumManager.purchase(.lifetime)
+						dismissAfterPurchase()
+					} catch {
+						purchaseError = error.localizedDescription
+					}
 					isPurchasing = false
-					dismissAfterPurchase()
 				}
 			} label: {
 				HStack {

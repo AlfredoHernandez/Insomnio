@@ -4,15 +4,15 @@
 
 import Foundation
 
-@MainActor
 struct AppDependencies {
 	let insomniac: Insomniac
 	let premiumManager: any PremiumManager
 	let scheduleEvaluator: any ScheduleEvaluator
 	let appRulesEvaluator: any AppRulesEvaluator
-	let automationCoordinator: AutomationCoordinator
+	let automationCoordinator: any AutomationCoordinating
 	let shortcutManager: any GlobalShortcutManager
 	let launchAtLoginManager: any LaunchAtLoginManager
+	let availableApps: () -> [AppInfo]
 
 	static func create() -> AppDependencies {
 		let timerScheduler = FoundationTimerScheduler()
@@ -53,6 +53,7 @@ struct AppDependencies {
 			automationCoordinator: automationCoordinator,
 			shortcutManager: NSEventGlobalShortcutManager(),
 			launchAtLoginManager: SMAppServiceLaunchAtLoginManager(),
+			availableApps: { NSWorkspaceAppInfoProvider.runningRegularApps() },
 		)
 	}
 }

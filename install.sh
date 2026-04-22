@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 function check_installed {
     if which $1 >/dev/null; then
         echo "$1 installed ✅"
@@ -23,5 +25,6 @@ fi
 
 echo "[+] Installing pre-commit hooks ..."
 cp scripts/pre-commit .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
 
 echo "[+] Done ✅"

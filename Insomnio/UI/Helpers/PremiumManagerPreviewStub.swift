@@ -6,7 +6,6 @@
 import Observation
 
 @Observable
-@MainActor
 final class PremiumManagerPreviewStub: PremiumManager {
 	var isPremium = false
 	var lifetimeDisplayPrice: String? = "$39.99"

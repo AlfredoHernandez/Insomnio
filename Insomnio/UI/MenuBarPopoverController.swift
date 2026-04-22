@@ -11,6 +11,7 @@ final class MenuBarPopoverController {
 	private let statusItem: NSStatusItem
 	private let popover: NSPopover
 	private let actionHandler = ActionHandler()
+	private var isObservingActive = false
 
 	init(icon: String, @ViewBuilder content: () -> some View) {
 		statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
@@ -32,12 +33,18 @@ final class MenuBarPopoverController {
 	}
 
 	func observeActive(_ insomniac: Insomniac) {
+		guard !isObservingActive else { return }
+		isObservingActive = true
+		trackActiveChanges(insomniac)
+	}
+
+	private func trackActiveChanges(_ insomniac: Insomniac) {
 		withObservationTracking {
 			_ = insomniac.isActive
 		} onChange: { [weak self] in
-			Task { @MainActor [weak self] in
+			Task { @MainActor in
 				self?.updateIcon(insomniac.isActive ? "moon.zzz.fill" : "moon.zzz")
-				self?.observeActive(insomniac)
+				self?.trackActiveChanges(insomniac)
 			}
 		}
 	}

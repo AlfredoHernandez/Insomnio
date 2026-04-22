@@ -2,6 +2,7 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+#if DEBUG
 final class SleepPreventerPreviewStub: SleepPreventer {
 	func createAssertion() -> Bool {
 		true
@@ -9,3 +10,4 @@ final class SleepPreventerPreviewStub: SleepPreventer {
 
 	func releaseAssertion() {}
 }
+#endif

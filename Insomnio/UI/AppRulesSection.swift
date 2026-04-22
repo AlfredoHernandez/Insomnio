@@ -6,7 +6,7 @@ import SwiftUI
 
 struct AppRulesSection: View {
 	let appRulesEvaluator: any AppRulesEvaluator
-	let availableApps: () -> [AppPickerView.AppInfo]
+	let availableApps: () -> [AppInfo]
 	@State private var showingAppPicker = false
 
 	var body: some View {

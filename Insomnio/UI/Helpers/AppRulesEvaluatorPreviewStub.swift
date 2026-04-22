@@ -5,7 +5,6 @@
 #if DEBUG
 import Foundation
 
-@MainActor
 final class AppRulesEvaluatorPreviewStub: AppRulesEvaluator {
 	var rules: [AppRule] = []
 	var stubbedShouldBeActive = false

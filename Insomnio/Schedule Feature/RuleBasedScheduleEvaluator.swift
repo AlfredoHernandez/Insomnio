@@ -5,7 +5,6 @@
 import Foundation
 
 @Observable
-@MainActor
 final class RuleBasedScheduleEvaluator: ScheduleEvaluator {
 	private let dateProvider: DateProvider
 	private let store: any RuleStore<ScheduleRule>

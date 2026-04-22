@@ -3,19 +3,21 @@
 //
 
 import Foundation
+import OSLog
 
 @MainActor
-final class AutomationCoordinator {
-	private let scheduleEvaluator: any ScheduleEvaluator
-	private let appRulesEvaluator: any AppRulesEvaluator
+final class AutomationCoordinator: AutomationCoordinating {
+	private let scheduleEvaluator: any ScheduleRuleEvaluating
+	private let appRulesEvaluator: any AppRulesEvaluating
 	private let insomniac: Insomniac
 	private let timerScheduler: any TimerScheduler
 	private var timer: TimerCancellable?
 	private var manualOverrideActive = false
+	private let logger = Logger(subsystem: "io.alfredohdz.Insomnio", category: "AutomationCoordinator")
 
 	init(
-		scheduleEvaluator: any ScheduleEvaluator,
-		appRulesEvaluator: any AppRulesEvaluator,
+		scheduleEvaluator: any ScheduleRuleEvaluating,
+		appRulesEvaluator: any AppRulesEvaluating,
 		insomniac: Insomniac,
 		timerScheduler: any TimerScheduler,
 	) {
@@ -39,10 +41,14 @@ final class AutomationCoordinator {
 		timer = nil
 	}
 
+	/// - Important: internal for testing; not part of the public API.
+	/// Called externally by `Insomniac.onToggle` and by the internal timer.
 	func notifyManualToggle() {
 		manualOverrideActive = true
 	}
 
+	/// - Important: internal for testing; not part of the public API.
+	/// Called by the internal monitoring timer on each tick.
 	func evaluate() {
 		let scheduleSaysActive = scheduleEvaluator.shouldBeActive()
 		let appRulesSayActive = appRulesEvaluator.shouldBeActive()
@@ -56,8 +62,10 @@ final class AutomationCoordinator {
 		}
 
 		if automationWantsActive, !insomniac.isActive {
+			logger.info("Automation activating Insomniac")
 			insomniac.start()
 		} else if !automationWantsActive, insomniac.isActive {
+			logger.info("Automation deactivating Insomniac")
 			insomniac.stop()
 		}
 	}

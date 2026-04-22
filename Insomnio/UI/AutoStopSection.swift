@@ -43,6 +43,7 @@ struct AutoStopSection: View {
 	}
 }
 
+#if DEBUG
 #Preview {
 	@Previewable @State var enabled = true
 	@Previewable @State var duration = AutoStopDuration.oneHour
@@ -55,3 +56,4 @@ struct AutoStopSection: View {
 	.padding()
 	.frame(width: 420)
 }
+#endif

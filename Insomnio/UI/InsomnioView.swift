@@ -10,7 +10,7 @@ struct InsomnioView: View {
 	let scheduleEvaluator: any ScheduleEvaluator
 	let appRulesEvaluator: any AppRulesEvaluator
 	let launchAtLoginManager: any LaunchAtLoginManager
-	let availableApps: () -> [AppPickerView.AppInfo]
+	let availableApps: () -> [AppInfo]
 	@State private var showingPaywall = false
 
 	private var appVersion: String {
