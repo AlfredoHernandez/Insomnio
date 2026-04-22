@@ -5,7 +5,11 @@
 import Foundation
 
 final class FoundationTimerScheduler: TimerScheduler {
-	func schedule(interval: TimeInterval, repeats: Bool, block: @escaping () -> Void) -> TimerCancellable {
-		Timer.scheduledTimer(withTimeInterval: interval, repeats: repeats) { _ in block() }
+	func schedule(interval: TimeInterval, repeats: Bool, block: @escaping @MainActor () -> Void) -> TimerCancellable {
+		Timer.scheduledTimer(withTimeInterval: interval, repeats: repeats) { _ in
+			MainActor.assumeIsolated {
+				block()
+			}
+		}
 	}
 }

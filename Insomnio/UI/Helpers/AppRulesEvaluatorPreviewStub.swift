@@ -2,8 +2,10 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+#if DEBUG
 import Foundation
 
+@MainActor
 final class AppRulesEvaluatorPreviewStub: AppRulesEvaluator {
 	var rules: [AppRule] = []
 	var stubbedShouldBeActive = false
@@ -22,3 +24,4 @@ final class AppRulesEvaluatorPreviewStub: AppRulesEvaluator {
 
 	func updateRule(_: AppRule) {}
 }
+#endif

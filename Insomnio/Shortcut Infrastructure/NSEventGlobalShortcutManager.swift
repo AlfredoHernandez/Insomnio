@@ -5,8 +5,8 @@
 import AppKit
 
 final class NSEventGlobalShortcutManager: GlobalShortcutManager {
-	private var globalMonitor: Any?
-	private var localMonitor: Any?
+	private nonisolated(unsafe) var globalMonitor: Any?
+	private nonisolated(unsafe) var localMonitor: Any?
 
 	// ⌃⌥⌘I
 	private let requiredFlags: NSEvent.ModifierFlags = [.control, .option, .command]
@@ -40,7 +40,12 @@ final class NSEventGlobalShortcutManager: GlobalShortcutManager {
 	}
 
 	deinit {
-		unregisterShortcut()
+		if let globalMonitor {
+			NSEvent.removeMonitor(globalMonitor)
+		}
+		if let localMonitor {
+			NSEvent.removeMonitor(localMonitor)
+		}
 	}
 
 	private func matchesShortcut(_ event: NSEvent) -> Bool {

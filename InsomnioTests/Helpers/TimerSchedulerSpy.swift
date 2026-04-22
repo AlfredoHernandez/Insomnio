@@ -13,9 +13,9 @@ final class TimerSchedulerSpy: TimerScheduler {
 	}
 
 	private(set) var receivedMessages = [ReceivedMessage]()
-	private var blocks: [() -> Void] = []
+	private var blocks: [@MainActor () -> Void] = []
 
-	func schedule(interval: TimeInterval, repeats _: Bool, block: @escaping () -> Void) -> TimerCancellable {
+	func schedule(interval: TimeInterval, repeats _: Bool, block: @escaping @MainActor () -> Void) -> TimerCancellable {
 		receivedMessages.append(.schedule(interval: interval))
 		blocks.append(block)
 		return Cancellable(spy: self)

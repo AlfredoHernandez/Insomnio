@@ -18,9 +18,10 @@ struct AppPickerView: View {
 	let onSelect: (String, String) -> Void
 	let onCancel: () -> Void
 	@State private var searchText = ""
+	@State private var cachedApps: [AppInfo] = []
 
 	private var filteredApps: [AppInfo] {
-		availableApps()
+		cachedApps
 			.filter { searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText) }
 			.sorted { $0.name < $1.name }
 	}
@@ -60,5 +61,6 @@ struct AppPickerView: View {
 		}
 		.padding(20)
 		.frame(width: 360)
+		.onAppear { cachedApps = availableApps() }
 	}
 }

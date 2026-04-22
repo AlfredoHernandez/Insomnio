@@ -4,7 +4,7 @@
 
 import CoreGraphics
 
-struct CircleCursorPatternStrategy: CursorPatternStrategy {
+nonisolated struct CircleCursorPatternStrategy: CursorPatternStrategy {
 	let radius: CGFloat
 	let steps: Int
 

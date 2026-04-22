@@ -4,9 +4,9 @@
 
 import CoreGraphics
 
-struct RandomCursorPatternStrategy: CursorPatternStrategy {
+nonisolated struct RandomCursorPatternStrategy: CursorPatternStrategy {
 	let radius: CGFloat
-	let randomSource: () -> CGFloat
+	let randomSource: @Sendable () -> CGFloat
 
 	init(radius: CGFloat = 50, randomSource: @escaping @Sendable () -> CGFloat = { CGFloat.random(in: -1 ... 1) }) {
 		self.radius = radius

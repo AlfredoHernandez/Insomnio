@@ -4,7 +4,7 @@
 
 import CoreGraphics
 
-struct NudgeCursorPatternStrategy: CursorPatternStrategy {
+nonisolated struct NudgeCursorPatternStrategy: CursorPatternStrategy {
 	let offset: CGFloat
 
 	init(offset: CGFloat = 20) {

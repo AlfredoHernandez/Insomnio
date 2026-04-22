@@ -18,6 +18,7 @@ final class Insomniac {
 	private let powerSourceProvider: (any PowerSourceProvider)?
 	private let autoStopTimer: (any AutoStopTimer)?
 	private let timerScheduler: any TimerScheduler
+	private let now: () -> Date
 	private var timer: TimerCancellable?
 	private var powerCheckTimer: TimerCancellable?
 	private var wasOnBattery = false
@@ -51,6 +52,7 @@ final class Insomniac {
 		powerSourceProvider: (any PowerSourceProvider)? = nil,
 		autoStopTimer: (any AutoStopTimer)? = nil,
 		timerScheduler: any TimerScheduler,
+		now: @escaping () -> Date = { Date() },
 	) {
 		self.mouseMover = mouseMover
 		self.sleepPreventer = sleepPreventer
@@ -58,6 +60,7 @@ final class Insomniac {
 		self.powerSourceProvider = powerSourceProvider
 		self.autoStopTimer = autoStopTimer
 		self.timerScheduler = timerScheduler
+		self.now = now
 	}
 
 	func toggle() {
@@ -78,7 +81,7 @@ final class Insomniac {
 			} else {
 				sleepPreventer.createAssertion()
 				activationCount += 1
-				lastActivation = Date()
+				lastActivation = now()
 				if pauseOnBattery {
 					schedulePowerCheckTimer()
 				}
@@ -117,7 +120,7 @@ final class Insomniac {
 		}
 		_ = mouseMover.moveMouseTo(currentPosition)
 		activationCount += 1
-		lastActivation = Date()
+		lastActivation = now()
 	}
 
 	// MARK: - Private
@@ -144,7 +147,7 @@ final class Insomniac {
 		} else if !onBattery, wasOnBattery {
 			sleepPreventer.createAssertion()
 			activationCount += 1
-			lastActivation = Date()
+			lastActivation = now()
 		}
 		wasOnBattery = onBattery
 	}

@@ -2,8 +2,10 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+#if DEBUG
 import Foundation
 
+@MainActor
 final class ScheduleEvaluatorPreviewStub: ScheduleEvaluator {
 	var rules: [ScheduleRule] = []
 	var stubbedShouldBeActive = false
@@ -22,3 +24,4 @@ final class ScheduleEvaluatorPreviewStub: ScheduleEvaluator {
 
 	func updateRule(_: ScheduleRule) {}
 }
+#endif

@@ -2,6 +2,11 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+#if DEBUG
+import Observation
+
+@Observable
+@MainActor
 final class PremiumManagerPreviewStub: PremiumManager {
 	var isPremium = false
 	var lifetimeDisplayPrice: String? = "$39.99"
@@ -13,3 +18,4 @@ final class PremiumManagerPreviewStub: PremiumManager {
 
 	func restorePurchases() async {}
 }
+#endif

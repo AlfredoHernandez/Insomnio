@@ -2,17 +2,21 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+import OSLog
 import StoreKit
 
 @Observable
+@MainActor
 final class StoreKitPremiumManager: PremiumManager {
 	private(set) var isPremium: Bool = false {
 		didSet { cache.isPremium = isPremium }
 	}
 
 	private var products: [Product] = []
-	private var transactionListener: Task<Void, Never>?
+	@ObservationIgnored
+	private nonisolated(unsafe) var transactionListener: Task<Void, Never>?
 	private var cache: any PremiumStatusCache
+	private let logger = Logger(subsystem: "io.alfredohdz.Insomnio", category: "StoreKitPremiumManager")
 
 	init(cache: any PremiumStatusCache = UserDefaultsPremiumStatusCache()) {
 		self.cache = cache
@@ -32,7 +36,9 @@ final class StoreKitPremiumManager: PremiumManager {
 	func loadProducts() async {
 		do {
 			products = try await Product.products(for: PremiumProduct.allCases.map(\.rawValue))
-		} catch {}
+		} catch {
+			logger.error("Failed to load products: \(error.localizedDescription, privacy: .public)")
+		}
 	}
 
 	func purchase(_ product: PremiumProduct) async throws -> Bool {
@@ -56,7 +62,11 @@ final class StoreKitPremiumManager: PremiumManager {
 	}
 
 	func restorePurchases() async {
-		try? await AppStore.sync()
+		do {
+			try await AppStore.sync()
+		} catch {
+			logger.error("AppStore.sync failed: \(error.localizedDescription, privacy: .public)")
+		}
 		await checkEntitlements()
 	}
 

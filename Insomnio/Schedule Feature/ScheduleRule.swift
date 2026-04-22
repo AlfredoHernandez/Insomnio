@@ -46,6 +46,24 @@ enum Weekday: Int, Codable, CaseIterable, Comparable {
 	}
 
 	var previous: Weekday {
-		Weekday(rawValue: rawValue == 1 ? 7 : rawValue - 1)!
+		Weekday(rawValue: rawValue == 1 ? 7 : rawValue - 1) ?? self
+	}
+
+	var shortLabel: String {
+		switch self {
+		case .sunday: "D"
+
+		case .monday: "L"
+
+		case .tuesday: "M"
+
+		case .wednesday: "X"
+
+		case .thursday: "J"
+
+		case .friday: "V"
+
+		case .saturday: "S"
+		}
 	}
 }

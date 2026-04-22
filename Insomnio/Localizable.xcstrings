@@ -396,6 +396,9 @@
         }
       }
     },
+    "launch_at_login_error_title" : {
+
+    },
     "launch_at_login_label" : {
       "localizations" : {
         "en" : {
@@ -542,6 +545,9 @@
           }
         }
       }
+    },
+    "ok" : {
+
     },
     "only_when_idle_desc" : {
       "localizations" : {

@@ -4,62 +4,62 @@
 
 @testable import Insomnio
 import CoreGraphics
+import Foundation
 import Testing
 
 @MainActor
-@Suite("Insomniac")
 struct InsomniacTests {
-	@Test("Init does not message mouse mover upon creation")
-	func init_doesNotMessageMouseMoverUponCreation() {
+	@Test
+	func `Init does not message mouse mover upon creation`() {
 		let (_, mover, _) = makeSUT()
 
 		#expect(mover.receivedMessages == [])
 	}
 
-	@Test("Init does not message sleep preventer upon creation")
-	func init_doesNotMessageSleepPreventerUponCreation() {
+	@Test
+	func `Init does not message sleep preventer upon creation`() {
 		let (_, _, sleepPreventer) = makeSUT()
 
 		#expect(sleepPreventer.receivedMessages == [])
 	}
 
-	@Test("Init is not active")
-	func init_isNotActive() {
+	@Test
+	func `Init is not active`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.isActive == false)
 	}
 
-	@Test("Init default interval is 30 seconds")
-	func init_defaultIntervalIs30Seconds() {
+	@Test
+	func `Init default interval is 30 seconds`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.interval == 30.0)
 	}
 
-	@Test("Init default mode is moveCursor")
-	func init_defaultModeIsMoveCursor() {
+	@Test
+	func `Init default mode is moveCursor`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.mode == .moveCursor)
 	}
 
-	@Test("Init activation count is zero")
-	func init_activationCountIsZero() {
+	@Test
+	func `Init activation count is zero`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.activationCount == 0)
 	}
 
-	@Test("Init last activation is nil")
-	func init_lastActivationIsNil() {
+	@Test
+	func `Init last activation is nil`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.lastActivation == nil)
 	}
 
-	@Test("Start sets isActive to true")
-	func start_setsIsActiveToTrue() {
+	@Test
+	func `Start sets isActive to true`() {
 		let (sut, _, _) = makeSUT()
 
 		sut.start()
@@ -67,8 +67,8 @@ struct InsomniacTests {
 		#expect(sut.isActive == true)
 	}
 
-	@Test("Start creates assertion in preventSleep mode")
-	func start_createsAssertionInPreventSleepMode() {
+	@Test
+	func `Start creates assertion in preventSleep mode`() {
 		let (sut, _, sleepPreventer) = makeSUT()
 		sut.mode = .preventSleep
 
@@ -77,8 +77,8 @@ struct InsomniacTests {
 		#expect(sleepPreventer.receivedMessages == [.createAssertion])
 	}
 
-	@Test("Start increments activation count in preventSleep mode")
-	func start_incrementsActivationCountInPreventSleepMode() {
+	@Test
+	func `Start increments activation count in preventSleep mode`() {
 		let (sut, _, _) = makeSUT()
 		sut.mode = .preventSleep
 
@@ -87,8 +87,8 @@ struct InsomniacTests {
 		#expect(sut.activationCount == 1)
 	}
 
-	@Test("Start sets last activation in preventSleep mode")
-	func start_setsLastActivationInPreventSleepMode() {
+	@Test
+	func `Start sets last activation in preventSleep mode`() {
 		let (sut, _, _) = makeSUT()
 		sut.mode = .preventSleep
 
@@ -97,8 +97,29 @@ struct InsomniacTests {
 		#expect(sut.lastActivation != nil)
 	}
 
-	@Test("Start does not start twice")
-	func start_doesNotStartTwice() {
+	@Test
+	func `Start uses injected clock for lastActivation in preventSleep mode`() {
+		let fixed = Date(timeIntervalSince1970: 1_700_000_000)
+		let (sut, _, _) = makeSUT(now: { fixed })
+		sut.mode = .preventSleep
+
+		sut.start()
+
+		#expect(sut.lastActivation == fixed)
+	}
+
+	@Test
+	func `keepAwake uses injected clock for lastActivation`() {
+		let fixed = Date(timeIntervalSince1970: 1_700_000_001)
+		let (sut, _, _) = makeSUT(now: { fixed })
+
+		sut.keepAwake()
+
+		#expect(sut.lastActivation == fixed)
+	}
+
+	@Test
+	func `Start does not start twice`() {
 		let timerScheduler = TimerSchedulerSpy()
 		let (sut, _, _) = makeSUT(timerScheduler: timerScheduler)
 
@@ -112,8 +133,8 @@ struct InsomniacTests {
 		#expect(scheduleCount == 1)
 	}
 
-	@Test("Stop sets isActive to false")
-	func stop_setsIsActiveToFalse() {
+	@Test
+	func `Stop sets isActive to false`() {
 		let (sut, _, _) = makeSUT()
 
 		sut.start()
@@ -122,8 +143,8 @@ struct InsomniacTests {
 		#expect(sut.isActive == false)
 	}
 
-	@Test("Stop releases assertion")
-	func stop_releasesAssertion() {
+	@Test
+	func `Stop releases assertion`() {
 		let (sut, _, sleepPreventer) = makeSUT()
 
 		sut.start()
@@ -132,8 +153,8 @@ struct InsomniacTests {
 		#expect(sleepPreventer.receivedMessages == [.releaseAssertion])
 	}
 
-	@Test("Stop releases assertion in preventSleep mode")
-	func stop_releasesAssertionInPreventSleepMode() {
+	@Test
+	func `Stop releases assertion in preventSleep mode`() {
 		let (sut, _, sleepPreventer) = makeSUT()
 		sut.mode = .preventSleep
 
@@ -143,8 +164,8 @@ struct InsomniacTests {
 		#expect(sleepPreventer.receivedMessages == [.createAssertion, .releaseAssertion])
 	}
 
-	@Test("Toggle starts when inactive")
-	func toggle_startsWhenInactive() {
+	@Test
+	func `Toggle starts when inactive`() {
 		let (sut, _, _) = makeSUT()
 
 		sut.toggle()
@@ -152,8 +173,8 @@ struct InsomniacTests {
 		#expect(sut.isActive == true)
 	}
 
-	@Test("Toggle stops when active")
-	func toggle_stopsWhenActive() {
+	@Test
+	func `Toggle stops when active`() {
 		let (sut, _, _) = makeSUT()
 
 		sut.start()
@@ -162,8 +183,8 @@ struct InsomniacTests {
 		#expect(sut.isActive == false)
 	}
 
-	@Test("keepAwake moves cursor right then back to original")
-	func keepAwake_movesCursorRightThenBackToOriginal() {
+	@Test
+	func `keepAwake moves cursor right then back to original`() {
 		let (sut, mover, _) = makeSUT()
 		mover.stubbedLocation = CGPoint(x: 50, y: 75)
 
@@ -176,8 +197,8 @@ struct InsomniacTests {
 		])
 	}
 
-	@Test("keepAwake increments activation count")
-	func keepAwake_incrementsActivationCount() {
+	@Test
+	func `keepAwake increments activation count`() {
 		let (sut, _, _) = makeSUT()
 
 		sut.keepAwake()
@@ -186,8 +207,8 @@ struct InsomniacTests {
 		#expect(sut.activationCount == 2)
 	}
 
-	@Test("keepAwake sets last activation")
-	func keepAwake_setsLastActivation() {
+	@Test
+	func `keepAwake sets last activation`() {
 		let (sut, _, _) = makeSUT()
 
 		sut.keepAwake()
@@ -197,15 +218,15 @@ struct InsomniacTests {
 
 	// MARK: - Idle Feature Tests
 
-	@Test("Init onlyWhenIdle defaults to false")
-	func init_onlyWhenIdleDefaultsToFalse() {
+	@Test
+	func `Init onlyWhenIdle defaults to false`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.onlyWhenIdle == false)
 	}
 
-	@Test("keepAwake when onlyWhenIdle and user active does not move cursor")
-	func keepAwake_whenOnlyWhenIdleAndUserActive_doesNotMoveCursor() {
+	@Test
+	func `keepAwake when onlyWhenIdle and user active does not move cursor`() {
 		let idleTimeProvider = IdleTimeProviderSpy()
 		let (sut, mover, _) = makeSUT(idleTimeProvider: idleTimeProvider)
 		sut.onlyWhenIdle = true
@@ -216,8 +237,8 @@ struct InsomniacTests {
 		#expect(mover.receivedMessages == [])
 	}
 
-	@Test("keepAwake when onlyWhenIdle and user idle moves cursor")
-	func keepAwake_whenOnlyWhenIdleAndUserIdle_movesCursor() {
+	@Test
+	func `keepAwake when onlyWhenIdle and user idle moves cursor`() {
 		let idleTimeProvider = IdleTimeProviderSpy()
 		let (sut, mover, _) = makeSUT(idleTimeProvider: idleTimeProvider)
 		sut.onlyWhenIdle = true
@@ -233,8 +254,8 @@ struct InsomniacTests {
 		])
 	}
 
-	@Test("keepAwake when onlyWhenIdle disabled always moves")
-	func keepAwake_whenOnlyWhenIdleDisabled_alwaysMoves() {
+	@Test
+	func `keepAwake when onlyWhenIdle disabled always moves`() {
 		let idleTimeProvider = IdleTimeProviderSpy()
 		let (sut, mover, _) = makeSUT(idleTimeProvider: idleTimeProvider)
 		sut.onlyWhenIdle = false
@@ -250,8 +271,8 @@ struct InsomniacTests {
 		])
 	}
 
-	@Test("keepAwake when onlyWhenIdle and user active does not increment count")
-	func keepAwake_whenOnlyWhenIdleAndUserActive_doesNotIncrementCount() {
+	@Test
+	func `keepAwake when onlyWhenIdle and user active does not increment count`() {
 		let idleTimeProvider = IdleTimeProviderSpy()
 		let (sut, _, _) = makeSUT(idleTimeProvider: idleTimeProvider)
 		sut.onlyWhenIdle = true
@@ -264,15 +285,15 @@ struct InsomniacTests {
 
 	// MARK: - Battery Feature Tests
 
-	@Test("Init pauseOnBattery defaults to false")
-	func init_pauseOnBatteryDefaultsToFalse() {
+	@Test
+	func `Init pauseOnBattery defaults to false`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.pauseOnBattery == false)
 	}
 
-	@Test("keepAwake when pauseOnBattery and on battery does not move cursor")
-	func keepAwake_whenPauseOnBatteryAndOnBattery_doesNotMoveCursor() {
+	@Test
+	func `keepAwake when pauseOnBattery and on battery does not move cursor`() {
 		let powerSourceProvider = PowerSourceProviderSpy()
 		let (sut, mover, _) = makeSUT(powerSourceProvider: powerSourceProvider)
 		sut.pauseOnBattery = true
@@ -283,8 +304,8 @@ struct InsomniacTests {
 		#expect(mover.receivedMessages == [])
 	}
 
-	@Test("keepAwake when pauseOnBattery and on AC moves cursor")
-	func keepAwake_whenPauseOnBatteryAndOnAC_movesCursor() {
+	@Test
+	func `keepAwake when pauseOnBattery and on AC moves cursor`() {
 		let powerSourceProvider = PowerSourceProviderSpy()
 		let (sut, mover, _) = makeSUT(powerSourceProvider: powerSourceProvider)
 		sut.pauseOnBattery = true
@@ -300,8 +321,8 @@ struct InsomniacTests {
 		])
 	}
 
-	@Test("keepAwake when pauseOnBattery disabled always moves")
-	func keepAwake_whenPauseOnBatteryDisabled_alwaysMoves() {
+	@Test
+	func `keepAwake when pauseOnBattery disabled always moves`() {
 		let powerSourceProvider = PowerSourceProviderSpy()
 		let (sut, mover, _) = makeSUT(powerSourceProvider: powerSourceProvider)
 		sut.pauseOnBattery = false
@@ -317,8 +338,8 @@ struct InsomniacTests {
 		])
 	}
 
-	@Test("Start preventSleep with pauseOnBattery and on battery does not create assertion")
-	func start_preventSleepAndPauseOnBatteryAndOnBattery_doesNotCreateAssertion() {
+	@Test
+	func `Start preventSleep with pauseOnBattery and on battery does not create assertion`() {
 		let powerSourceProvider = PowerSourceProviderSpy()
 		let (sut, _, sleepPreventer) = makeSUT(powerSourceProvider: powerSourceProvider)
 		sut.mode = .preventSleep
@@ -330,8 +351,8 @@ struct InsomniacTests {
 		#expect(!sleepPreventer.receivedMessages.contains(.createAssertion))
 	}
 
-	@Test("Start preventSleep with pauseOnBattery and on AC creates assertion")
-	func start_preventSleepAndPauseOnBatteryAndOnAC_createsAssertion() {
+	@Test
+	func `Start preventSleep with pauseOnBattery and on AC creates assertion`() {
 		let powerSourceProvider = PowerSourceProviderSpy()
 		let (sut, _, sleepPreventer) = makeSUT(powerSourceProvider: powerSourceProvider)
 		sut.mode = .preventSleep
@@ -345,15 +366,15 @@ struct InsomniacTests {
 
 	// MARK: - Cursor Pattern Tests
 
-	@Test("Init default cursor pattern is nudge")
-	func init_defaultCursorPatternIsNudge() {
+	@Test
+	func `Init default cursor pattern is nudge`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.cursorPattern == .nudge)
 	}
 
-	@Test("keepAwake with circle pattern moves cursor through circle points then back")
-	func keepAwake_withCirclePattern_movesCursorThroughCirclePointsThenBack() {
+	@Test
+	func `keepAwake with circle pattern moves cursor through circle points then back`() {
 		let (sut, mover, _) = makeSUT()
 		mover.stubbedLocation = CGPoint(x: 100, y: 100)
 		sut.cursorPattern = .circle
@@ -367,8 +388,8 @@ struct InsomniacTests {
 		#expect(messages.count == 10)
 	}
 
-	@Test("keepAwake with zigzag pattern moves cursor through zigzag points then back")
-	func keepAwake_withZigzagPattern_movesCursorThroughZigzagPointsThenBack() {
+	@Test
+	func `keepAwake with zigzag pattern moves cursor through zigzag points then back`() {
 		let (sut, mover, _) = makeSUT()
 		mover.stubbedLocation = CGPoint(x: 50, y: 50)
 		sut.cursorPattern = .zigzag
@@ -384,22 +405,22 @@ struct InsomniacTests {
 
 	// MARK: - Auto-Stop Tests
 
-	@Test("Init autoStopEnabled defaults to false")
-	func init_autoStopEnabledDefaultsToFalse() {
+	@Test
+	func `Init autoStopEnabled defaults to false`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.autoStopEnabled == false)
 	}
 
-	@Test("Init autoStopDuration defaults to one hour")
-	func init_autoStopDurationDefaultsToOneHour() {
+	@Test
+	func `Init autoStopDuration defaults to one hour`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.autoStopDuration == .oneHour)
 	}
 
-	@Test("Start with autoStop enabled starts auto-stop timer")
-	func start_withAutoStopEnabled_startsAutoStopTimer() {
+	@Test
+	func `Start with autoStop enabled starts auto-stop timer`() {
 		let autoStopTimer = AutoStopTimerSpy()
 		let (sut, _, _) = makeSUT(autoStopTimer: autoStopTimer)
 		sut.autoStopEnabled = true
@@ -410,8 +431,8 @@ struct InsomniacTests {
 		#expect(autoStopTimer.receivedMessages == [.start(7200)])
 	}
 
-	@Test("Start with autoStop disabled does not start auto-stop timer")
-	func start_withAutoStopDisabled_doesNotStartAutoStopTimer() {
+	@Test
+	func `Start with autoStop disabled does not start auto-stop timer`() {
 		let autoStopTimer = AutoStopTimerSpy()
 		let (sut, _, _) = makeSUT(autoStopTimer: autoStopTimer)
 		sut.autoStopEnabled = false
@@ -421,8 +442,8 @@ struct InsomniacTests {
 		#expect(autoStopTimer.receivedMessages == [])
 	}
 
-	@Test("Stop cancels auto-stop timer")
-	func stop_cancelsAutoStopTimer() {
+	@Test
+	func `Stop cancels auto-stop timer`() {
 		let autoStopTimer = AutoStopTimerSpy()
 		let (sut, _, _) = makeSUT(autoStopTimer: autoStopTimer)
 		sut.autoStopEnabled = true
@@ -433,8 +454,8 @@ struct InsomniacTests {
 		#expect(autoStopTimer.receivedMessages == [.start(3600), .cancel])
 	}
 
-	@Test("Auto-stop timer expiration stops insomniac")
-	func autoStopTimerExpiration_stopsInsomniac() {
+	@Test
+	func `Auto-stop timer expiration stops insomniac`() {
 		let autoStopTimer = AutoStopTimerSpy()
 		let (sut, _, _) = makeSUT(autoStopTimer: autoStopTimer)
 		sut.autoStopEnabled = true
@@ -447,8 +468,8 @@ struct InsomniacTests {
 		#expect(sut.isActive == false)
 	}
 
-	@Test("autoStopRemainingTime delegates to timer")
-	func autoStopRemainingTime_delegatesToTimer() {
+	@Test
+	func `autoStopRemainingTime delegates to timer`() {
 		let autoStopTimer = AutoStopTimerSpy()
 		let (sut, _, _) = makeSUT(autoStopTimer: autoStopTimer)
 		sut.autoStopEnabled = true
@@ -458,8 +479,8 @@ struct InsomniacTests {
 		#expect(sut.autoStopRemainingTime == autoStopTimer.remainingTime)
 	}
 
-	@Test("autoStopIsRunning delegates to timer")
-	func autoStopIsRunning_delegatesToTimer() {
+	@Test
+	func `autoStopIsRunning delegates to timer`() {
 		let autoStopTimer = AutoStopTimerSpy()
 		let (sut, _, _) = makeSUT(autoStopTimer: autoStopTimer)
 		sut.autoStopEnabled = true
@@ -469,15 +490,15 @@ struct InsomniacTests {
 		#expect(sut.autoStopIsRunning == autoStopTimer.isRunning)
 	}
 
-	@Test("autoStopRemainingTime returns zero when no timer")
-	func autoStopRemainingTime_returnsZeroWhenNoTimer() {
+	@Test
+	func `autoStopRemainingTime returns zero when no timer`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.autoStopRemainingTime == 0)
 	}
 
-	@Test("autoStopIsRunning returns false when no timer")
-	func autoStopIsRunning_returnsFalseWhenNoTimer() {
+	@Test
+	func `autoStopIsRunning returns false when no timer`() {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.autoStopIsRunning == false)
@@ -485,8 +506,8 @@ struct InsomniacTests {
 
 	// MARK: - Timer Scheduler Tests
 
-	@Test("Start in moveCursor mode schedules timer with configured interval")
-	func start_moveCursor_schedulesTimerWithConfiguredInterval() {
+	@Test
+	func `Start in moveCursor mode schedules timer with configured interval`() {
 		let timerScheduler = TimerSchedulerSpy()
 		let (sut, _, _) = makeSUT(timerScheduler: timerScheduler)
 		sut.interval = 45
@@ -496,8 +517,8 @@ struct InsomniacTests {
 		#expect(timerScheduler.receivedMessages == [.schedule(interval: 45)])
 	}
 
-	@Test("Start in moveCursor mode timer fire calls keepAwake")
-	func start_moveCursor_timerFireCallsKeepAwake() {
+	@Test
+	func `Start in moveCursor mode timer fire calls keepAwake`() {
 		let timerScheduler = TimerSchedulerSpy()
 		let (sut, mover, _) = makeSUT(timerScheduler: timerScheduler)
 		mover.stubbedLocation = CGPoint(x: 50, y: 75)
@@ -508,8 +529,8 @@ struct InsomniacTests {
 		#expect(mover.receivedMessages.contains(.currentLocation))
 	}
 
-	@Test("Stop invalidates scheduled timer")
-	func stop_invalidatesScheduledTimer() {
+	@Test
+	func `Stop invalidates scheduled timer`() {
 		let timerScheduler = TimerSchedulerSpy()
 		let (sut, _, _) = makeSUT(timerScheduler: timerScheduler)
 
@@ -519,8 +540,8 @@ struct InsomniacTests {
 		#expect(timerScheduler.receivedMessages.contains(.invalidate))
 	}
 
-	@Test("Start in preventSleep with pauseOnBattery schedules power check timer")
-	func start_preventSleep_pauseOnBattery_schedulesPowerCheckTimer() {
+	@Test
+	func `Start in preventSleep with pauseOnBattery schedules power check timer`() {
 		let powerSourceProvider = PowerSourceProviderSpy()
 		powerSourceProvider.stubbedIsOnBattery = false
 		let timerScheduler = TimerSchedulerSpy()
@@ -535,8 +556,8 @@ struct InsomniacTests {
 
 	// MARK: - Memory Leak Tracking
 
-	@Test("makeSUT does not leak after start and stop")
-	func makeSUT_doesNotLeakAfterStartAndStop() {
+	@Test
+	func `makeSUT does not leak after start and stop`() {
 		assertNoLeaks {
 			let (sut, mover, sleepPreventer) = makeSUT()
 			sut.start()
@@ -552,6 +573,7 @@ struct InsomniacTests {
 		powerSourceProvider: PowerSourceProviderSpy? = nil,
 		autoStopTimer: AutoStopTimerSpy? = nil,
 		timerScheduler: TimerSchedulerSpy? = nil,
+		now: @escaping () -> Date = { Date() },
 	) -> (sut: Insomniac, mover: MouseMoverSpy, sleepPreventer: SleepPreventerSpy) {
 		let mover = MouseMoverSpy()
 		let sleepPreventer = SleepPreventerSpy()
@@ -562,6 +584,7 @@ struct InsomniacTests {
 			powerSourceProvider: powerSourceProvider,
 			autoStopTimer: autoStopTimer,
 			timerScheduler: timerScheduler ?? TimerSchedulerSpy(),
+			now: now,
 		)
 		return (sut, mover, sleepPreventer)
 	}

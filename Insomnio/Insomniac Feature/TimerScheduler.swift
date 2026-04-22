@@ -11,5 +11,5 @@ protocol TimerCancellable {
 extension Timer: TimerCancellable {}
 
 protocol TimerScheduler {
-	func schedule(interval: TimeInterval, repeats: Bool, block: @escaping () -> Void) -> TimerCancellable
+	func schedule(interval: TimeInterval, repeats: Bool, block: @escaping @MainActor () -> Void) -> TimerCancellable
 }

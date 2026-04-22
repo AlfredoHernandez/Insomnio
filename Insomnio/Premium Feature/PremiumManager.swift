@@ -2,7 +2,9 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-protocol PremiumManager: AnyObject {
+import Observation
+
+protocol PremiumManager: AnyObject, Observable {
 	var isPremium: Bool { get }
 	var lifetimeDisplayPrice: String? { get }
 	func refreshStatus() async

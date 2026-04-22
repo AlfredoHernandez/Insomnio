@@ -9,6 +9,7 @@ struct OptionsSection: View {
 	@Binding var pauseOnBattery: Bool
 	let isPreventSleepMode: Bool
 	let launchAtLoginManager: any LaunchAtLoginManager
+	@State private var launchAtLoginError: String?
 
 	var body: some View {
 		CardView {
@@ -35,13 +36,29 @@ struct OptionsSection: View {
 				Toggle("launch_at_login_label", isOn: Binding(
 					get: { launchAtLoginManager.isEnabled },
 					set: { newValue in
-						try? newValue
-							? launchAtLoginManager.enable()
-							: launchAtLoginManager.disable()
+						do {
+							try newValue
+								? launchAtLoginManager.enable()
+								: launchAtLoginManager.disable()
+						} catch {
+							launchAtLoginError = error.localizedDescription
+						}
 					},
 				))
 			}
 			.toggleStyle(.checkbox)
+		}
+		.alert(
+			"launch_at_login_error_title",
+			isPresented: Binding(
+				get: { launchAtLoginError != nil },
+				set: { if !$0 { launchAtLoginError = nil } },
+			),
+			presenting: launchAtLoginError,
+		) { _ in
+			Button("ok") { launchAtLoginError = nil }
+		} message: { message in
+			Text(message)
 		}
 	}
 }

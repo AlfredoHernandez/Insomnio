@@ -4,11 +4,11 @@
 
 import CoreGraphics
 
-protocol CursorPatternStrategy {
-	func points(from origin: CGPoint) -> [CGPoint]
+protocol CursorPatternStrategy: Sendable {
+	nonisolated func points(from origin: CGPoint) -> [CGPoint]
 }
 
-enum CursorPattern: CaseIterable, Hashable {
+nonisolated enum CursorPattern: CaseIterable, Hashable {
 	case nudge
 	case circle
 	case zigzag
@@ -29,9 +29,5 @@ enum CursorPattern: CaseIterable, Hashable {
 
 		case .random: Self.randomStrategy
 		}
-	}
-
-	var isFree: Bool {
-		self == .nudge
 	}
 }

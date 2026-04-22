@@ -5,6 +5,7 @@
 import Foundation
 
 @Observable
+@MainActor
 final class FoundationAutoStopTimer: AutoStopTimer {
 	private(set) var isRunning: Bool = false
 	private(set) var remainingTime: TimeInterval = 0
@@ -26,7 +27,9 @@ final class FoundationAutoStopTimer: AutoStopTimer {
 		isRunning = true
 
 		timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-			self?.tick()
+			MainActor.assumeIsolated {
+				self?.tick()
+			}
 		}
 	}
 

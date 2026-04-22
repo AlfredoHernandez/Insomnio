@@ -6,10 +6,9 @@
 import Testing
 
 @MainActor
-@Suite("AutomationCoordinator")
 struct AutomationCoordinatorTests {
-	@Test("Evaluate with no automation does not start")
-	func evaluate_noAutomation_doesNotStart() {
+	@Test
+	func `Evaluate with no automation does not start`() {
 		let (sut, _, _, insomniac, _) = makeSUT()
 
 		sut.evaluate()
@@ -17,8 +16,8 @@ struct AutomationCoordinatorTests {
 		#expect(insomniac.isActive == false)
 	}
 
-	@Test("Evaluate with schedule active starts insomniac")
-	func evaluate_scheduleActive_startsInsomniac() {
+	@Test
+	func `Evaluate with schedule active starts insomniac`() {
 		let (sut, schedule, _, insomniac, _) = makeSUT()
 		schedule.stubbedShouldBeActive = true
 
@@ -27,8 +26,8 @@ struct AutomationCoordinatorTests {
 		#expect(insomniac.isActive == true)
 	}
 
-	@Test("Evaluate with app rule active starts insomniac")
-	func evaluate_appRuleActive_startsInsomniac() {
+	@Test
+	func `Evaluate with app rule active starts insomniac`() {
 		let (sut, _, appRules, insomniac, _) = makeSUT()
 		appRules.stubbedShouldBeActive = true
 
@@ -37,8 +36,8 @@ struct AutomationCoordinatorTests {
 		#expect(insomniac.isActive == true)
 	}
 
-	@Test("Evaluate with automation becoming inactive stops insomniac")
-	func evaluate_automationBecomesInactive_stopsInsomniac() {
+	@Test
+	func `Evaluate with automation becoming inactive stops insomniac`() {
 		let (sut, schedule, _, insomniac, _) = makeSUT()
 		schedule.stubbedShouldBeActive = true
 		sut.evaluate()
@@ -50,8 +49,8 @@ struct AutomationCoordinatorTests {
 		#expect(insomniac.isActive == false)
 	}
 
-	@Test("Evaluate with manual override does not undo user action")
-	func evaluate_manualOverride_doesNotUndoUserAction() {
+	@Test
+	func `Evaluate with manual override does not undo user action`() {
 		let (sut, schedule, _, insomniac, _) = makeSUT()
 		schedule.stubbedShouldBeActive = true
 		sut.evaluate()
@@ -64,8 +63,8 @@ struct AutomationCoordinatorTests {
 		#expect(insomniac.isActive == false)
 	}
 
-	@Test("Evaluate clears manual override when automation agrees with state")
-	func evaluate_manualOverrideClearsWhenAutomationAgreesWithState() {
+	@Test
+	func `Evaluate clears manual override when automation agrees with state`() {
 		let (sut, schedule, _, insomniac, _) = makeSUT()
 		schedule.stubbedShouldBeActive = true
 		sut.evaluate()
@@ -80,8 +79,8 @@ struct AutomationCoordinatorTests {
 		#expect(insomniac.isActive == true)
 	}
 
-	@Test("Evaluate with both active starts insomniac once")
-	func evaluate_bothActive_startsInsomniac() {
+	@Test
+	func `Evaluate with both active starts insomniac once`() {
 		let (sut, schedule, appRules, insomniac, _) = makeSUT()
 		schedule.stubbedShouldBeActive = true
 		appRules.stubbedShouldBeActive = true
@@ -91,8 +90,8 @@ struct AutomationCoordinatorTests {
 		#expect(insomniac.isActive == true)
 	}
 
-	@Test("Evaluate does not restart already active insomniac")
-	func evaluate_doesNotRestartAlreadyActive() {
+	@Test
+	func `Evaluate does not restart already active insomniac`() {
 		let (sut, schedule, _, insomniac, _) = makeSUT()
 		schedule.stubbedShouldBeActive = true
 
@@ -106,8 +105,8 @@ struct AutomationCoordinatorTests {
 
 	// MARK: - Timer Scheduler Tests
 
-	@Test("Start monitoring schedules timer every 60 seconds")
-	func startMonitoring_schedulesTimerEvery60Seconds() {
+	@Test
+	func `Start monitoring schedules timer every 60 seconds`() {
 		let (sut, _, _, _, timerScheduler) = makeSUT()
 
 		sut.startMonitoring()
@@ -115,8 +114,8 @@ struct AutomationCoordinatorTests {
 		#expect(timerScheduler.receivedMessages == [.schedule(interval: 60)])
 	}
 
-	@Test("Start monitoring timer fire calls evaluate")
-	func startMonitoring_timerFireCallsEvaluate() {
+	@Test
+	func `Start monitoring timer fire calls evaluate`() {
 		let (sut, schedule, _, insomniac, timerScheduler) = makeSUT()
 		schedule.stubbedShouldBeActive = true
 
@@ -129,8 +128,8 @@ struct AutomationCoordinatorTests {
 		#expect(insomniac.isActive == true)
 	}
 
-	@Test("Stop monitoring invalidates timer")
-	func stopMonitoring_invalidatesTimer() {
+	@Test
+	func `Stop monitoring invalidates timer`() {
 		let (sut, _, _, _, timerScheduler) = makeSUT()
 
 		sut.startMonitoring()
@@ -141,8 +140,8 @@ struct AutomationCoordinatorTests {
 
 	// MARK: - Memory Leak Tracking
 
-	@Test("makeSUT does not leak after evaluate cycle")
-	func makeSUT_doesNotLeakAfterEvaluateCycle() {
+	@Test
+	func `makeSUT does not leak after evaluate cycle`() {
 		assertNoLeaks {
 			let (sut, schedule, appRules, insomniac, timerScheduler) = makeSUT()
 			schedule.stubbedShouldBeActive = true
@@ -157,13 +156,13 @@ struct AutomationCoordinatorTests {
 
 	private func makeSUT() -> (
 		sut: AutomationCoordinator,
-		schedule: ScheduleEvaluatorStub,
-		appRules: AppRulesEvaluatorStub,
+		schedule: ScheduleEvaluatorPreviewStub,
+		appRules: AppRulesEvaluatorPreviewStub,
 		insomniac: Insomniac,
 		timerScheduler: TimerSchedulerSpy,
 	) {
-		let schedule = ScheduleEvaluatorStub()
-		let appRules = AppRulesEvaluatorStub()
+		let schedule = ScheduleEvaluatorPreviewStub()
+		let appRules = AppRulesEvaluatorPreviewStub()
 		let insomniac = Insomniac(
 			mouseMover: MouseMoverSpy(),
 			sleepPreventer: SleepPreventerSpy(),

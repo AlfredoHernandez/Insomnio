@@ -97,12 +97,7 @@ private struct ScheduleRuleRow: View {
 	}
 
 	private var weekdayText: String {
-		let abbreviations: [Weekday: String] = [
-			.monday: "L", .tuesday: "M", .wednesday: "X",
-			.thursday: "J", .friday: "V", .saturday: "S", .sunday: "D",
-		]
-		let sorted = rule.weekdays.sorted()
-		return sorted.map { abbreviations[$0] ?? "" }.joined(separator: " ")
+		rule.weekdays.sorted().map(\.shortLabel).joined(separator: " ")
 	}
 
 	private var timeRangeText: String {
@@ -202,27 +197,9 @@ private struct WeekdayButton: View {
 	let isSelected: Bool
 	let onToggle: () -> Void
 
-	private var label: String {
-		switch day {
-		case .sunday: "D"
-
-		case .monday: "L"
-
-		case .tuesday: "M"
-
-		case .wednesday: "X"
-
-		case .thursday: "J"
-
-		case .friday: "V"
-
-		case .saturday: "S"
-		}
-	}
-
 	var body: some View {
 		Button(action: onToggle) {
-			Text(label)
+			Text(day.shortLabel)
 				.font(.system(size: 11, weight: .medium))
 				.frame(width: 28, height: 28)
 				.background(isSelected ? Color.accentColor : Color.clear)

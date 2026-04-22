@@ -20,7 +20,6 @@ struct PaywallView: View {
 		}
 		.frame(width: 380)
 		.fixedSize(horizontal: false, vertical: true)
-		.task { await premiumManager.loadProducts() }
 	}
 
 	private var subscriptionSection: some View {
@@ -106,11 +105,8 @@ struct PaywallView: View {
 	}
 
 	private func dismissAfterPurchase() {
-		Task {
-			await premiumManager.restorePurchases()
-			if premiumManager.isPremium {
-				dismiss()
-			}
+		if premiumManager.isPremium {
+			dismiss()
 		}
 	}
 
