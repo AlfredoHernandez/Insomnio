@@ -6,9 +6,9 @@ import Foundation
 import TimerScheduler
 
 @Observable
-final class FoundationAutoStopTimer: AutoStopTimer {
-	private(set) var isRunning: Bool = false
-	private(set) var remainingTime: TimeInterval = 0
+public final class FoundationAutoStopTimer: AutoStopTimer {
+	public private(set) var isRunning: Bool = false
+	public private(set) var remainingTime: TimeInterval = 0
 
 	private let timerScheduler: any TimerScheduler
 	private let now: () -> Date
@@ -16,7 +16,7 @@ final class FoundationAutoStopTimer: AutoStopTimer {
 	private var expirationDate: Date?
 	private var onExpired: (() -> Void)?
 
-	init(
+	public init(
 		timerScheduler: any TimerScheduler = FoundationTimerScheduler(),
 		now: @escaping () -> Date = { Date() },
 	) {
@@ -24,7 +24,7 @@ final class FoundationAutoStopTimer: AutoStopTimer {
 		self.now = now
 	}
 
-	func start(duration: AutoStopDuration, onExpired: @escaping () -> Void) {
+	public func start(duration: AutoStopDuration, onExpired: @escaping () -> Void) {
 		cancel()
 		self.onExpired = onExpired
 		remainingTime = duration.seconds
@@ -36,7 +36,7 @@ final class FoundationAutoStopTimer: AutoStopTimer {
 		}
 	}
 
-	func cancel() {
+	public func cancel() {
 		timer?.invalidate()
 		timer = nil
 		isRunning = false

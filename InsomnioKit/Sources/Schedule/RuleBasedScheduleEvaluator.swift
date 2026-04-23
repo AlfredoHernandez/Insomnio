@@ -6,18 +6,18 @@ import Foundation
 import RuleStore
 
 @Observable
-final class RuleBasedScheduleEvaluator: ScheduleEvaluator {
+public final class RuleBasedScheduleEvaluator: ScheduleEvaluator {
 	private let dateProvider: DateProvider
 	private let store: any RuleStore<ScheduleRule>
-	var rules: [ScheduleRule]
+	public var rules: [ScheduleRule]
 
-	init(dateProvider: DateProvider, store: any RuleStore<ScheduleRule>) {
+	public init(dateProvider: DateProvider, store: any RuleStore<ScheduleRule>) {
 		self.dateProvider = dateProvider
 		self.store = store
 		rules = store.loadRules()
 	}
 
-	func shouldBeActive() -> Bool {
+	public func shouldBeActive() -> Bool {
 		let weekday = dateProvider.currentWeekday()
 		let hour = dateProvider.currentHour()
 		let minute = dateProvider.currentMinute()
@@ -43,17 +43,17 @@ final class RuleBasedScheduleEvaluator: ScheduleEvaluator {
 		}
 	}
 
-	func addRule(_ rule: ScheduleRule) {
+	public func addRule(_ rule: ScheduleRule) {
 		rules.append(rule)
 		store.saveRules(rules)
 	}
 
-	func removeRule(id: UUID) {
+	public func removeRule(id: UUID) {
 		rules.removeAll { $0.id == id }
 		store.saveRules(rules)
 	}
 
-	func updateRule(_ rule: ScheduleRule) {
+	public func updateRule(_ rule: ScheduleRule) {
 		guard let index = rules.firstIndex(where: { $0.id == rule.id }) else { return }
 		rules[index] = rule
 		store.saveRules(rules)

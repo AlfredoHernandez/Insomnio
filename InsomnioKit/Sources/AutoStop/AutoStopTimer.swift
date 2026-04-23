@@ -4,13 +4,13 @@
 
 import Foundation
 
-enum AutoStopDuration: Hashable {
+public enum AutoStopDuration: Hashable {
 	case thirtyMinutes
 	case oneHour
 	case twoHours
 	case fourHours
 
-	var seconds: TimeInterval {
+	public var seconds: TimeInterval {
 		switch self {
 		case .thirtyMinutes: 1800
 
@@ -22,12 +22,12 @@ enum AutoStopDuration: Hashable {
 		}
 	}
 
-	static var presets: [AutoStopDuration] {
+	public static var presets: [AutoStopDuration] {
 		[.thirtyMinutes, .oneHour, .twoHours, .fourHours]
 	}
 }
 
-protocol AutoStopTimer: AnyObject {
+public protocol AutoStopTimer: AnyObject {
 	var isRunning: Bool { get }
 	var remainingTime: TimeInterval { get }
 	func start(duration: AutoStopDuration, onExpired: @escaping () -> Void)

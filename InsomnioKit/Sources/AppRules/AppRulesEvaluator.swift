@@ -4,11 +4,11 @@
 
 import Foundation
 
-protocol AppRulesEvaluating: AnyObject {
+public protocol AppRulesEvaluating: AnyObject {
 	func shouldBeActive() -> Bool
 }
 
-protocol AppRulesEvaluator: AppRulesEvaluating {
+public protocol AppRulesEvaluator: AppRulesEvaluating {
 	var rules: [AppRule] { get }
 	func addRule(_ rule: AppRule)
 	func removeRule(id: UUID)

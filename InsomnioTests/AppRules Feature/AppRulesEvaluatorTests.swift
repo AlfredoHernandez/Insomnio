@@ -3,6 +3,7 @@
 //
 
 @testable import Insomnio
+import AppRules
 import Testing
 
 @MainActor

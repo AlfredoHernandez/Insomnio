@@ -4,8 +4,10 @@
 
 import AppKit
 
-final class NSWorkspaceRunningAppProvider: RunningAppProvider {
-	func runningAppBundleIdentifiers() -> Set<String> {
+public final class NSWorkspaceRunningAppProvider: RunningAppProvider {
+	public init() {}
+
+	public func runningAppBundleIdentifiers() -> Set<String> {
 		Set(NSWorkspace.shared.runningApplications.compactMap(\.bundleIdentifier))
 	}
 }

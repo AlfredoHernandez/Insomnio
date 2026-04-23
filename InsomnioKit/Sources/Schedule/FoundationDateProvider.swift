@@ -4,17 +4,19 @@
 
 import Foundation
 
-final class FoundationDateProvider: DateProvider {
-	func currentWeekday() -> Weekday {
+public final class FoundationDateProvider: DateProvider {
+	public init() {}
+
+	public func currentWeekday() -> Weekday {
 		let component = Calendar.current.component(.weekday, from: Date())
 		return Weekday(rawValue: component) ?? .sunday
 	}
 
-	func currentHour() -> Int {
+	public func currentHour() -> Int {
 		Calendar.current.component(.hour, from: Date())
 	}
 
-	func currentMinute() -> Int {
+	public func currentMinute() -> Int {
 		Calendar.current.component(.minute, from: Date())
 	}
 }

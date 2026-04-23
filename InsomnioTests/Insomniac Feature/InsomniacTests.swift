@@ -3,6 +3,7 @@
 //
 
 @testable import Insomnio
+import AutoStop
 import CoreGraphics
 import CursorPattern
 import Foundation

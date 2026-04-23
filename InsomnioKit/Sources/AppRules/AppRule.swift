@@ -4,13 +4,13 @@
 
 import Foundation
 
-struct AppRule: Codable, Equatable, Identifiable {
-	let id: UUID
-	var bundleIdentifier: String
-	var displayName: String
-	var isEnabled: Bool
+public struct AppRule: Codable, Equatable, Identifiable {
+	public let id: UUID
+	public var bundleIdentifier: String
+	public var displayName: String
+	public var isEnabled: Bool
 
-	init(
+	public init(
 		id: UUID = UUID(),
 		bundleIdentifier: String,
 		displayName: String,

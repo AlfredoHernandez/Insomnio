@@ -3,6 +3,7 @@
 //
 
 @testable import Insomnio
+import Schedule
 import Testing
 
 @MainActor

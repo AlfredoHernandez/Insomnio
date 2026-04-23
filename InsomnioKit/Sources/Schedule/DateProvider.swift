@@ -4,7 +4,7 @@
 
 import Foundation
 
-protocol DateProvider {
+public protocol DateProvider {
 	func currentWeekday() -> Weekday
 	func currentHour() -> Int
 	func currentMinute() -> Int

@@ -3,9 +3,11 @@
 //
 
 #if DEBUG
+import AppRules
 import Foundation
 
-final class AppRulesEvaluatorPreviewStub: AppRulesEvaluator {
+@MainActor
+final class AppRulesEvaluatorPreviewStub: @MainActor AppRulesEvaluator {
 	var rules: [AppRule] = []
 	var stubbedShouldBeActive = false
 

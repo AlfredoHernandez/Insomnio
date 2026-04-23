@@ -3,8 +3,10 @@
 //
 
 import AccessibilityPermission
+import AppRules
 import LaunchAtLogin
 import Premium
+import Schedule
 import SwiftUI
 
 struct InsomnioView: View {

@@ -4,8 +4,10 @@
 
 #if DEBUG
 import Foundation
+import Schedule
 
-final class ScheduleEvaluatorPreviewStub: ScheduleEvaluator {
+@MainActor
+final class ScheduleEvaluatorPreviewStub: @MainActor ScheduleEvaluator {
 	var rules: [ScheduleRule] = []
 	var stubbedShouldBeActive = false
 

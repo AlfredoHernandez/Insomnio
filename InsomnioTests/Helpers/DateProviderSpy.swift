@@ -3,6 +3,7 @@
 //
 
 @testable import Insomnio
+import Schedule
 
 @MainActor
 final class DateProviderSpy: DateProvider {

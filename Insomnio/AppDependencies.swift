@@ -3,10 +3,13 @@
 //
 
 import AccessibilityPermission
+import AppRules
+import AutoStop
 import Foundation
 import LaunchAtLogin
 import Premium
 import RuleStore
+import Schedule
 import Shortcut
 import TimerScheduler
 

@@ -3,6 +3,7 @@
 //
 
 @testable import Insomnio
+import AppRules
 
 @MainActor
 final class RunningAppProviderSpy: RunningAppProvider {

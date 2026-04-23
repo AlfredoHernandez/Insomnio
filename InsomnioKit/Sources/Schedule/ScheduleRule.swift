@@ -4,16 +4,16 @@
 
 import Foundation
 
-struct ScheduleRule: Codable, Equatable, Identifiable {
-	let id: UUID
-	var weekdays: Set<Weekday>
-	var startHour: Int
-	var startMinute: Int
-	var endHour: Int
-	var endMinute: Int
-	var isEnabled: Bool
+public struct ScheduleRule: Codable, Equatable, Identifiable {
+	public let id: UUID
+	public var weekdays: Set<Weekday>
+	public var startHour: Int
+	public var startMinute: Int
+	public var endHour: Int
+	public var endMinute: Int
+	public var isEnabled: Bool
 
-	init(
+	public init(
 		id: UUID = UUID(),
 		weekdays: Set<Weekday> = [],
 		startHour: Int = 9,
@@ -32,7 +32,7 @@ struct ScheduleRule: Codable, Equatable, Identifiable {
 	}
 }
 
-enum Weekday: Int, Codable, CaseIterable, Comparable {
+public enum Weekday: Int, Codable, CaseIterable, Comparable {
 	case sunday = 1
 	case monday = 2
 	case tuesday = 3
@@ -41,15 +41,15 @@ enum Weekday: Int, Codable, CaseIterable, Comparable {
 	case friday = 6
 	case saturday = 7
 
-	static func < (lhs: Weekday, rhs: Weekday) -> Bool {
+	public static func < (lhs: Weekday, rhs: Weekday) -> Bool {
 		lhs.rawValue < rhs.rawValue
 	}
 
-	var previous: Weekday {
+	public var previous: Weekday {
 		Weekday(rawValue: rawValue == 1 ? 7 : rawValue - 1) ?? self
 	}
 
-	var shortLabel: String {
+	public var shortLabel: String {
 		switch self {
 		case .sunday: "D"
 
