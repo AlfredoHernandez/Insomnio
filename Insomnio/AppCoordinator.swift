@@ -15,6 +15,10 @@ final class AppCoordinator {
 	private var hasStarted = false
 	private var menuBarController: MenuBarPopoverController?
 	private nonisolated(unsafe) var terminationObserver: (any NSObjectProtocol)?
+	/// The unstructured task kicked off by `start()` to load StoreKit products.
+	/// Exposed so tests can `await` its completion deterministically instead of
+	/// polling with `Task.yield()`.
+	private(set) var bootstrapTask: Task<Void, Never>?
 
 	init(dependencies: AppDependencies) {
 		self.dependencies = dependencies
@@ -37,7 +41,7 @@ final class AppCoordinator {
 			dependencies.insomniac.toggle()
 		}
 		dependencies.automationCoordinator.startMonitoring()
-		Task {
+		bootstrapTask = Task { [dependencies] in
 			await dependencies.premiumManager.loadProducts()
 		}
 

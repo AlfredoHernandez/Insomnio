@@ -14,21 +14,19 @@ import TimerSchedulerTesting
 @MainActor
 struct AppCoordinatorTests {
 	@Test
-	func `Start registers shortcut`() async {
+	func `Start registers shortcut`() {
 		let (sut, spies) = makeSUT()
 
 		sut.start()
-		await Task.yield()
 
 		#expect(spies.shortcut.receivedMessages == [.registerShortcut])
 	}
 
 	@Test
-	func `Start calls automation startMonitoring`() async {
+	func `Start calls automation startMonitoring`() {
 		let (sut, spies) = makeSUT()
 
 		sut.start()
-		await Task.yield()
 
 		#expect(spies.automation.receivedMessages == [.startMonitoring])
 	}
@@ -38,29 +36,27 @@ struct AppCoordinatorTests {
 		let (sut, spies) = makeSUT()
 
 		sut.start()
-		await waitUntil { spies.premium.receivedMessages.contains(.loadProducts) }
+		await sut.bootstrapTask?.value
 
 		#expect(spies.premium.receivedMessages.contains(.loadProducts))
 	}
 
 	@Test
-	func `Start is idempotent and does not re-register on second call`() async {
+	func `Start is idempotent and does not re-register on second call`() {
 		let (sut, spies) = makeSUT()
 
 		sut.start()
 		sut.start()
-		await Task.yield()
 
 		#expect(spies.shortcut.receivedMessages == [.registerShortcut])
 		#expect(spies.automation.receivedMessages == [.startMonitoring])
 	}
 
 	@Test
-	func `Shortcut action toggles insomniac`() async {
+	func `Shortcut action toggles insomniac`() {
 		let (sut, spies) = makeSUT()
 
 		sut.start()
-		await Task.yield()
 		spies.shortcut.registeredAction?()
 
 		#expect(spies.insomniac.isActive == true)
@@ -70,7 +66,6 @@ struct AppCoordinatorTests {
 	func `willTerminate notification stops automation and insomniac`() async {
 		let (sut, spies) = makeSUT()
 		sut.start()
-		await Task.yield()
 		spies.insomniac.start()
 		#expect(spies.insomniac.isActive == true)
 
