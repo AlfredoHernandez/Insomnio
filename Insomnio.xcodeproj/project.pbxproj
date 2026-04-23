@@ -6,15 +6,26 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		AA01010101010101AA000005 /* CursorPattern in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000002 /* CursorPattern */; };
+		AA01010101010101AA000006 /* RuleStore in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000003 /* RuleStore */; };
+		AA01010101010101AA000007 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000004 /* LaunchAtLogin */; };
+		AA01010101010101AA000015 /* TimerScheduler in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000012 /* TimerScheduler */; };
+		AA01010101010101AA000016 /* AccessibilityPermission in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000013 /* AccessibilityPermission */; };
+		AA01010101010101AA000017 /* Shortcut in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000014 /* Shortcut */; };
+		AA01010101010101AA000018 /* Premium in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000019 /* Premium */; };
+		AA01010101010101AA000021 /* AutoStop in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000020 /* AutoStop */; };
+		AA01010101010101AA000023 /* Schedule in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000022 /* Schedule */; };
+		AA01010101010101AA000025 /* AppRules in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000024 /* AppRules */; };
+		AA01010101010101AA000027 /* Insomniac in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000026 /* Insomniac */; };
+		AA01010101010101AA000029 /* Automation in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000028 /* Automation */; };
+		AA01010101010101AA000031 /* TestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000030 /* TestSupport */; };
+		AA01010101010101AA000033 /* InsomniacTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000032 /* InsomniacTesting */; };
+		AA01010101010101AA000035 /* TimerSchedulerTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000034 /* TimerSchedulerTesting */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		384DA66E2F4295FE0059E034 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 384DA6582F4295FE0059E034 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 384DA65F2F4295FE0059E034;
-			remoteInfo = Insomnio;
-		};
-		384DA6782F4295FE0059E034 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 384DA6582F4295FE0059E034 /* Project object */;
 			proxyType = 1;
@@ -26,7 +37,6 @@
 /* Begin PBXFileReference section */
 		384DA6602F4295FE0059E034 /* Insomnio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Insomnio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		384DA66D2F4295FE0059E034 /* InsomnioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InsomnioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		384DA6772F4295FE0059E034 /* InsomnioUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InsomnioUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,11 +50,6 @@
 			path = InsomnioTests;
 			sourceTree = "<group>";
 		};
-		384DA67A2F4295FE0059E034 /* InsomnioUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = InsomnioUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +57,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA01010101010101AA000005 /* CursorPattern in Frameworks */,
+				AA01010101010101AA000006 /* RuleStore in Frameworks */,
+				AA01010101010101AA000007 /* LaunchAtLogin in Frameworks */,
+				AA01010101010101AA000015 /* TimerScheduler in Frameworks */,
+				AA01010101010101AA000016 /* AccessibilityPermission in Frameworks */,
+				AA01010101010101AA000017 /* Shortcut in Frameworks */,
+				AA01010101010101AA000018 /* Premium in Frameworks */,
+				AA01010101010101AA000021 /* AutoStop in Frameworks */,
+				AA01010101010101AA000023 /* Schedule in Frameworks */,
+				AA01010101010101AA000025 /* AppRules in Frameworks */,
+				AA01010101010101AA000027 /* Insomniac in Frameworks */,
+				AA01010101010101AA000029 /* Automation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,13 +76,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		384DA6742F4295FE0059E034 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				AA01010101010101AA000031 /* TestSupport in Frameworks */,
+				AA01010101010101AA000033 /* InsomniacTesting in Frameworks */,
+				AA01010101010101AA000035 /* TimerSchedulerTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,7 +90,6 @@
 			children = (
 				384DA6622F4295FE0059E034 /* Insomnio */,
 				384DA6702F4295FE0059E034 /* InsomnioTests */,
-				384DA67A2F4295FE0059E034 /* InsomnioUITests */,
 				384DA6612F4295FE0059E034 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,7 +99,6 @@
 			children = (
 				384DA6602F4295FE0059E034 /* Insomnio.app */,
 				384DA66D2F4295FE0059E034 /* InsomnioTests.xctest */,
-				384DA6772F4295FE0059E034 /* InsomnioUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,6 +123,18 @@
 			);
 			name = Insomnio;
 			packageProductDependencies = (
+				AA01010101010101AA000002 /* CursorPattern */,
+				AA01010101010101AA000003 /* RuleStore */,
+				AA01010101010101AA000004 /* LaunchAtLogin */,
+				AA01010101010101AA000012 /* TimerScheduler */,
+				AA01010101010101AA000013 /* AccessibilityPermission */,
+				AA01010101010101AA000014 /* Shortcut */,
+				AA01010101010101AA000019 /* Premium */,
+				AA01010101010101AA000020 /* AutoStop */,
+				AA01010101010101AA000022 /* Schedule */,
+				AA01010101010101AA000024 /* AppRules */,
+				AA01010101010101AA000026 /* Insomniac */,
+				AA01010101010101AA000028 /* Automation */,
 			);
 			productName = Insomnio;
 			productReference = 384DA6602F4295FE0059E034 /* Insomnio.app */;
@@ -135,33 +158,13 @@
 			);
 			name = InsomnioTests;
 			packageProductDependencies = (
+				AA01010101010101AA000030 /* TestSupport */,
+				AA01010101010101AA000032 /* InsomniacTesting */,
+				AA01010101010101AA000034 /* TimerSchedulerTesting */,
 			);
 			productName = InsomnioTests;
 			productReference = 384DA66D2F4295FE0059E034 /* InsomnioTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		384DA6762F4295FE0059E034 /* InsomnioUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 384DA6872F4295FE0059E034 /* Build configuration list for PBXNativeTarget "InsomnioUITests" */;
-			buildPhases = (
-				384DA6732F4295FE0059E034 /* Sources */,
-				384DA6742F4295FE0059E034 /* Frameworks */,
-				384DA6752F4295FE0059E034 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				384DA6792F4295FE0059E034 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				384DA67A2F4295FE0059E034 /* InsomnioUITests */,
-			);
-			name = InsomnioUITests;
-			packageProductDependencies = (
-			);
-			productName = InsomnioUITests;
-			productReference = 384DA6772F4295FE0059E034 /* InsomnioUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -180,10 +183,6 @@
 						CreatedOnToolsVersion = 26.2;
 						TestTargetID = 384DA65F2F4295FE0059E034;
 					};
-					384DA6762F4295FE0059E034 = {
-						CreatedOnToolsVersion = 26.2;
-						TestTargetID = 384DA65F2F4295FE0059E034;
-					};
 				};
 			};
 			buildConfigurationList = 384DA65B2F4295FE0059E034 /* Build configuration list for PBXProject "Insomnio" */;
@@ -191,10 +190,14 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				es,
 				Base,
 			);
 			mainGroup = 384DA6572F4295FE0059E034;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AA01010101010101AA000001 /* XCLocalSwiftPackageReference "InsomnioKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 384DA6612F4295FE0059E034 /* Products */;
 			projectDirPath = "";
@@ -202,7 +205,6 @@
 			targets = (
 				384DA65F2F4295FE0059E034 /* Insomnio */,
 				384DA66C2F4295FE0059E034 /* InsomnioTests */,
-				384DA6762F4295FE0059E034 /* InsomnioUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -216,13 +218,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		384DA66B2F4295FE0059E034 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		384DA6752F4295FE0059E034 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -246,13 +241,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		384DA6732F4295FE0059E034 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -260,11 +248,6 @@
 			isa = PBXTargetDependency;
 			target = 384DA65F2F4295FE0059E034 /* Insomnio */;
 			targetProxy = 384DA66E2F4295FE0059E034 /* PBXContainerItemProxy */;
-		};
-		384DA6792F4295FE0059E034 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 384DA65F2F4295FE0059E034 /* Insomnio */;
-			targetProxy = 384DA6782F4295FE0059E034 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -323,12 +306,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -381,18 +366,20 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};
 		384DA6822F4295FE0059E034 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Icon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -400,15 +387,27 @@
 				DEVELOPMENT_TEAM = HS399QXLRD;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.alfredohdz.Insomnio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -416,15 +415,16 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_INFER_ISOLATED_CONFORMANCES = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
 		384DA6832F4295FE0059E034 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Icon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -432,15 +432,27 @@
 				DEVELOPMENT_TEAM = HS399QXLRD;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.alfredohdz.Insomnio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -448,8 +460,9 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_INFER_ISOLATED_CONFORMANCES = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -461,15 +474,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HS399QXLRD;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.alfredohdz.InsomnioTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_INFER_ISOLATED_CONFORMANCES = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Insomnio.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Insomnio";
 			};
 			name = Debug;
@@ -482,54 +496,17 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HS399QXLRD;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.alfredohdz.InsomnioTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_INFER_ISOLATED_CONFORMANCES = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Insomnio.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Insomnio";
-			};
-			name = Release;
-		};
-		384DA6882F4295FE0059E034 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HS399QXLRD;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.alfredohdz.InsomnioUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = Insomnio;
-			};
-			name = Debug;
-		};
-		384DA6892F4295FE0059E034 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HS399QXLRD;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.alfredohdz.InsomnioUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = Insomnio;
 			};
 			name = Release;
 		};
@@ -563,16 +540,77 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		384DA6872F4295FE0059E034 /* Build configuration list for PBXNativeTarget "InsomnioUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				384DA6882F4295FE0059E034 /* Debug */,
-				384DA6892F4295FE0059E034 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		AA01010101010101AA000001 /* XCLocalSwiftPackageReference "InsomnioKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = InsomnioKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA01010101010101AA000002 /* CursorPattern */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CursorPattern;
+		};
+		AA01010101010101AA000003 /* RuleStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RuleStore;
+		};
+		AA01010101010101AA000004 /* LaunchAtLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LaunchAtLogin;
+		};
+		AA01010101010101AA000012 /* TimerScheduler */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TimerScheduler;
+		};
+		AA01010101010101AA000013 /* AccessibilityPermission */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AccessibilityPermission;
+		};
+		AA01010101010101AA000014 /* Shortcut */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Shortcut;
+		};
+		AA01010101010101AA000019 /* Premium */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Premium;
+		};
+		AA01010101010101AA000020 /* AutoStop */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AutoStop;
+		};
+		AA01010101010101AA000022 /* Schedule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Schedule;
+		};
+		AA01010101010101AA000024 /* AppRules */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppRules;
+		};
+		AA01010101010101AA000026 /* Insomniac */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Insomniac;
+		};
+		AA01010101010101AA000028 /* Automation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Automation;
+		};
+		AA01010101010101AA000030 /* TestSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TestSupport;
+		};
+		AA01010101010101AA000032 /* InsomniacTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = InsomniacTesting;
+		};
+		AA01010101010101AA000034 /* TimerSchedulerTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TimerSchedulerTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 384DA6582F4295FE0059E034 /* Project object */;
 }
