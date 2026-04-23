@@ -2,13 +2,16 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-@testable import Insomnio
 import AutoStop
+import AutoStopTesting
 import CoreGraphics
 import CursorPattern
 import Foundation
 import Insomniac
+import InsomniacTesting
 import Testing
+import TestSupport
+import TimerSchedulerTesting
 
 @MainActor
 struct InsomniacTests {
@@ -387,7 +390,6 @@ struct InsomniacTests {
 		let messages = mover.receivedMessages
 		#expect(messages.first == .currentLocation)
 		#expect(messages.last == .moveTo(CGPoint(x: 100, y: 100)))
-		// 1 currentLocation + 8 circle points + 1 return = 10 messages
 		#expect(messages.count == 10)
 	}
 
@@ -402,7 +404,6 @@ struct InsomniacTests {
 		let messages = mover.receivedMessages
 		#expect(messages.first == .currentLocation)
 		#expect(messages.last == .moveTo(CGPoint(x: 50, y: 50)))
-		// 1 currentLocation + 4 zigzag points + 1 return = 6 messages
 		#expect(messages.count == 6)
 	}
 
