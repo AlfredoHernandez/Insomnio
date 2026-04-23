@@ -19,6 +19,9 @@
 		AA01010101010101AA000025 /* AppRules in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000024 /* AppRules */; };
 		AA01010101010101AA000027 /* Insomniac in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000026 /* Insomniac */; };
 		AA01010101010101AA000029 /* Automation in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000028 /* Automation */; };
+		AA01010101010101AA000031 /* TestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000030 /* TestSupport */; };
+		AA01010101010101AA000033 /* InsomniacTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000032 /* InsomniacTesting */; };
+		AA01010101010101AA000035 /* TimerSchedulerTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000034 /* TimerSchedulerTesting */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +76,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA01010101010101AA000031 /* TestSupport in Frameworks */,
+				AA01010101010101AA000033 /* InsomniacTesting in Frameworks */,
+				AA01010101010101AA000035 /* TimerSchedulerTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +158,9 @@
 			);
 			name = InsomnioTests;
 			packageProductDependencies = (
+				AA01010101010101AA000030 /* TestSupport */,
+				AA01010101010101AA000032 /* InsomniacTesting */,
+				AA01010101010101AA000034 /* TimerSchedulerTesting */,
 			);
 			productName = InsomnioTests;
 			productReference = 384DA66D2F4295FE0059E034 /* InsomnioTests.xctest */;
@@ -588,6 +597,18 @@
 		AA01010101010101AA000028 /* Automation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Automation;
+		};
+		AA01010101010101AA000030 /* TestSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TestSupport;
+		};
+		AA01010101010101AA000032 /* InsomniacTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = InsomniacTesting;
+		};
+		AA01010101010101AA000034 /* TimerSchedulerTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TimerSchedulerTesting;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

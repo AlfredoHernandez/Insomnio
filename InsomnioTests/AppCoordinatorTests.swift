@@ -6,7 +6,10 @@
 import AppKit
 import Automation
 import Insomniac
+import InsomniacTesting
 import Testing
+import TestSupport
+import TimerSchedulerTesting
 
 @MainActor
 struct AppCoordinatorTests {
