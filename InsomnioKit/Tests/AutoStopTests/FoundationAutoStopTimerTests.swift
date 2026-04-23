@@ -2,10 +2,11 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-@testable import Insomnio
 import AutoStop
 import Foundation
 import Testing
+import TestSupport
+import TimerSchedulerTesting
 
 @MainActor
 struct FoundationAutoStopTimerTests {
