@@ -79,6 +79,7 @@ public final class Insomniac {
 
 		case .preventSleep:
 			if pauseOnBattery, let powerSourceProvider, powerSourceProvider.isOnBatteryPower() {
+				wasOnBattery = true
 				schedulePowerCheckTimer()
 			} else {
 				sleepPreventer.createAssertion()

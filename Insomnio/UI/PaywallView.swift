@@ -62,8 +62,12 @@ struct PaywallView: View {
 			.padding(.horizontal, 20)
 		}
 		.onInAppPurchaseCompletion { _, result in
+			// Trust StoreKit's completion result directly: `premiumManager.isPremium`
+			// is updated asynchronously by `listenForTransactions`, so polling it
+			// here would almost always see stale `false` and leave the user stuck
+			// on the paywall after a successful subscription purchase.
 			if case .success(.success) = result {
-				dismissAfterPurchase()
+				dismiss()
 			}
 		}
 		.storeButton(.visible, for: .redeemCode)

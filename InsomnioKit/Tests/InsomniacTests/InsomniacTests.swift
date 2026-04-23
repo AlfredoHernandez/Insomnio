@@ -370,6 +370,24 @@ struct InsomniacTests {
 		#expect(sleepPreventer.receivedMessages == [.createAssertion])
 	}
 
+	@Test
+	func `Start on battery then first power check tick on battery does not release assertion`() {
+		let powerSourceProvider = PowerSourceProviderSpy()
+		let timerScheduler = TimerSchedulerSpy()
+		let (sut, _, sleepPreventer) = makeSUT(
+			powerSourceProvider: powerSourceProvider,
+			timerScheduler: timerScheduler,
+		)
+		sut.mode = .preventSleep
+		sut.pauseOnBattery = true
+		powerSourceProvider.stubbedIsOnBattery = true
+
+		sut.start()
+		timerScheduler.fire(at: 0)
+
+		#expect(sleepPreventer.receivedMessages == [])
+	}
+
 	// MARK: - Cursor Pattern Tests
 
 	@Test
