@@ -4,6 +4,7 @@
 
 import Foundation
 import OSLog
+import TimerScheduler
 
 @MainActor
 final class AutomationCoordinator: AutomationCoordinating {

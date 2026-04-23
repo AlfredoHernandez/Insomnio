@@ -6,15 +6,15 @@ import OSLog
 import StoreKit
 
 @Observable
-final class StoreKitPremiumManager: PremiumManager {
-	private(set) var isPremium: Bool = false
+public final class StoreKitPremiumManager: PremiumManager {
+	public private(set) var isPremium: Bool = false
 
 	private var products: [Product] = []
 	@ObservationIgnored
 	private var transactionListener: Task<Void, Never>?
 	private let logger = Logger(subsystem: "io.alfredohdz.Insomnio", category: "StoreKitPremiumManager")
 
-	init() {
+	public init() {
 		transactionListener = listenForTransactions()
 		Task { await checkEntitlements() }
 	}
@@ -23,11 +23,11 @@ final class StoreKitPremiumManager: PremiumManager {
 		transactionListener?.cancel()
 	}
 
-	func refreshStatus() async {
+	public func refreshStatus() async {
 		await checkEntitlements()
 	}
 
-	func loadProducts() async {
+	public func loadProducts() async {
 		do {
 			products = try await Product.products(for: PremiumProduct.allCases.map(\.rawValue))
 		} catch {
@@ -35,7 +35,7 @@ final class StoreKitPremiumManager: PremiumManager {
 		}
 	}
 
-	func purchase(_ product: PremiumProduct) async throws -> Bool {
+	public func purchase(_ product: PremiumProduct) async throws -> Bool {
 		guard let storeProduct = products.first(where: { $0.id == product.rawValue }) else {
 			return false
 		}
@@ -55,7 +55,7 @@ final class StoreKitPremiumManager: PremiumManager {
 		}
 	}
 
-	func restorePurchases() async {
+	public func restorePurchases() async {
 		do {
 			try await AppStore.sync()
 		} catch {
@@ -64,7 +64,7 @@ final class StoreKitPremiumManager: PremiumManager {
 		await checkEntitlements()
 	}
 
-	var lifetimeDisplayPrice: String? {
+	public var lifetimeDisplayPrice: String? {
 		products.first { $0.id == PremiumProduct.lifetime.rawValue }?.displayPrice
 	}
 

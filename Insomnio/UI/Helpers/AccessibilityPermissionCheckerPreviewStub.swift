@@ -3,6 +3,8 @@
 //
 
 #if DEBUG
+import AccessibilityPermission
+
 final class AccessibilityPermissionCheckerPreviewStub: AccessibilityPermissionChecker {
 	var isGranted: Bool
 

@@ -4,6 +4,7 @@
 
 @testable import Insomnio
 import Observation
+import Premium
 
 @MainActor
 @Observable

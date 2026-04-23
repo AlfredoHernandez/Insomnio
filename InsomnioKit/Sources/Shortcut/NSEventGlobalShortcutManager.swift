@@ -5,7 +5,7 @@
 import AppKit
 import OSLog
 
-final class NSEventGlobalShortcutManager: GlobalShortcutManager {
+public final class NSEventGlobalShortcutManager: GlobalShortcutManager {
 	private let logger = Logger(subsystem: "io.alfredohdz.Insomnio", category: "NSEventGlobalShortcutManager")
 	private let monitor: any KeyEventMonitor
 	// `globalMonitor` and `localMonitor` store opaque NSEvent monitor tokens
@@ -21,11 +21,11 @@ final class NSEventGlobalShortcutManager: GlobalShortcutManager {
 	private let requiredFlags: NSEvent.ModifierFlags = [.control, .option, .command]
 	private let keyCode: UInt16 = 34
 
-	init(monitor: any KeyEventMonitor = NSEventKeyEventMonitor()) {
+	public init(monitor: any KeyEventMonitor = NSEventKeyEventMonitor()) {
 		self.monitor = monitor
 	}
 
-	func registerShortcut(action: @escaping () -> Void) {
+	public func registerShortcut(action: @escaping () -> Void) {
 		unregisterShortcut()
 
 		globalMonitor = monitor.addGlobal { [weak self] event in
@@ -46,7 +46,7 @@ final class NSEventGlobalShortcutManager: GlobalShortcutManager {
 		}
 	}
 
-	func unregisterShortcut() {
+	public func unregisterShortcut() {
 		if let globalMonitor {
 			monitor.remove(globalMonitor)
 		}

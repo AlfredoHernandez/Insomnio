@@ -4,16 +4,18 @@
 
 import AppKit
 
-final class NSEventKeyEventMonitor: KeyEventMonitor, Sendable {
-	func addGlobal(handler: @escaping (NSEvent) -> Void) -> Any? {
+public final class NSEventKeyEventMonitor: KeyEventMonitor, Sendable {
+	public init() {}
+
+	public func addGlobal(handler: @escaping (NSEvent) -> Void) -> Any? {
 		NSEvent.addGlobalMonitorForEvents(matching: .keyDown, handler: handler)
 	}
 
-	func addLocal(handler: @escaping (NSEvent) -> NSEvent?) -> Any? {
+	public func addLocal(handler: @escaping (NSEvent) -> NSEvent?) -> Any? {
 		NSEvent.addLocalMonitorForEvents(matching: .keyDown, handler: handler)
 	}
 
-	func remove(_ token: Any) {
+	public func remove(_ token: Any) {
 		NSEvent.removeMonitor(token)
 	}
 }

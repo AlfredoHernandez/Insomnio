@@ -3,6 +3,8 @@
 //
 
 import AppKit
+import Premium
+import Shortcut
 import SwiftUI
 
 @MainActor

@@ -4,12 +4,12 @@
 
 import Foundation
 
-protocol TimerCancellable {
+public protocol TimerCancellable {
 	func invalidate()
 }
 
 extension Timer: TimerCancellable {}
 
-protocol TimerScheduler {
+public protocol TimerScheduler {
 	func schedule(interval: TimeInterval, repeats: Bool, block: @escaping @MainActor () -> Void) -> TimerCancellable
 }

@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import TimerScheduler
 
 @Observable
 final class FoundationAutoStopTimer: AutoStopTimer {

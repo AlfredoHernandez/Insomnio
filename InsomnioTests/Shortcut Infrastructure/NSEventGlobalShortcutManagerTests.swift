@@ -4,6 +4,7 @@
 
 @testable import Insomnio
 import AppKit
+import Shortcut
 import Testing
 
 @MainActor

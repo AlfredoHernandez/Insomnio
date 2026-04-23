@@ -3,6 +3,7 @@
 //
 
 @testable import Insomnio
+import Shortcut
 
 @MainActor
 final class GlobalShortcutManagerSpy: GlobalShortcutManager {

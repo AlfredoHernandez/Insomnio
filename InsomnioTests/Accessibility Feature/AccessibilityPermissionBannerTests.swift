@@ -3,6 +3,7 @@
 //
 
 @testable import Insomnio
+import AccessibilityPermission
 import SwiftUI
 import Testing
 

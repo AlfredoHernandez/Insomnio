@@ -2,9 +2,13 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+import AccessibilityPermission
 import Foundation
 import LaunchAtLogin
+import Premium
 import RuleStore
+import Shortcut
+import TimerScheduler
 
 struct AppDependencies {
 	let insomniac: Insomniac

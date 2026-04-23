@@ -4,6 +4,7 @@
 
 @testable import Insomnio
 import Foundation
+import TimerScheduler
 
 @MainActor
 final class TimerSchedulerSpy: TimerScheduler {

@@ -4,6 +4,7 @@
 
 @testable import Insomnio
 import AppKit
+import Shortcut
 
 final nonisolated class KeyEventMonitorSpy: KeyEventMonitor, @unchecked Sendable {
 	final class Token {}

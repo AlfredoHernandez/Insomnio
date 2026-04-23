@@ -4,6 +4,7 @@
 
 import CursorPattern
 import Foundation
+import TimerScheduler
 
 @Observable
 final class Insomniac {

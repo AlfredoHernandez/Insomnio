@@ -8,7 +8,7 @@ import Observation
 /// through the existential `any PremiumManager`. `Observation` is a pure-Swift,
 /// UI-agnostic framework; the dependency does not couple this feature layer
 /// to AppKit/SwiftUI.
-protocol PremiumManager: AnyObject, Observable {
+public protocol PremiumManager: AnyObject, Observable {
 	var isPremium: Bool { get }
 	var lifetimeDisplayPrice: String? { get }
 	func refreshStatus() async

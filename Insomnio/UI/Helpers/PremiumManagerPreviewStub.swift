@@ -4,6 +4,7 @@
 
 #if DEBUG
 import Observation
+import Premium
 
 @Observable
 final class PremiumManagerPreviewStub: PremiumManager {

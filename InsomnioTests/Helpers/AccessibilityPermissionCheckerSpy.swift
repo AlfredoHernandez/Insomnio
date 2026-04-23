@@ -3,6 +3,7 @@
 //
 
 @testable import Insomnio
+import AccessibilityPermission
 
 @MainActor
 final class AccessibilityPermissionCheckerSpy: AccessibilityPermissionChecker {

@@ -2,7 +2,9 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+import AccessibilityPermission
 import LaunchAtLogin
+import Premium
 import SwiftUI
 
 struct InsomnioView: View {

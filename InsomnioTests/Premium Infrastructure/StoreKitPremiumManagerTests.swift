@@ -3,6 +3,7 @@
 //
 
 @testable import Insomnio
+import Premium
 import Testing
 
 @MainActor

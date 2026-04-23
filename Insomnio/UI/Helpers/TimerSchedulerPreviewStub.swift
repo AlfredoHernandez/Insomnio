@@ -4,6 +4,7 @@
 
 #if DEBUG
 import Foundation
+import TimerScheduler
 
 final class TimerSchedulerPreviewStub: TimerScheduler {
 	func schedule(interval _: TimeInterval, repeats _: Bool, block _: @escaping @MainActor () -> Void) -> TimerCancellable {
