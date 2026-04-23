@@ -2,10 +2,14 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-@testable import Automation
-@testable import Insomnio
+import AppRulesTesting
+@_spi(Testing) import Automation
 import Insomniac
+import InsomniacTesting
+import ScheduleTesting
 import Testing
+import TestSupport
+import TimerSchedulerTesting
 
 @MainActor
 struct AutomationCoordinatorTests {
@@ -158,13 +162,13 @@ struct AutomationCoordinatorTests {
 
 	private func makeSUT() -> (
 		sut: AutomationCoordinator,
-		schedule: ScheduleEvaluatorPreviewStub,
-		appRules: AppRulesEvaluatorPreviewStub,
+		schedule: ScheduleEvaluatorSpy,
+		appRules: AppRulesEvaluatorSpy,
 		insomniac: Insomniac,
 		timerScheduler: TimerSchedulerSpy,
 	) {
-		let schedule = ScheduleEvaluatorPreviewStub()
-		let appRules = AppRulesEvaluatorPreviewStub()
+		let schedule = ScheduleEvaluatorSpy()
+		let appRules = AppRulesEvaluatorSpy()
 		let insomniac = Insomniac(
 			mouseMover: MouseMoverSpy(),
 			sleepPreventer: SleepPreventerSpy(),

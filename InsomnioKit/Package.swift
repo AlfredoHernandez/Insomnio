@@ -54,6 +54,10 @@ let package = Package(
 			name: "InsomniacTests",
 			dependencies: ["Insomniac", "InsomniacTesting", "AutoStop", "AutoStopTesting", "CursorPattern", "TestSupport", "TimerSchedulerTesting"],
 		),
+		.testTarget(
+			name: "AutomationTests",
+			dependencies: ["Automation", "AppRulesTesting", "Insomniac", "InsomniacTesting", "ScheduleTesting", "TestSupport", "TimerSchedulerTesting"],
+		),
 	],
 	swiftLanguageModes: [.v6],
 )

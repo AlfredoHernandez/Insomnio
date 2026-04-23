@@ -44,15 +44,17 @@ public final class AutomationCoordinator: AutomationCoordinating {
 		timer = nil
 	}
 
-	/// - Important: internal for testing; not part of the public API.
+	/// - Important: exposed via SPI for testing; not part of the public API.
 	/// Called externally by `Insomniac.onToggle` and by the internal timer.
-	func notifyManualToggle() {
+	@_spi(Testing)
+	public func notifyManualToggle() {
 		manualOverrideActive = true
 	}
 
-	/// - Important: internal for testing; not part of the public API.
+	/// - Important: exposed via SPI for testing; not part of the public API.
 	/// Called by the internal monitoring timer on each tick.
-	func evaluate() {
+	@_spi(Testing)
+	public func evaluate() {
 		let scheduleSaysActive = scheduleEvaluator.shouldBeActive()
 		let appRulesSayActive = appRulesEvaluator.shouldBeActive()
 		let automationWantsActive = scheduleSaysActive || appRulesSayActive
