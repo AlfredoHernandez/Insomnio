@@ -1,0 +1,33 @@
+{
+  "": {
+    "swift-dependencies": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/primary.swiftdeps"
+  },
+  "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/Tests/CursorPatternTests/CircleCursorPatternStrategyTests.swift": {
+    "dependencies": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/CircleCursorPatternStrategyTests.d",
+    "object": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/CircleCursorPatternStrategyTests.swift.o",
+    "swiftmodule": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/CircleCursorPatternStrategyTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/CircleCursorPatternStrategyTests.swiftdeps",
+    "diagnostics": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/CircleCursorPatternStrategyTests.dia"
+  },
+  "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/Tests/CursorPatternTests/NudgeCursorPatternStrategyTests.swift": {
+    "dependencies": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/NudgeCursorPatternStrategyTests.d",
+    "object": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/NudgeCursorPatternStrategyTests.swift.o",
+    "swiftmodule": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/NudgeCursorPatternStrategyTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/NudgeCursorPatternStrategyTests.swiftdeps",
+    "diagnostics": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/NudgeCursorPatternStrategyTests.dia"
+  },
+  "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/Tests/CursorPatternTests/RandomCursorPatternStrategyTests.swift": {
+    "dependencies": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/RandomCursorPatternStrategyTests.d",
+    "object": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/RandomCursorPatternStrategyTests.swift.o",
+    "swiftmodule": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/RandomCursorPatternStrategyTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/RandomCursorPatternStrategyTests.swiftdeps",
+    "diagnostics": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/RandomCursorPatternStrategyTests.dia"
+  },
+  "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/Tests/CursorPatternTests/ZigzagCursorPatternStrategyTests.swift": {
+    "dependencies": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/ZigzagCursorPatternStrategyTests.d",
+    "object": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/ZigzagCursorPatternStrategyTests.swift.o",
+    "swiftmodule": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/ZigzagCursorPatternStrategyTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/ZigzagCursorPatternStrategyTests.swiftdeps",
+    "diagnostics": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/CursorPatternTests.build/ZigzagCursorPatternStrategyTests.dia"
+  }
+}

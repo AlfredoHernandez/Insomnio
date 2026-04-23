@@ -1,0 +1,3 @@
+module RuleStore {
+    header "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/RuleStore.build/include/RuleStore-Swift.h"
+}

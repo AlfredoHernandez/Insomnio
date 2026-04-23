@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		AA01010101010101AA000005 /* CursorPattern in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000002 /* CursorPattern */; };
+		AA01010101010101AA000006 /* RuleStore in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000003 /* RuleStore */; };
+		AA01010101010101AA000007 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000004 /* LaunchAtLogin */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		384DA66E2F4295FE0059E034 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -39,6 +45,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA01010101010101AA000005 /* CursorPattern in Frameworks */,
+				AA01010101010101AA000006 /* RuleStore in Frameworks */,
+				AA01010101010101AA000007 /* LaunchAtLogin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +99,9 @@
 			);
 			name = Insomnio;
 			packageProductDependencies = (
+				AA01010101010101AA000002 /* CursorPattern */,
+				AA01010101010101AA000003 /* RuleStore */,
+				AA01010101010101AA000004 /* LaunchAtLogin */,
 			);
 			productName = Insomnio;
 			productReference = 384DA6602F4295FE0059E034 /* Insomnio.app */;
@@ -147,6 +159,9 @@
 			);
 			mainGroup = 384DA6572F4295FE0059E034;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AA01010101010101AA000001 /* XCLocalSwiftPackageReference "InsomnioKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 384DA6612F4295FE0059E034 /* Products */;
 			projectDirPath = "";
@@ -486,6 +501,28 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		AA01010101010101AA000001 /* XCLocalSwiftPackageReference "InsomnioKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = InsomnioKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA01010101010101AA000002 /* CursorPattern */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CursorPattern;
+		};
+		AA01010101010101AA000003 /* RuleStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RuleStore;
+		};
+		AA01010101010101AA000004 /* LaunchAtLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LaunchAtLogin;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 384DA6582F4295FE0059E034 /* Project object */;
 }

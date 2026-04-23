@@ -2,6 +2,7 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+import LaunchAtLogin
 import SwiftUI
 
 struct InsomnioView: View {

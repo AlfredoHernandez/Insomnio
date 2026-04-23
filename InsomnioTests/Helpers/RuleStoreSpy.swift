@@ -2,7 +2,7 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-@testable import Insomnio
+import RuleStore
 
 @MainActor
 final class RuleStoreSpy<Rule: Codable>: RuleStore {

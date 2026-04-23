@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/RuleStoreTests.build/primary.swiftdeps"
+  },
+  "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/Tests/RuleStoreTests/UserDefaultsRuleStoreTests.swift": {
+    "dependencies": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/RuleStoreTests.build/UserDefaultsRuleStoreTests.d",
+    "object": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/RuleStoreTests.build/UserDefaultsRuleStoreTests.swift.o",
+    "swiftmodule": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/RuleStoreTests.build/UserDefaultsRuleStoreTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/RuleStoreTests.build/UserDefaultsRuleStoreTests.swiftdeps",
+    "diagnostics": "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/RuleStoreTests.build/UserDefaultsRuleStoreTests.dia"
+  }
+}

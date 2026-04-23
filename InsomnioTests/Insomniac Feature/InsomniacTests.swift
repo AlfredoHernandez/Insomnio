@@ -4,6 +4,7 @@
 
 @testable import Insomnio
 import CoreGraphics
+import CursorPattern
 import Foundation
 import Testing
 

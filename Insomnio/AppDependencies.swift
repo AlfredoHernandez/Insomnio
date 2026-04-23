@@ -3,6 +3,8 @@
 //
 
 import Foundation
+import LaunchAtLogin
+import RuleStore
 
 struct AppDependencies {
 	let insomniac: Insomniac

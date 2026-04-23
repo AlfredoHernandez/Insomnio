@@ -2,6 +2,7 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+import CursorPattern
 import SwiftUI
 
 extension CursorPattern {

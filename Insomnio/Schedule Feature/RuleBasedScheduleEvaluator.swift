@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import RuleStore
 
 @Observable
 final class RuleBasedScheduleEvaluator: ScheduleEvaluator {

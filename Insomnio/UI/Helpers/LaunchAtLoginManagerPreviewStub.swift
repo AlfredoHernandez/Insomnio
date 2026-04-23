@@ -3,6 +3,8 @@
 //
 
 #if DEBUG
+import LaunchAtLogin
+
 final class LaunchAtLoginManagerPreviewStub: LaunchAtLoginManager {
 	var isEnabled = false
 	func enable() throws {}
