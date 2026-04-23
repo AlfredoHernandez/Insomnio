@@ -82,7 +82,7 @@ struct AppRulesEvaluatorTests {
 
 		sut.addRule(rule)
 
-		#expect(sut.rules.count == 1)
+		#expect(sut.rules == [rule])
 		#expect(store.receivedMessages == [.loadRules, .saveRules])
 	}
 
