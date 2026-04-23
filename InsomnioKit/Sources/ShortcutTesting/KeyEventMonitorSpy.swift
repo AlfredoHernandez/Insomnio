@@ -2,17 +2,16 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-@testable import Insomnio
 import AppKit
 import Shortcut
 
 /// @unchecked Sendable: every mutable field (`_receivedMessages`, `_globalHandler`,
 /// `_localHandler`, `_globalToken`, `_localToken`, `_stubbedGlobalReturnsNil`,
 /// `_stubbedLocalReturnsNil`) is only accessed behind `lock.withLock { ... }`.
-final nonisolated class KeyEventMonitorSpy: KeyEventMonitor, @unchecked Sendable {
-	final class Token {}
+public final nonisolated class KeyEventMonitorSpy: KeyEventMonitor, @unchecked Sendable {
+	public final class Token {}
 
-	enum ReceivedMessage: Equatable {
+	public enum ReceivedMessage: Equatable {
 		case addGlobal
 		case addLocal
 		case remove(ObjectIdentifier)
@@ -27,37 +26,39 @@ final nonisolated class KeyEventMonitorSpy: KeyEventMonitor, @unchecked Sendable
 	private var _stubbedGlobalReturnsNil = false
 	private var _stubbedLocalReturnsNil = false
 
-	var receivedMessages: [ReceivedMessage] {
+	public init() {}
+
+	public var receivedMessages: [ReceivedMessage] {
 		lock.withLock { _receivedMessages }
 	}
 
-	var globalHandler: ((NSEvent) -> Void)? {
+	public var globalHandler: ((NSEvent) -> Void)? {
 		lock.withLock { _globalHandler }
 	}
 
-	var localHandler: ((NSEvent) -> NSEvent?)? {
+	public var localHandler: ((NSEvent) -> NSEvent?)? {
 		lock.withLock { _localHandler }
 	}
 
-	var globalToken: Token? {
+	public var globalToken: Token? {
 		lock.withLock { _globalToken }
 	}
 
-	var localToken: Token? {
+	public var localToken: Token? {
 		lock.withLock { _localToken }
 	}
 
-	var stubbedGlobalReturnsNil: Bool {
+	public var stubbedGlobalReturnsNil: Bool {
 		get { lock.withLock { _stubbedGlobalReturnsNil } }
 		set { lock.withLock { _stubbedGlobalReturnsNil = newValue } }
 	}
 
-	var stubbedLocalReturnsNil: Bool {
+	public var stubbedLocalReturnsNil: Bool {
 		get { lock.withLock { _stubbedLocalReturnsNil } }
 		set { lock.withLock { _stubbedLocalReturnsNil = newValue } }
 	}
 
-	func addGlobal(handler: @escaping (NSEvent) -> Void) -> Any? {
+	public func addGlobal(handler: @escaping (NSEvent) -> Void) -> Any? {
 		lock.withLock {
 			_receivedMessages.append(.addGlobal)
 			_globalHandler = handler
@@ -68,7 +69,7 @@ final nonisolated class KeyEventMonitorSpy: KeyEventMonitor, @unchecked Sendable
 		}
 	}
 
-	func addLocal(handler: @escaping (NSEvent) -> NSEvent?) -> Any? {
+	public func addLocal(handler: @escaping (NSEvent) -> NSEvent?) -> Any? {
 		lock.withLock {
 			_receivedMessages.append(.addLocal)
 			_localHandler = handler
@@ -79,7 +80,7 @@ final nonisolated class KeyEventMonitorSpy: KeyEventMonitor, @unchecked Sendable
 		}
 	}
 
-	func remove(_ token: Any) {
+	public func remove(_ token: Any) {
 		guard let token = token as? Token else { return }
 		lock.withLock {
 			_receivedMessages.append(.remove(ObjectIdentifier(token)))

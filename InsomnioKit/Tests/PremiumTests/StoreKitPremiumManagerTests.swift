@@ -2,9 +2,9 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-@testable import Insomnio
 import Premium
 import Testing
+import TestSupport
 
 @MainActor
 struct StoreKitPremiumManagerTests {

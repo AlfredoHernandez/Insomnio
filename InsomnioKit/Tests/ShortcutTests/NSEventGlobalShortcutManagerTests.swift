@@ -2,10 +2,11 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-@testable import Insomnio
 import AppKit
 import Shortcut
+import ShortcutTesting
 import Testing
+import TestSupport
 
 @MainActor
 struct NSEventGlobalShortcutManagerTests {
