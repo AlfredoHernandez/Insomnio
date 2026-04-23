@@ -37,7 +37,7 @@ final class AppCoordinator {
 			await dependencies.premiumManager.loadProducts()
 		}
 
-		let controller = MenuBarPopoverController(icon: "moon.zzz") {
+		let controller = MenuBarPopoverController(initialState: .idle) {
 			MenuBarView(
 				insomniac: dependencies.insomniac,
 				activateApp: { NSApplication.shared.activate(ignoringOtherApps: true) },

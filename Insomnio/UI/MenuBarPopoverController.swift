@@ -8,12 +8,26 @@ import SwiftUI
 
 @MainActor
 final class MenuBarPopoverController {
+	enum IconState {
+		case idle
+		case active
+		case activeWithAutoStop
+
+		var symbolName: String {
+			switch self {
+			case .idle: "moon.zzz"
+			case .active: "moon.zzz.fill"
+			case .activeWithAutoStop: "hourglass"
+			}
+		}
+	}
+
 	private let statusItem: NSStatusItem
 	private let popover: NSPopover
 	private let actionHandler = ActionHandler()
 	private var isObservingActive = false
 
-	init(icon: String, @ViewBuilder content: () -> some View) {
+	init(initialState: IconState = .idle, @ViewBuilder content: () -> some View) {
 		statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 		popover = NSPopover()
 		popover.behavior = .transient
@@ -23,13 +37,13 @@ final class MenuBarPopoverController {
 		actionHandler.popover = popover
 		actionHandler.statusItem = statusItem
 
-		statusItem.button?.image = NSImage(systemSymbolName: icon, accessibilityDescription: "Insomnio")
+		statusItem.button?.image = NSImage(systemSymbolName: initialState.symbolName, accessibilityDescription: "Insomnio")
 		statusItem.button?.action = #selector(ActionHandler.togglePopover)
 		statusItem.button?.target = actionHandler
 	}
 
-	func updateIcon(_ name: String) {
-		statusItem.button?.image = NSImage(systemSymbolName: name, accessibilityDescription: "Insomnio")
+	func updateIcon(_ state: IconState) {
+		statusItem.button?.image = NSImage(systemSymbolName: state.symbolName, accessibilityDescription: "Insomnio")
 	}
 
 	func observeActive(_ insomniac: Insomniac) {
@@ -41,12 +55,18 @@ final class MenuBarPopoverController {
 	private func trackActiveChanges(_ insomniac: Insomniac) {
 		withObservationTracking {
 			_ = insomniac.isActive
+			_ = insomniac.autoStopIsRunning
 		} onChange: { [weak self] in
 			Task { @MainActor in
-				self?.updateIcon(insomniac.isActive ? "moon.zzz.fill" : "moon.zzz")
+				self?.updateIcon(Self.iconState(for: insomniac))
 				self?.trackActiveChanges(insomniac)
 			}
 		}
+	}
+
+	private static func iconState(for insomniac: Insomniac) -> IconState {
+		guard insomniac.isActive else { return .idle }
+		return insomniac.autoStopIsRunning ? .activeWithAutoStop : .active
 	}
 }
 
