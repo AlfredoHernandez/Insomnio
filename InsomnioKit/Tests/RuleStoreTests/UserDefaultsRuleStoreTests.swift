@@ -5,6 +5,7 @@
 import Foundation
 import RuleStore
 import Testing
+import TestSupport
 
 @MainActor
 struct UserDefaultsRuleStoreTests {
@@ -76,22 +77,5 @@ struct UserDefaultsRuleStoreTests {
 		let defaults = UserDefaults(suiteName: suiteName)!
 		let sut = UserDefaultsRuleStore<TestRule>(key: "testRules", defaults: defaults)
 		return (sut, { defaults.removePersistentDomain(forName: suiteName) })
-	}
-}
-
-@MainActor
-private func assertNoLeaks(
-	sourceLocation: SourceLocation = #_sourceLocation,
-	_ body: @MainActor () -> [AnyObject],
-) {
-	var weakRefs: [() -> AnyObject?] = []
-	autoreleasepool {
-		let instances = body()
-		weakRefs = instances.map { instance in
-			{ [weak instance] in instance }
-		}
-	}
-	for ref in weakRefs {
-		#expect(ref() == nil, "Instance should have been deallocated. Potential memory leak!", sourceLocation: sourceLocation)
 	}
 }

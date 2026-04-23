@@ -114,15 +114,4 @@ struct AppCoordinatorTests {
 		let spies = Spies(insomniac: insomniac, premium: premium, automation: automation, shortcut: shortcut)
 		return (sut, spies)
 	}
-
-	private func waitUntil(
-		timeout: Duration = .seconds(1),
-		_ condition: () -> Bool,
-	) async {
-		let start = ContinuousClock.now
-		while !condition(), ContinuousClock.now - start < timeout {
-			await Task.yield()
-			try? await Task.sleep(for: .milliseconds(10))
-		}
-	}
 }

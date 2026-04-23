@@ -34,11 +34,11 @@ struct CircleCursorPatternStrategyTests {
 
 		let result = sut.points(from: origin)
 
-		for point in result {
+		for (index, point) in result.enumerated() {
 			let dx = point.x - origin.x
 			let dy = point.y - origin.y
 			let distance = sqrt(dx * dx + dy * dy)
-			#expect(abs(distance - 3) < 0.001)
+			#expect(abs(distance - 3) < 0.001, "Point \(index) at \(point) is outside the expected radius of 3")
 		}
 	}
 }
