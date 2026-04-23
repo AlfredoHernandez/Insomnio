@@ -1,3 +1,0 @@
-module LaunchAtLogin {
-    header "/Users/alfredo/Developer/iOS/Insomnio/InsomnioKit/.build/arm64-apple-macosx/debug/LaunchAtLogin.build/include/LaunchAtLogin-Swift.h"
-}
