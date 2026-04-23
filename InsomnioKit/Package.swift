@@ -19,6 +19,8 @@ let package = Package(
 		.library(name: "Automation", targets: ["Automation"]),
 		.library(name: "TestSupport", targets: ["TestSupport"]),
 		.library(name: "TimerSchedulerTesting", targets: ["TimerSchedulerTesting"]),
+		.library(name: "ScheduleTesting", targets: ["ScheduleTesting"]),
+		.library(name: "RuleStoreTesting", targets: ["RuleStoreTesting"]),
 	],
 	targets: [
 		.target(name: "CursorPattern"),
@@ -35,9 +37,12 @@ let package = Package(
 		.target(name: "Automation", dependencies: ["AppRules", "Insomniac", "Schedule", "TimerScheduler"]),
 		.target(name: "TestSupport"),
 		.target(name: "TimerSchedulerTesting", dependencies: ["TimerScheduler"]),
+		.target(name: "ScheduleTesting", dependencies: ["Schedule"]),
+		.target(name: "RuleStoreTesting", dependencies: ["RuleStore"]),
 		.testTarget(name: "CursorPatternTests", dependencies: ["CursorPattern"]),
 		.testTarget(name: "RuleStoreTests", dependencies: ["RuleStore"]),
 		.testTarget(name: "AutoStopTests", dependencies: ["AutoStop", "TestSupport", "TimerSchedulerTesting"]),
+		.testTarget(name: "ScheduleTests", dependencies: ["Schedule", "ScheduleTesting", "RuleStoreTesting", "TestSupport"]),
 	],
 	swiftLanguageModes: [.v6],
 )

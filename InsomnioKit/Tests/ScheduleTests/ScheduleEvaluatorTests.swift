@@ -2,9 +2,11 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-@testable import Insomnio
+import RuleStoreTesting
 import Schedule
+import ScheduleTesting
 import Testing
+import TestSupport
 
 @MainActor
 struct ScheduleEvaluatorTests {
