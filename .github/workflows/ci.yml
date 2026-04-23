@@ -46,6 +46,9 @@ jobs:
             -scheme Insomnio \
             -destination 'platform=macOS' \
             -resultBundlePath TestResults.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
             -quiet
 
       - name: Test InsomnioKit package
