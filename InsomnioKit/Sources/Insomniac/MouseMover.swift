@@ -4,7 +4,7 @@
 
 import CoreGraphics
 
-protocol MouseMover {
+public protocol MouseMover {
 	func moveMouseTo(_ point: CGPoint) -> Bool
 	func currentMouseLocation() -> CGPoint
 }

@@ -4,8 +4,10 @@
 
 import IOKit.ps
 
-struct IOKitPowerSourceProvider: PowerSourceProvider {
-	func isOnBatteryPower() -> Bool {
+public struct IOKitPowerSourceProvider: PowerSourceProvider {
+	public init() {}
+
+	public func isOnBatteryPower() -> Bool {
 		guard let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue(),
 		      let sources = IOPSCopyPowerSourcesList(snapshot)?.takeRetainedValue() as? [CFTypeRef],
 		      let first = sources.first,

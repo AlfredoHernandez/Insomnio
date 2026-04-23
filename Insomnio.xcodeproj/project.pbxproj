@@ -17,6 +17,8 @@
 		AA01010101010101AA000021 /* AutoStop in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000020 /* AutoStop */; };
 		AA01010101010101AA000023 /* Schedule in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000022 /* Schedule */; };
 		AA01010101010101AA000025 /* AppRules in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000024 /* AppRules */; };
+		AA01010101010101AA000027 /* Insomniac in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000026 /* Insomniac */; };
+		AA01010101010101AA000029 /* Automation in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000028 /* Automation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,8 @@
 				AA01010101010101AA000021 /* AutoStop in Frameworks */,
 				AA01010101010101AA000023 /* Schedule in Frameworks */,
 				AA01010101010101AA000025 /* AppRules in Frameworks */,
+				AA01010101010101AA000027 /* Insomniac in Frameworks */,
+				AA01010101010101AA000029 /* Automation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +127,8 @@
 				AA01010101010101AA000020 /* AutoStop */,
 				AA01010101010101AA000022 /* Schedule */,
 				AA01010101010101AA000024 /* AppRules */,
+				AA01010101010101AA000026 /* Insomniac */,
+				AA01010101010101AA000028 /* Automation */,
 			);
 			productName = Insomnio;
 			productReference = 384DA6602F4295FE0059E034 /* Insomnio.app */;
@@ -400,8 +406,8 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_UPCOMING_FEATURE_INFER_ISOLATED_CONFORMANCES = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
@@ -445,8 +451,8 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_UPCOMING_FEATURE_INFER_ISOLATED_CONFORMANCES = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
@@ -466,8 +472,8 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_UPCOMING_FEATURE_INFER_ISOLATED_CONFORMANCES = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Insomnio.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Insomnio";
 			};
@@ -488,8 +494,8 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_UPCOMING_FEATURE_INFER_ISOLATED_CONFORMANCES = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Insomnio.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Insomnio";
 			};
@@ -574,6 +580,14 @@
 		AA01010101010101AA000024 /* AppRules */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppRules;
+		};
+		AA01010101010101AA000026 /* Insomniac */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Insomniac;
+		};
+		AA01010101010101AA000028 /* Automation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Automation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

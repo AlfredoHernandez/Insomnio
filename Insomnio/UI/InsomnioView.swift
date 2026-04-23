@@ -4,6 +4,7 @@
 
 import AccessibilityPermission
 import AppRules
+import Insomniac
 import LaunchAtLogin
 import Premium
 import Schedule

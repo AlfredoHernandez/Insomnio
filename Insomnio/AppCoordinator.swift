@@ -3,6 +3,8 @@
 //
 
 import AppKit
+import Automation
+import Insomniac
 import Premium
 import Shortcut
 import SwiftUI

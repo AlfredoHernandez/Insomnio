@@ -15,6 +15,8 @@ let package = Package(
 		.library(name: "AutoStop", targets: ["AutoStop"]),
 		.library(name: "Schedule", targets: ["Schedule"]),
 		.library(name: "AppRules", targets: ["AppRules"]),
+		.library(name: "Insomniac", targets: ["Insomniac"]),
+		.library(name: "Automation", targets: ["Automation"]),
 	],
 	targets: [
 		.target(name: "CursorPattern"),
@@ -27,6 +29,8 @@ let package = Package(
 		.target(name: "AutoStop", dependencies: ["TimerScheduler"]),
 		.target(name: "Schedule", dependencies: ["RuleStore"]),
 		.target(name: "AppRules", dependencies: ["RuleStore"]),
+		.target(name: "Insomniac", dependencies: ["AutoStop", "CursorPattern", "TimerScheduler"]),
+		.target(name: "Automation", dependencies: ["AppRules", "Insomniac", "Schedule", "TimerScheduler"]),
 		.testTarget(name: "CursorPatternTests", dependencies: ["CursorPattern"]),
 		.testTarget(name: "RuleStoreTests", dependencies: ["RuleStore"]),
 	],

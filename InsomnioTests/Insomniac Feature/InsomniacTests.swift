@@ -7,6 +7,7 @@ import AutoStop
 import CoreGraphics
 import CursorPattern
 import Foundation
+import Insomniac
 import Testing
 
 @MainActor

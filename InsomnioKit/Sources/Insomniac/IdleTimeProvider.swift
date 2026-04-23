@@ -4,6 +4,6 @@
 
 import Foundation
 
-protocol IdleTimeProvider {
+public protocol IdleTimeProvider {
 	func secondsSinceLastUserInput() -> TimeInterval
 }

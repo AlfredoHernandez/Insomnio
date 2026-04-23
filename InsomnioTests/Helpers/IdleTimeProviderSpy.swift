@@ -4,6 +4,7 @@
 
 @testable import Insomnio
 import Foundation
+import Insomniac
 
 @MainActor
 final class IdleTimeProviderSpy: IdleTimeProvider {

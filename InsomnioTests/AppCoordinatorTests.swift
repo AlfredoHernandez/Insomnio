@@ -4,6 +4,8 @@
 
 @testable import Insomnio
 import AppKit
+import Automation
+import Insomniac
 import Testing
 
 @MainActor

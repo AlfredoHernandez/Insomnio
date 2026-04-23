@@ -2,7 +2,9 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+@testable import Automation
 @testable import Insomnio
+import Insomniac
 import Testing
 
 @MainActor

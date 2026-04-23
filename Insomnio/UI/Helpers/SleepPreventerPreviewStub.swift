@@ -3,6 +3,8 @@
 //
 
 #if DEBUG
+import Insomniac
+
 final class SleepPreventerPreviewStub: SleepPreventer {
 	func createAssertion() -> Bool {
 		true

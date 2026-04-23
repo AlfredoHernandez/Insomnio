@@ -8,8 +8,8 @@ import Foundation
 import TimerScheduler
 
 @Observable
-final class Insomniac {
-	enum Mode: CaseIterable {
+public final class Insomniac {
+	public enum Mode: CaseIterable {
 		case moveCursor
 		case preventSleep
 	}
@@ -25,29 +25,29 @@ final class Insomniac {
 	private var powerCheckTimer: TimerCancellable?
 	private var wasOnBattery = false
 
-	static let idleThreshold: TimeInterval = 5.0
+	public static let idleThreshold: TimeInterval = 5.0
 
-	private(set) var isActive: Bool = false
-	var mode: Mode = .moveCursor
-	var interval: TimeInterval = 30.0
-	var onlyWhenIdle: Bool = false
-	var pauseOnBattery: Bool = false
-	var autoStopEnabled: Bool = false
-	var autoStopDuration: AutoStopDuration = .oneHour
-	var cursorPattern: CursorPattern = .nudge
-	var onToggle: (() -> Void)?
-	private(set) var activationCount: Int = 0
-	private(set) var lastActivation: Date?
+	public private(set) var isActive: Bool = false
+	public var mode: Mode = .moveCursor
+	public var interval: TimeInterval = 30.0
+	public var onlyWhenIdle: Bool = false
+	public var pauseOnBattery: Bool = false
+	public var autoStopEnabled: Bool = false
+	public var autoStopDuration: AutoStopDuration = .oneHour
+	public var cursorPattern: CursorPattern = .nudge
+	public var onToggle: (() -> Void)?
+	public private(set) var activationCount: Int = 0
+	public private(set) var lastActivation: Date?
 
-	var autoStopRemainingTime: TimeInterval {
+	public var autoStopRemainingTime: TimeInterval {
 		autoStopTimer?.remainingTime ?? 0
 	}
 
-	var autoStopIsRunning: Bool {
+	public var autoStopIsRunning: Bool {
 		autoStopTimer?.isRunning ?? false
 	}
 
-	init(
+	public init(
 		mouseMover: any MouseMover,
 		sleepPreventer: any SleepPreventer,
 		idleTimeProvider: (any IdleTimeProvider)? = nil,
@@ -65,12 +65,12 @@ final class Insomniac {
 		self.now = now
 	}
 
-	func toggle() {
+	public func toggle() {
 		isActive ? stop() : start()
 		onToggle?()
 	}
 
-	func start() {
+	public func start() {
 		guard !isActive else { return }
 		isActive = true
 		switch mode {
@@ -96,7 +96,7 @@ final class Insomniac {
 		}
 	}
 
-	func stop() {
+	public func stop() {
 		isActive = false
 		timer?.invalidate()
 		timer = nil
@@ -107,7 +107,7 @@ final class Insomniac {
 		autoStopTimer?.cancel()
 	}
 
-	func keepAwake() {
+	public func keepAwake() {
 		if pauseOnBattery, let powerSourceProvider, powerSourceProvider.isOnBatteryPower() {
 			return
 		}

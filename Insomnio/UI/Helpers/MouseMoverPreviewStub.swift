@@ -4,6 +4,7 @@
 
 #if DEBUG
 import CoreGraphics
+import Insomniac
 
 final class MouseMoverPreviewStub: MouseMover {
 	func moveMouseTo(_: CGPoint) -> Bool {

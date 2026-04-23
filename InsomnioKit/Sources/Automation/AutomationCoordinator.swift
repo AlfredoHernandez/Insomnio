@@ -4,12 +4,12 @@
 
 import AppRules
 import Foundation
+import Insomniac
 import OSLog
 import Schedule
 import TimerScheduler
 
-@MainActor
-final class AutomationCoordinator: AutomationCoordinating {
+public final class AutomationCoordinator: AutomationCoordinating {
 	private let scheduleEvaluator: any ScheduleRuleEvaluating
 	private let appRulesEvaluator: any AppRulesEvaluating
 	private let insomniac: Insomniac
@@ -18,7 +18,7 @@ final class AutomationCoordinator: AutomationCoordinating {
 	private var manualOverrideActive = false
 	private let logger = Logger(subsystem: "io.alfredohdz.Insomnio", category: "AutomationCoordinator")
 
-	init(
+	public init(
 		scheduleEvaluator: any ScheduleRuleEvaluating,
 		appRulesEvaluator: any AppRulesEvaluating,
 		insomniac: Insomniac,
@@ -31,7 +31,7 @@ final class AutomationCoordinator: AutomationCoordinating {
 		insomniac.onToggle = { [weak self] in self?.notifyManualToggle() }
 	}
 
-	func startMonitoring() {
+	public func startMonitoring() {
 		timer?.invalidate()
 		timer = timerScheduler.schedule(interval: 60, repeats: true) { [weak self] in
 			self?.evaluate()
@@ -39,7 +39,7 @@ final class AutomationCoordinator: AutomationCoordinating {
 		evaluate()
 	}
 
-	func stopMonitoring() {
+	public func stopMonitoring() {
 		timer?.invalidate()
 		timer = nil
 	}

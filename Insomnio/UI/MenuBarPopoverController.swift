@@ -3,6 +3,7 @@
 //
 
 import AppKit
+import Insomniac
 import Observation
 import SwiftUI
 

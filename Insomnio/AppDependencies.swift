@@ -4,8 +4,10 @@
 
 import AccessibilityPermission
 import AppRules
+import Automation
 import AutoStop
 import Foundation
+import Insomniac
 import LaunchAtLogin
 import Premium
 import RuleStore

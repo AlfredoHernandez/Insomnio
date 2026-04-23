@@ -2,6 +2,6 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-protocol PowerSourceProvider {
+public protocol PowerSourceProvider {
 	func isOnBatteryPower() -> Bool
 }

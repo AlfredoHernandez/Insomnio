@@ -5,13 +5,15 @@
 import IOKit.pwr_mgt
 import OSLog
 
-final class IOKitSleepPreventer: SleepPreventer {
+public final class IOKitSleepPreventer: SleepPreventer {
 	private nonisolated(unsafe) var assertionID: IOPMAssertionID = 0
 	private nonisolated(unsafe) var isHolding = false
 	private let logger = Logger(subsystem: "io.alfredohdz.Insomnio", category: "IOKitSleepPreventer")
 
+	public init() {}
+
 	@discardableResult
-	func createAssertion() -> Bool {
+	public func createAssertion() -> Bool {
 		guard !isHolding else { return true }
 		let result = IOPMAssertionCreateWithName(
 			kIOPMAssertPreventUserIdleDisplaySleep as CFString,
@@ -26,7 +28,7 @@ final class IOKitSleepPreventer: SleepPreventer {
 		return isHolding
 	}
 
-	func releaseAssertion() {
+	public func releaseAssertion() {
 		guard isHolding else { return }
 		IOPMAssertionRelease(assertionID)
 		assertionID = 0

@@ -5,8 +5,10 @@
 import CoreGraphics
 import Foundation
 
-struct CGIdleTimeProvider: IdleTimeProvider {
-	func secondsSinceLastUserInput() -> TimeInterval {
+public struct CGIdleTimeProvider: IdleTimeProvider {
+	public init() {}
+
+	public func secondsSinceLastUserInput() -> TimeInterval {
 		let eventTypes: [CGEventType] = [
 			.mouseMoved, .leftMouseDown, .rightMouseDown,
 			.keyDown, .scrollWheel,

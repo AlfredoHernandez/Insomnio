@@ -4,6 +4,7 @@
 
 @testable import Insomnio
 import CoreGraphics
+import Insomniac
 
 @MainActor
 final class MouseMoverSpy: MouseMover {

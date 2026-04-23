@@ -3,6 +3,7 @@
 //
 
 @testable import Insomnio
+import Insomniac
 
 @MainActor
 final class SleepPreventerSpy: SleepPreventer {

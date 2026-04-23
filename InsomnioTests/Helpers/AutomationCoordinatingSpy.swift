@@ -3,6 +3,7 @@
 //
 
 @testable import Insomnio
+import Automation
 
 @MainActor
 final class AutomationCoordinatingSpy: AutomationCoordinating {

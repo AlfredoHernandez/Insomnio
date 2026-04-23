@@ -4,8 +4,10 @@
 
 import CoreGraphics
 
-struct CGMouseMover: MouseMover {
-	func moveMouseTo(_ point: CGPoint) -> Bool {
+public struct CGMouseMover: MouseMover {
+	public init() {}
+
+	public func moveMouseTo(_ point: CGPoint) -> Bool {
 		guard let event = CGEvent(
 			mouseEventSource: nil,
 			mouseType: .mouseMoved,
@@ -18,7 +20,7 @@ struct CGMouseMover: MouseMover {
 		return true
 	}
 
-	func currentMouseLocation() -> CGPoint {
+	public func currentMouseLocation() -> CGPoint {
 		guard let event = CGEvent(source: nil) else { return .zero }
 		return event.location
 	}
