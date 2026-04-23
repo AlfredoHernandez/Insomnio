@@ -6,6 +6,9 @@
 import AppKit
 import Shortcut
 
+/// @unchecked Sendable: every mutable field (`_receivedMessages`, `_globalHandler`,
+/// `_localHandler`, `_globalToken`, `_localToken`, `_stubbedGlobalReturnsNil`,
+/// `_stubbedLocalReturnsNil`) is only accessed behind `lock.withLock { ... }`.
 final nonisolated class KeyEventMonitorSpy: KeyEventMonitor, @unchecked Sendable {
 	final class Token {}
 

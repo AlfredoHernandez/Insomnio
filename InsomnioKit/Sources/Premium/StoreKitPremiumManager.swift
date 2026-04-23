@@ -12,15 +12,20 @@ public final class StoreKitPremiumManager: PremiumManager {
 	private var products: [Product] = []
 	@ObservationIgnored
 	private var transactionListener: Task<Void, Never>?
+	@ObservationIgnored
+	private var bootstrapTask: Task<Void, Never>?
 	private let logger = Logger(subsystem: "io.alfredohdz.Insomnio", category: "StoreKitPremiumManager")
 
 	public init() {
 		transactionListener = listenForTransactions()
-		Task { await checkEntitlements() }
+		bootstrapTask = Task { [weak self] in
+			await self?.checkEntitlements()
+		}
 	}
 
 	deinit {
 		transactionListener?.cancel()
+		bootstrapTask?.cancel()
 	}
 
 	public func refreshStatus() async {
