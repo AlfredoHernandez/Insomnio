@@ -1401,6 +1401,156 @@
           }
         }
       }
+    },
+    "Start Insomnio" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar Insomnio"
+          }
+        }
+      }
+    },
+    "Stop Insomnio" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detener Insomnio"
+          }
+        }
+      }
+    },
+    "Toggle Insomnio" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alternar Insomnio"
+          }
+        }
+      }
+    },
+    "Start Insomnio for Duration" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar Insomnio por un tiempo"
+          }
+        }
+      }
+    },
+    "Start for Duration" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar por un tiempo"
+          }
+        }
+      }
+    },
+    "Starts keeping your Mac awake." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantiene tu Mac despierta."
+          }
+        }
+      }
+    },
+    "Stops keeping your Mac awake." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deja que tu Mac se duerma."
+          }
+        }
+      }
+    },
+    "Toggles whether your Mac is being kept awake." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alterna si tu Mac se mantiene despierta."
+          }
+        }
+      }
+    },
+    "Starts keeping your Mac awake for a fixed amount of time." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantiene tu Mac despierta durante un tiempo fijo."
+          }
+        }
+      }
+    },
+    "Duration" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duración"
+          }
+        }
+      }
+    },
+    "Auto-Stop Duration" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duración de detención automática"
+          }
+        }
+      }
+    },
+    "30 Minutes" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30 minutos"
+          }
+        }
+      }
+    },
+    "1 Hour" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 hora"
+          }
+        }
+      }
+    },
+    "2 Hours" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 horas"
+          }
+        }
+      }
+    },
+    "4 Hours" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "4 horas"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

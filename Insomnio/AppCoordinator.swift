@@ -37,6 +37,7 @@ final class AppCoordinator {
 		guard !hasStarted else { return }
 		hasStarted = true
 
+		IntentDependencies.performer = AutomationCoordinatorIntentPerformer(insomniac: dependencies.insomniac)
 		dependencies.shortcutManager.registerShortcut { [dependencies] in
 			dependencies.insomniac.toggle()
 		}
