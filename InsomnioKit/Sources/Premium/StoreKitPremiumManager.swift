@@ -76,6 +76,12 @@ public final class StoreKitPremiumManager: PremiumManager {
 	// MARK: - Private
 
 	private func listenForTransactions() -> Task<Void, Never> {
+		// `Task.detached` is intentional: `Transaction.updates` is an unbounded
+		// async sequence that runs for the full lifetime of the process, so the
+		// listener must not inherit the MainActor isolation of the caller (the
+		// awaits would still serialize cleanly, but there's no reason to pin
+		// this loop to the main actor). Each hop into `checkEntitlements()`
+		// crosses back to MainActor via the `self?.` call.
 		Task.detached { [weak self] in
 			for await result in Transaction.updates {
 				if case let .verified(transaction) = result {

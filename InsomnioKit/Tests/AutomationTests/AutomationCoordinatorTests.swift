@@ -11,7 +11,6 @@ import Testing
 import TestSupport
 import TimerSchedulerTesting
 
-@MainActor
 struct AutomationCoordinatorTests {
 	@Test
 	func `Evaluate with no automation does not start`() {

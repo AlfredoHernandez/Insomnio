@@ -10,7 +10,6 @@ import InsomniacTesting
 import Testing
 import TimerSchedulerTesting
 
-@MainActor
 struct AutomationCoordinatorIntentPerformerTests {
 	@Test
 	func `Start activates the insomniac model`() {

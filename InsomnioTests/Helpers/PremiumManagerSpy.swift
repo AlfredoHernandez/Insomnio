@@ -6,7 +6,6 @@
 import Observation
 import Premium
 
-@MainActor
 @Observable
 final class PremiumManagerSpy: PremiumManager {
 	enum ReceivedMessage: Equatable {

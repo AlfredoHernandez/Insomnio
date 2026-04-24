@@ -8,7 +8,6 @@ import Testing
 import TestSupport
 import TimerSchedulerTesting
 
-@MainActor
 struct FoundationAutoStopTimerTests {
 	@Test
 	func `Init is not running`() {

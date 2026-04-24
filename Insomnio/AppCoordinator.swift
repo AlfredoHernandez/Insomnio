@@ -9,7 +9,6 @@ import Premium
 import Shortcut
 import SwiftUI
 
-@MainActor
 final class AppCoordinator {
 	private let dependencies: AppDependencies
 	private var hasStarted = false
@@ -72,10 +71,18 @@ final class AppCoordinator {
 	}
 
 	private func observeTermination() {
+		// `queue: nil` dispatches the handler synchronously on the posting
+		// thread. `NSApplication.willTerminateNotification` is always posted
+		// by AppKit on the main thread, so the handler lands on the main
+		// actor and `MainActor.assumeIsolated` is a safe compiler bridge.
+		// Synchronous delivery also lets tests observe the side effects
+		// immediately after `post(...)` without any polling.
+		// Capturing `dependencies` explicitly (value-ish struct) avoids
+		// retaining `self`.
 		terminationObserver = NotificationCenter.default.addObserver(
 			forName: NSApplication.willTerminateNotification,
 			object: nil,
-			queue: .main,
+			queue: nil,
 		) { [dependencies] _ in
 			MainActor.assumeIsolated {
 				dependencies.automationCoordinator.stopMonitoring()

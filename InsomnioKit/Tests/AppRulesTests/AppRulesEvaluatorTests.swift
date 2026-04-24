@@ -8,7 +8,6 @@ import RuleStoreTesting
 import Testing
 import TestSupport
 
-@MainActor
 struct AppRulesEvaluatorTests {
 	@Test
 	func `Init loads rules from store`() {

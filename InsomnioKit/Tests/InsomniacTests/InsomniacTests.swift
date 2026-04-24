@@ -13,7 +13,6 @@ import Testing
 import TestSupport
 import TimerSchedulerTesting
 
-@MainActor
 struct InsomniacTests {
 	@Test
 	func `Init does not message mouse mover upon creation`() {

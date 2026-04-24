@@ -6,7 +6,6 @@ import Premium
 import Testing
 import TestSupport
 
-@MainActor
 struct StoreKitPremiumManagerTests {
 	@Test
 	func `Initial isPremium is false before any entitlement resolves`() {

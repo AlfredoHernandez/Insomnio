@@ -8,7 +8,6 @@ import ScheduleTesting
 import Testing
 import TestSupport
 
-@MainActor
 struct ScheduleEvaluatorTests {
 	@Test
 	func `Init loads rules from store`() {

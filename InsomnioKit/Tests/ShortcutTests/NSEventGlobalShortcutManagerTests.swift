@@ -8,7 +8,6 @@ import ShortcutTesting
 import Testing
 import TestSupport
 
-@MainActor
 struct NSEventGlobalShortcutManagerTests {
 	@Test
 	func `Unregister is idempotent when nothing was registered`() {

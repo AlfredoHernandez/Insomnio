@@ -12,7 +12,6 @@ import Insomniac
 /// `Insomniac.toggle()` when a state change is required so the
 /// `AutomationCoordinator`'s `onToggle` hook registers a manual override and
 /// does not immediately revert the user's intent on the next evaluation tick.
-@MainActor
 final class AutomationCoordinatorIntentPerformer: InsomnioIntentPerformer {
 	private let insomniac: Insomniac
 

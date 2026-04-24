@@ -5,7 +5,6 @@
 @testable import Insomnio
 import Shortcut
 
-@MainActor
 final class GlobalShortcutManagerSpy: GlobalShortcutManager {
 	enum ReceivedMessage: Equatable {
 		case registerShortcut

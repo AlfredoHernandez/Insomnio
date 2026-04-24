@@ -8,10 +8,8 @@ import Automation
 import Insomniac
 import InsomniacTesting
 import Testing
-import TestSupport
 import TimerSchedulerTesting
 
-@MainActor
 struct AppCoordinatorTests {
 	@Test
 	func `Start registers shortcut`() {
@@ -63,14 +61,16 @@ struct AppCoordinatorTests {
 	}
 
 	@Test
-	func `willTerminate notification stops automation and insomniac`() async {
+	func `willTerminate notification stops automation and insomniac`() {
 		let (sut, spies) = makeSUT()
 		sut.start()
 		spies.insomniac.start()
 		#expect(spies.insomniac.isActive == true)
 
+		// `AppCoordinator` installs the observer with `queue: nil`, so posting
+		// from the main actor runs the handler synchronously before this
+		// `post(_:)` call returns — no awaiting required.
 		NotificationCenter.default.post(name: NSApplication.willTerminateNotification, object: nil)
-		await waitUntil { spies.automation.receivedMessages.contains(.stopMonitoring) }
 
 		#expect(spies.automation.receivedMessages.contains(.stopMonitoring))
 		#expect(spies.insomniac.isActive == false)

@@ -7,7 +7,6 @@ import Insomniac
 import Observation
 import SwiftUI
 
-@MainActor
 final class MenuBarPopoverController {
 	enum IconState {
 		case idle
@@ -58,6 +57,10 @@ final class MenuBarPopoverController {
 			_ = insomniac.isActive
 			_ = insomniac.autoStopIsRunning
 		} onChange: { [weak self] in
+			// `onChange` fires from the Observation runtime in a nonisolated
+			// context, so the hop to `@MainActor` is required — without it the
+			// task inherits the nonisolated caller and cannot reach
+			// `updateIcon` / `trackActiveChanges`.
 			Task { @MainActor in
 				self?.updateIcon(Self.iconState(for: insomniac))
 				self?.trackActiveChanges(insomniac)
