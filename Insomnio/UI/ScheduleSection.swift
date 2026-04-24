@@ -13,8 +13,7 @@ struct ScheduleSection: View {
 		CardView {
 			VStack(alignment: .leading, spacing: 8) {
 				HStack {
-					Label("schedule_title", systemImage: "calendar.badge.clock")
-						.font(.subheadline.bold())
+					liquidGlassSectionTitle("schedule_title", systemImage: "calendar.badge.clock")
 					Spacer()
 					Button { isAddingRule = true } label: {
 						Image(systemName: "plus.circle")
@@ -23,13 +22,13 @@ struct ScheduleSection: View {
 				}
 
 				Text("schedule_desc")
-					.font(.system(size: 11))
-					.foregroundStyle(.tertiary)
+					.font(LiquidGlassStyle.sectionBodyFont)
+					.foregroundStyle(LiquidGlassStyle.sectionHintStyle)
 
 				if scheduleEvaluator.rules.isEmpty {
 					Text("schedule_empty")
-						.font(.system(size: 11))
-						.foregroundStyle(.secondary)
+						.font(LiquidGlassStyle.sectionBodyFont)
+						.foregroundStyle(LiquidGlassStyle.sectionBodyStyle)
 						.padding(.vertical, 4)
 				} else {
 					ForEach(scheduleEvaluator.rules) { rule in

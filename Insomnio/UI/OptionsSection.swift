@@ -20,8 +20,8 @@ struct OptionsSection: View {
 						.disabled(isPreventSleepMode)
 
 					Text("only_when_idle_desc")
-						.font(.system(size: 11))
-						.foregroundStyle(.tertiary)
+						.font(LiquidGlassStyle.sectionBodyFont)
+						.foregroundStyle(LiquidGlassStyle.sectionHintStyle)
 						.padding(.leading, 20)
 				}
 
@@ -29,8 +29,8 @@ struct OptionsSection: View {
 					Toggle("pause_on_battery_label", isOn: $pauseOnBattery)
 
 					Text("pause_on_battery_desc")
-						.font(.system(size: 11))
-						.foregroundStyle(.tertiary)
+						.font(LiquidGlassStyle.sectionBodyFont)
+						.foregroundStyle(LiquidGlassStyle.sectionHintStyle)
 						.padding(.leading, 20)
 				}
 

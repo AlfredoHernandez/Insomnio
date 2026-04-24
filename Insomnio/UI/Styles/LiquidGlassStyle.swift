@@ -11,6 +11,10 @@ enum LiquidGlassStyle {
 	static let cardStrokeOpacity: Double = 0.08
 	static let cardStrokeWidth: CGFloat = 0.5
 	static let iconButtonSize: CGFloat = 26
+	static let sectionTitleFont: Font = .subheadline.bold()
+	static let sectionBodyFont: Font = .system(size: 11)
+	static let sectionBodyStyle: AnyShapeStyle = .init(.secondary)
+	static let sectionHintStyle: AnyShapeStyle = .init(.tertiary)
 }
 
 extension View {
@@ -51,5 +55,16 @@ extension View {
 		} else {
 			self
 		}
+	}
+
+	func liquidGlassSectionTitle(_ title: LocalizedStringKey, systemImage: String? = nil) -> some View {
+		Group {
+			if let systemImage {
+				Label(title, systemImage: systemImage)
+			} else {
+				Text(title)
+			}
+		}
+		.font(LiquidGlassStyle.sectionTitleFont)
 	}
 }

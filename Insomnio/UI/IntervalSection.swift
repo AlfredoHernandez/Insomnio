@@ -72,10 +72,11 @@ struct IntervalSection: View {
 	var body: some View {
 		CardView {
 			VStack(alignment: .leading, spacing: 4) {
-				Text("interval_title")
+				liquidGlassSectionTitle("interval_title")
 
 				Text("interval_hint \(formattedInterval)")
-					.foregroundStyle(.secondary)
+					.font(LiquidGlassStyle.sectionBodyFont)
+					.foregroundStyle(LiquidGlassStyle.sectionBodyStyle)
 
 				Slider(
 					value: stepIndex,
@@ -90,7 +91,7 @@ struct IntervalSection: View {
 					ForEach(Self.tickLabels, id: \.index) { tick in
 						Text(tick.label)
 							.font(.system(size: 10))
-							.foregroundStyle(.tertiary)
+							.foregroundStyle(LiquidGlassStyle.sectionHintStyle)
 							.fixedSize()
 							.position(
 								x: inset + usableWidth * Double(tick.index) / maxIndex,
@@ -102,8 +103,8 @@ struct IntervalSection: View {
 
 				HStack(spacing: 8) {
 					Text("custom_interval_label")
-						.font(.system(size: 11))
-						.foregroundStyle(.secondary)
+						.font(LiquidGlassStyle.sectionBodyFont)
+						.foregroundStyle(LiquidGlassStyle.sectionBodyStyle)
 
 					TextField("", value: displayValue, format: .number)
 						.textFieldStyle(.roundedBorder)

@@ -32,8 +32,8 @@ struct ModeSection: View {
 				.disabled(isDisabled)
 
 				Text(modeDescription)
-					.font(.system(size: 11))
-					.foregroundStyle(.secondary)
+					.font(LiquidGlassStyle.sectionBodyFont)
+					.foregroundStyle(LiquidGlassStyle.sectionBodyStyle)
 					.fixedSize(horizontal: false, vertical: true)
 			}
 		}

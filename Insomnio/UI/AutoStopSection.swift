@@ -18,8 +18,8 @@ struct AutoStopSection: View {
 					.toggleStyle(.checkbox)
 
 				Text("autostop_desc")
-					.font(.system(size: 11))
-					.foregroundStyle(.tertiary)
+					.font(LiquidGlassStyle.sectionBodyFont)
+					.foregroundStyle(LiquidGlassStyle.sectionHintStyle)
 					.padding(.leading, 20)
 
 				if autoStopEnabled {
@@ -34,8 +34,8 @@ struct AutoStopSection: View {
 
 					if isRunning {
 						Text("autostop_remaining \(remainingTime.formattedCountdown)")
-							.font(.system(size: 11))
-							.foregroundStyle(.secondary)
+							.font(LiquidGlassStyle.sectionBodyFont)
+							.foregroundStyle(LiquidGlassStyle.sectionBodyStyle)
 							.monospacedDigit()
 					}
 				}
