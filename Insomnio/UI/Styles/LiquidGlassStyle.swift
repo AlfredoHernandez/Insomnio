@@ -15,6 +15,9 @@ enum LiquidGlassStyle {
 	static let sectionBodyFont: Font = .system(size: 11)
 	static let sectionBodyStyle: AnyShapeStyle = .init(.secondary)
 	static let sectionHintStyle: AnyShapeStyle = .init(.tertiary)
+	static let metricValueFont: Font = .system(size: 20, weight: .semibold, design: .rounded)
+	static let metricLabelFont: Font = .system(size: 11, weight: .medium)
+	static let metricCornerRadius: CGFloat = 12
 }
 
 extension View {
@@ -66,5 +69,15 @@ extension View {
 			}
 		}
 		.font(LiquidGlassStyle.sectionTitleFont)
+	}
+
+	func liquidGlassMetricTile() -> some View {
+		padding(12)
+			.frame(maxWidth: .infinity, alignment: .leading)
+			.glassEffect(.regular, in: RoundedRectangle(cornerRadius: LiquidGlassStyle.metricCornerRadius, style: .continuous))
+			.overlay {
+				RoundedRectangle(cornerRadius: LiquidGlassStyle.metricCornerRadius, style: .continuous)
+					.strokeBorder(.white.opacity(0.08), lineWidth: 0.5)
+			}
 	}
 }
