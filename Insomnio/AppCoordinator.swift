@@ -38,7 +38,7 @@ final class AppCoordinator {
 
 		IntentDependencies.performer = AutomationCoordinatorIntentPerformer(insomniac: dependencies.insomniac)
 		dependencies.shortcutManager.registerShortcut { [dependencies] in
-			dependencies.insomniac.toggle()
+			dependencies.insomniac.toggle(from: .globalShortcut)
 		}
 		dependencies.automationCoordinator.startMonitoring()
 		bootstrapTask = Task { [dependencies] in

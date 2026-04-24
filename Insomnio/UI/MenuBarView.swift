@@ -52,8 +52,13 @@ struct MenuBarView: View {
 						.frame(maxWidth: .infinity, alignment: .leading)
 				}
 
+				if insomniac.isActive, let source = insomniac.activationSource {
+					ActivationSourcePill(source: source)
+						.frame(maxWidth: .infinity, alignment: .leading)
+				}
+
 				Button {
-					insomniac.toggle()
+					insomniac.toggle(from: .menuBar)
 				} label: {
 					Text(insomniac.isActive ? "button_stop" : "button_start")
 						.frame(maxWidth: .infinity)

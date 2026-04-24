@@ -9,9 +9,10 @@ import Insomniac
 /// shared `Insomniac` model.
 ///
 /// Intents are treated as manual user input: `start` and `stop` invoke
-/// `Insomniac.toggle()` when a state change is required so the
+/// `Insomniac.toggle(from: .shortcutsIntent)` when a state change is required so the
 /// `AutomationCoordinator`'s `onToggle` hook registers a manual override and
 /// does not immediately revert the user's intent on the next evaluation tick.
+@MainActor
 final class AutomationCoordinatorIntentPerformer: InsomnioIntentPerformer {
 	private let insomniac: Insomniac
 
@@ -21,16 +22,16 @@ final class AutomationCoordinatorIntentPerformer: InsomnioIntentPerformer {
 
 	func start() {
 		guard !insomniac.isActive else { return }
-		insomniac.toggle()
+		insomniac.toggle(from: .shortcutsIntent)
 	}
 
 	func stop() {
 		guard insomniac.isActive else { return }
-		insomniac.toggle()
+		insomniac.toggle(from: .shortcutsIntent)
 	}
 
 	func toggle() {
-		insomniac.toggle()
+		insomniac.toggle(from: .shortcutsIntent)
 	}
 
 	func startForDuration(_ duration: AutoStopDuration) {

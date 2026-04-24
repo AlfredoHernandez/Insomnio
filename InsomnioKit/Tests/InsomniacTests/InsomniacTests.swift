@@ -63,6 +63,53 @@ struct InsomniacTests {
 		#expect(sut.lastActivation == nil)
 	}
 
+	// MARK: - Activation source
+
+	@Test
+	func `Init activation source is nil`() {
+		let (sut, _, _) = makeSUT()
+
+		#expect(sut.activationSource == nil)
+	}
+
+	@Test
+	func `Start assigns menu bar activation source by default`() {
+		let (sut, _, _) = makeSUT()
+
+		sut.start()
+
+		#expect(sut.activationSource == .menuBar)
+	}
+
+	@Test
+	func `Register activation source then start records that source`() {
+		let (sut, _, _) = makeSUT()
+
+		sut.registerActivationSource(.automation)
+		sut.start()
+
+		#expect(sut.activationSource == .automation)
+	}
+
+	@Test
+	func `Toggle from source records activation source when turning on`() {
+		let (sut, _, _) = makeSUT()
+
+		sut.toggle(from: .globalShortcut)
+
+		#expect(sut.activationSource == .globalShortcut)
+	}
+
+	@Test
+	func `Stop clears activation source`() {
+		let (sut, _, _) = makeSUT()
+		sut.toggle(from: .mainWindow)
+
+		sut.stop()
+
+		#expect(sut.activationSource == nil)
+	}
+
 	@Test
 	func `Start sets isActive to true`() {
 		let (sut, _, _) = makeSUT()

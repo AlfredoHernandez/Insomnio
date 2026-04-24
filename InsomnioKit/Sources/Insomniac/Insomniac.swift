@@ -14,6 +14,15 @@ public final class Insomniac {
 		case preventSleep
 	}
 
+	/// Where the current awake session was turned on from (menu bar, Shortcuts, etc.).
+	public enum ActivationSource: String, Sendable, Equatable {
+		case menuBar
+		case mainWindow
+		case globalShortcut
+		case shortcutsIntent
+		case automation
+	}
+
 	private let mouseMover: any MouseMover
 	private let sleepPreventer: any SleepPreventer
 	private let idleTimeProvider: (any IdleTimeProvider)?
@@ -24,10 +33,13 @@ public final class Insomniac {
 	private var timer: TimerCancellable?
 	private var powerCheckTimer: TimerCancellable?
 	private var wasOnBattery = false
+	private var pendingActivationSource: ActivationSource?
 
 	public static let idleThreshold: TimeInterval = 5.0
 
 	public private(set) var isActive: Bool = false
+	/// Set when `isActive` becomes `true`; cleared on `stop()`.
+	public private(set) var activationSource: ActivationSource?
 	public var mode: Mode = .moveCursor
 	public var interval: TimeInterval = 30.0
 	public var onlyWhenIdle: Bool = false
@@ -65,13 +77,27 @@ public final class Insomniac {
 		self.now = now
 	}
 
-	public func toggle() {
-		isActive ? stop() : start()
+	/// Toggles awake state. When turning on, `source` is stored for UI (e.g. menu bar pill).
+	public func toggle(from source: ActivationSource = .menuBar) {
+		if isActive {
+			stop()
+		} else {
+			pendingActivationSource = source
+			start()
+		}
 		onToggle?()
+	}
+
+	/// Call immediately before `start()` when activation is not routed through `toggle(from:)`
+	/// (for example automation turning the model on).
+	public func registerActivationSource(_ source: ActivationSource) {
+		pendingActivationSource = source
 	}
 
 	public func start() {
 		guard !isActive else { return }
+		activationSource = pendingActivationSource ?? .menuBar
+		pendingActivationSource = nil
 		isActive = true
 		switch mode {
 		case .moveCursor:
@@ -99,6 +125,8 @@ public final class Insomniac {
 
 	public func stop() {
 		isActive = false
+		activationSource = nil
+		pendingActivationSource = nil
 		timer?.invalidate()
 		timer = nil
 		powerCheckTimer?.invalidate()

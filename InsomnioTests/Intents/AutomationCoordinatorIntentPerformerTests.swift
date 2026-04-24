@@ -18,6 +18,7 @@ struct AutomationCoordinatorIntentPerformerTests {
 		sut.start()
 
 		#expect(insomniac.isActive == true)
+		#expect(insomniac.activationSource == .shortcutsIntent)
 	}
 
 	@Test

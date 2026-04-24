@@ -29,6 +29,7 @@ struct AutomationCoordinatorTests {
 		sut.evaluate()
 
 		#expect(insomniac.isActive == true)
+		#expect(insomniac.activationSource == .automation)
 	}
 
 	@Test
@@ -39,6 +40,7 @@ struct AutomationCoordinatorTests {
 		sut.evaluate()
 
 		#expect(insomniac.isActive == true)
+		#expect(insomniac.activationSource == .automation)
 	}
 
 	@Test
@@ -82,6 +84,7 @@ struct AutomationCoordinatorTests {
 		schedule.stubbedShouldBeActive = true
 		sut.evaluate()
 		#expect(insomniac.isActive == true)
+		#expect(insomniac.activationSource == .automation)
 	}
 
 	@Test
@@ -93,6 +96,7 @@ struct AutomationCoordinatorTests {
 		sut.evaluate()
 
 		#expect(insomniac.isActive == true)
+		#expect(insomniac.activationSource == .automation)
 	}
 
 	@Test
@@ -131,6 +135,7 @@ struct AutomationCoordinatorTests {
 		timerScheduler.fire(at: 0)
 
 		#expect(insomniac.isActive == true)
+		#expect(insomniac.activationSource == .automation)
 	}
 
 	@Test

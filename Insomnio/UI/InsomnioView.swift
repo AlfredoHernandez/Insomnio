@@ -30,7 +30,7 @@ struct InsomnioView: View {
 				AccessibilityPermissionBanner(checker: accessibilityPermissionChecker)
 
 				StatusSection(isActive: insomniac.isActive, onToggle: {
-					insomniac.toggle()
+					insomniac.toggle(from: .mainWindow)
 				})
 
 				ModeSection(mode: $insomniac.mode, isDisabled: insomniac.isActive)
