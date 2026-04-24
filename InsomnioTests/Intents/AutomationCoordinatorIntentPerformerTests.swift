@@ -4,6 +4,7 @@
 
 @testable import Insomnio
 import AutoStop
+import AutoStopTesting
 import Insomniac
 import InsomniacTesting
 import Testing
@@ -34,6 +35,15 @@ struct AutomationCoordinatorIntentPerformerTests {
 	func `Stop deactivates the insomniac model`() {
 		let (sut, insomniac) = makeSUT()
 		insomniac.start()
+
+		sut.stop()
+
+		#expect(insomniac.isActive == false)
+	}
+
+	@Test
+	func `Stop is idempotent on an already inactive model`() {
+		let (sut, insomniac) = makeSUT()
 
 		sut.stop()
 
@@ -73,9 +83,10 @@ struct AutomationCoordinatorIntentPerformerTests {
 	}
 
 	@Test
-	func `Start for duration does not re-activate an already active model but still applies settings`() {
-		let (sut, insomniac) = makeSUT()
-		insomniac.autoStopEnabled = false
+	func `Start for duration on an already active model restarts the auto-stop timer with the new duration`() {
+		let autoStopTimer = AutoStopTimerSpy()
+		let (sut, insomniac) = makeSUT(autoStopTimer: autoStopTimer)
+		insomniac.autoStopEnabled = true
 		insomniac.autoStopDuration = .oneHour
 		insomniac.start()
 
@@ -84,14 +95,22 @@ struct AutomationCoordinatorIntentPerformerTests {
 		#expect(insomniac.autoStopEnabled == true)
 		#expect(insomniac.autoStopDuration == .fourHours)
 		#expect(insomniac.isActive == true)
+		#expect(autoStopTimer.receivedMessages == [
+			.start(AutoStopDuration.oneHour.seconds),
+			.cancel,
+			.start(AutoStopDuration.fourHours.seconds),
+		])
 	}
 
 	// MARK: - Helpers
 
-	private func makeSUT() -> (AutomationCoordinatorIntentPerformer, Insomniac) {
+	private func makeSUT(
+		autoStopTimer: (any AutoStopTimer)? = nil,
+	) -> (AutomationCoordinatorIntentPerformer, Insomniac) {
 		let insomniac = Insomniac(
 			mouseMover: MouseMoverSpy(),
 			sleepPreventer: SleepPreventerSpy(),
+			autoStopTimer: autoStopTimer,
 			timerScheduler: TimerSchedulerSpy(),
 		)
 		let sut = AutomationCoordinatorIntentPerformer(insomniac: insomniac)

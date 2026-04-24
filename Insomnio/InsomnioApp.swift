@@ -7,14 +7,10 @@ import SwiftUI
 @main
 struct InsomnioApp: App {
 	@NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-	@State private var coordinator = AppCoordinator(dependencies: .create())
 
 	var body: some Scene {
 		Window("Insomnio", id: "main") {
-			coordinator.makeMainView()
-				.onAppear {
-					coordinator.start()
-				}
+			appDelegate.coordinator.makeMainView()
 		}
 		.defaultSize(width: 420, height: 560)
 		.windowResizability(.contentSize)

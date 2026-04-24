@@ -11,7 +11,10 @@ struct StartInsomnioIntent: AppIntent {
 
 	@MainActor
 	func perform() async throws -> some IntentResult {
-		IntentDependencies.performer?.start()
+		guard let performer = IntentDependencies.performer else {
+			throw InsomnioIntentError.performerUnavailable
+		}
+		performer.start()
 		return .result()
 	}
 }

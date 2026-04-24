@@ -378,6 +378,22 @@
     "Insomnio" : {
 
     },
+    "intent_error_performer_unavailable" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insomnio is not running."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insomnio no se está ejecutando."
+          }
+        }
+      }
+    },
     "interval_hint %@" : {
       "localizations" : {
         "en" : {

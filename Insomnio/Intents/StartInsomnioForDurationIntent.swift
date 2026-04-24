@@ -4,8 +4,6 @@
 
 import AppIntents
 
-/// A future `StartUntilBatteryBelowIntent` is a natural premium-gated candidate;
-/// the four intents shipped in this module are intentionally free.
 struct StartInsomnioForDurationIntent: AppIntent {
 	static let title: LocalizedStringResource = "Start Insomnio for Duration"
 	static let description = IntentDescription("Starts keeping your Mac awake for a fixed amount of time.")
@@ -16,7 +14,10 @@ struct StartInsomnioForDurationIntent: AppIntent {
 
 	@MainActor
 	func perform() async throws -> some IntentResult {
-		IntentDependencies.performer?.startForDuration(duration.domainValue)
+		guard let performer = IntentDependencies.performer else {
+			throw InsomnioIntentError.performerUnavailable
+		}
+		performer.startForDuration(duration.domainValue)
 		return .result()
 	}
 }

@@ -22,6 +22,7 @@
 		AA01010101010101AA000031 /* TestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000030 /* TestSupport */; };
 		AA01010101010101AA000033 /* InsomniacTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000032 /* InsomniacTesting */; };
 		AA01010101010101AA000035 /* TimerSchedulerTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000034 /* TimerSchedulerTesting */; };
+		AA01010101010101AA000037 /* AutoStopTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000036 /* AutoStopTesting */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 				AA01010101010101AA000031 /* TestSupport in Frameworks */,
 				AA01010101010101AA000033 /* InsomniacTesting in Frameworks */,
 				AA01010101010101AA000035 /* TimerSchedulerTesting in Frameworks */,
+				AA01010101010101AA000037 /* AutoStopTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +163,7 @@
 				AA01010101010101AA000030 /* TestSupport */,
 				AA01010101010101AA000032 /* InsomniacTesting */,
 				AA01010101010101AA000034 /* TimerSchedulerTesting */,
+				AA01010101010101AA000036 /* AutoStopTesting */,
 			);
 			productName = InsomnioTests;
 			productReference = 384DA66D2F4295FE0059E034 /* InsomnioTests.xctest */;
@@ -609,6 +612,10 @@
 		AA01010101010101AA000034 /* TimerSchedulerTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TimerSchedulerTesting;
+		};
+		AA01010101010101AA000036 /* AutoStopTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AutoStopTesting;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

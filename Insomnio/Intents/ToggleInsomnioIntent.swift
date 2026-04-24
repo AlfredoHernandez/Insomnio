@@ -11,7 +11,10 @@ struct ToggleInsomnioIntent: AppIntent {
 
 	@MainActor
 	func perform() async throws -> some IntentResult {
-		IntentDependencies.performer?.toggle()
+		guard let performer = IntentDependencies.performer else {
+			throw InsomnioIntentError.performerUnavailable
+		}
+		performer.toggle()
 		return .result()
 	}
 }

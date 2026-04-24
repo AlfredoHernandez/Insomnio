@@ -5,6 +5,8 @@
 import AppIntents
 import AutoStop
 
+/// Cases must stay in sync with `AutoStop.AutoStopDuration`; `domainValue`'s
+/// exhaustive switch guarantees a compile error if the domain enum changes.
 enum AutoStopDurationAppEnum: String, AppEnum {
 	case thirtyMinutes
 	case oneHour

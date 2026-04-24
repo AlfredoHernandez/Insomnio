@@ -35,6 +35,11 @@ final class AutomationCoordinatorIntentPerformer: InsomnioIntentPerformer {
 	}
 
 	func startForDuration(_ duration: AutoStopDuration) {
+		// Stop first when already active so the in-flight auto-stop timer is
+		// cancelled; otherwise the new `autoStopDuration` is applied to the
+		// model but the original countdown keeps running and Insomnio shuts
+		// off at the old time.
+		stop()
 		insomniac.autoStopEnabled = true
 		insomniac.autoStopDuration = duration
 		start()
