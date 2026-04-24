@@ -7,6 +7,49 @@
     "·" : {
 
     },
+    "%lld" : {
+
+    },
+    "1 Hour" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 hora"
+          }
+        }
+      }
+    },
+    "2 Hours" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 horas"
+          }
+        }
+      }
+    },
+    "4 Hours" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "4 horas"
+          }
+        }
+      }
+    },
+    "30 Minutes" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30 minutos"
+          }
+        }
+      }
+    },
     "accessibility_banner_button" : {
       "localizations" : {
         "en" : {
@@ -55,7 +98,7 @@
         }
       }
     },
-    "settings_sidebar_automation" : {
+    "activation_source_pill_automation" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -71,50 +114,66 @@
         }
       }
     },
-    "settings_sidebar_general" : {
+    "activation_source_pill_keyboard_shortcut" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "General"
+            "value" : "Keyboard shortcut"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "General"
+            "value" : "Atajo de teclado"
           }
         }
       }
     },
-    "settings_sidebar_keep_awake" : {
+    "activation_source_pill_main_window" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keep Awake"
+            "value" : "Main window"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mantener activo"
+            "value" : "Ventana principal"
           }
         }
       }
     },
-    "settings_sidebar_status" : {
+    "activation_source_pill_menu_bar" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Status"
+            "value" : "Menu bar"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estado"
+            "value" : "Barra de menú"
+          }
+        }
+      }
+    },
+    "activation_source_pill_shortcuts" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shortcuts"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atajos"
           }
         }
       }
@@ -211,6 +270,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reglas por Aplicación"
+          }
+        }
+      }
+    },
+    "Auto-Stop Duration" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duración de detención automática"
           }
         }
       }
@@ -387,6 +456,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "O define un tiempo personalizado:"
+          }
+        }
+      }
+    },
+    "Duration" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duración"
           }
         }
       }
@@ -1162,6 +1241,198 @@
         }
       }
     },
+    "settings_dashboard_mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo"
+          }
+        }
+      }
+    },
+    "settings_dashboard_monitor_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitor"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoreo"
+          }
+        }
+      }
+    },
+    "settings_dashboard_off" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apagado"
+          }
+        }
+      }
+    },
+    "settings_dashboard_quick_actions_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick actions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acciones rápidas"
+          }
+        }
+      }
+    },
+    "settings_dashboard_source" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Origen"
+          }
+        }
+      }
+    },
+    "settings_dashboard_timer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temporizador"
+          }
+        }
+      }
+    },
+    "settings_sidebar_automation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automation"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatización"
+          }
+        }
+      }
+    },
+    "settings_sidebar_dashboard" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dashboard"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dashboard"
+          }
+        }
+      }
+    },
+    "settings_dashboard_activations" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activations"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activaciones"
+          }
+        }
+      }
+    },
+    "settings_sidebar_general" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
+          }
+        }
+      }
+    },
+    "settings_sidebar_keep_awake" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep Awake"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantener activo"
+          }
+        }
+      }
+    },
+    "settings_sidebar_status" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado"
+          }
+        }
+      }
+    },
     "shortcut_hint" : {
       "localizations" : {
         "en" : {
@@ -1174,6 +1445,56 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⌃⌥⌘I"
+          }
+        }
+      }
+    },
+    "Start for Duration" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar por un tiempo"
+          }
+        }
+      }
+    },
+    "Start Insomnio" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar Insomnio"
+          }
+        }
+      }
+    },
+    "Start Insomnio for Duration" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar Insomnio por un tiempo"
+          }
+        }
+      }
+    },
+    "Starts keeping your Mac awake for a fixed amount of time." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantiene tu Mac despierta durante un tiempo fijo."
+          }
+        }
+      }
+    },
+    "Starts keeping your Mac awake." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantiene tu Mac despierta."
           }
         }
       }
@@ -1210,82 +1531,22 @@
         }
       }
     },
-    "activation_source_pill_automation" : {
+    "Stop Insomnio" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Automation"
-          }
-        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Automatización"
+            "value" : "Detener Insomnio"
           }
         }
       }
     },
-    "activation_source_pill_keyboard_shortcut" : {
+    "Stops keeping your Mac awake." : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keyboard shortcut"
-          }
-        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Atajo de teclado"
-          }
-        }
-      }
-    },
-    "activation_source_pill_main_window" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Main window"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ventana principal"
-          }
-        }
-      }
-    },
-    "activation_source_pill_menu_bar" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Menu bar"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Barra de menú"
-          }
-        }
-      }
-    },
-    "activation_source_pill_shortcuts" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Shortcuts"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Atajos"
+            "value" : "Deja que tu Mac se duerma."
           }
         }
       }
@@ -1498,6 +1759,26 @@
         }
       }
     },
+    "Toggle Insomnio" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alternar Insomnio"
+          }
+        }
+      }
+    },
+    "Toggles whether your Mac is being kept awake." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alterna si tu Mac se mantiene despierta."
+          }
+        }
+      }
+    },
     "unit_hours" : {
       "localizations" : {
         "en" : {
@@ -1558,156 +1839,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Versión %@"
-          }
-        }
-      }
-    },
-    "Start Insomnio" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar Insomnio"
-          }
-        }
-      }
-    },
-    "Stop Insomnio" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detener Insomnio"
-          }
-        }
-      }
-    },
-    "Toggle Insomnio" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alternar Insomnio"
-          }
-        }
-      }
-    },
-    "Start Insomnio for Duration" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar Insomnio por un tiempo"
-          }
-        }
-      }
-    },
-    "Start for Duration" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar por un tiempo"
-          }
-        }
-      }
-    },
-    "Starts keeping your Mac awake." : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mantiene tu Mac despierta."
-          }
-        }
-      }
-    },
-    "Stops keeping your Mac awake." : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Deja que tu Mac se duerma."
-          }
-        }
-      }
-    },
-    "Toggles whether your Mac is being kept awake." : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alterna si tu Mac se mantiene despierta."
-          }
-        }
-      }
-    },
-    "Starts keeping your Mac awake for a fixed amount of time." : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mantiene tu Mac despierta durante un tiempo fijo."
-          }
-        }
-      }
-    },
-    "Duration" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Duración"
-          }
-        }
-      }
-    },
-    "Auto-Stop Duration" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Duración de detención automática"
-          }
-        }
-      }
-    },
-    "30 Minutes" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "30 minutos"
-          }
-        }
-      }
-    },
-    "1 Hour" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "1 hora"
-          }
-        }
-      }
-    },
-    "2 Hours" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "2 horas"
-          }
-        }
-      }
-    },
-    "4 Hours" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "4 horas"
           }
         }
       }

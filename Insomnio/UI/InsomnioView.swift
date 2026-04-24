@@ -19,7 +19,7 @@ struct InsomnioView: View {
 	let accessibilityPermissionChecker: any AccessibilityPermissionChecker
 	let availableApps: () -> [AppInfo]
 	@State private var showingPaywall = false
-	@State private var selection: SettingsDestination? = .status
+	@State private var selection: SettingsDestination? = .dashboard
 
 	var body: some View {
 		NavigationSplitView {
@@ -28,7 +28,17 @@ struct InsomnioView: View {
 			VStack(alignment: .leading, spacing: 12) {
 				AccessibilityPermissionBanner(checker: accessibilityPermissionChecker)
 
-				switch selection ?? .status {
+				switch selection ?? .dashboard {
+				case .dashboard:
+					DashboardSettingsView(
+						insomniac: insomniac,
+						premiumManager: premiumManager,
+						scheduleEvaluator: scheduleEvaluator,
+						appRulesEvaluator: appRulesEvaluator,
+						selection: $selection,
+						showingPaywall: $showingPaywall,
+					)
+
 				case .status:
 					StatusSettingsView(insomniac: insomniac)
 
