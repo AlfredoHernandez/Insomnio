@@ -20,7 +20,7 @@ struct AppRulesSection: View {
 					Button { showingAppPicker = true } label: {
 						Image(systemName: "plus.circle")
 					}
-					.buttonStyle(.plain)
+					.liquidGlassIconButton()
 				}
 
 				Text("apprules_desc")

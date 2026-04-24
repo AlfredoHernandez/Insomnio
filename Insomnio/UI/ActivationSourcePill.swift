@@ -21,7 +21,7 @@ struct ActivationSourcePill: View {
 		.padding(.horizontal, 10)
 		.padding(.vertical, 5)
 		.accessibilityLabel(Text(titleKey))
-		.modifier(LiquidGlassCapsuleStyle())
+		.glassEffect(.regular, in: Capsule())
 	}
 
 	private var titleKey: LocalizedStringKey {
@@ -31,26 +31,6 @@ struct ActivationSourcePill: View {
 		case .globalShortcut: "activation_source_pill_keyboard_shortcut"
 		case .shortcutsIntent: "activation_source_pill_shortcuts"
 		case .automation: "activation_source_pill_automation"
-		}
-	}
-}
-
-// MARK: - Liquid Glass
-
-private struct LiquidGlassCapsuleStyle: ViewModifier {
-	func body(content: Content) -> some View {
-		if #available(macOS 26.0, *) {
-			content.glassEffect(.regular, in: Capsule())
-		} else {
-			content
-				.background {
-					Capsule()
-						.fill(.ultraThinMaterial)
-				}
-				.overlay {
-					Capsule()
-						.strokeBorder(Color.primary.opacity(0.08), lineWidth: 0.5)
-				}
 		}
 	}
 }

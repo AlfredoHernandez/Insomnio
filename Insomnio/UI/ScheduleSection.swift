@@ -19,7 +19,7 @@ struct ScheduleSection: View {
 					Button { isAddingRule = true } label: {
 						Image(systemName: "plus.circle")
 					}
-					.buttonStyle(.plain)
+					.liquidGlassIconButton()
 				}
 
 				Text("schedule_desc")

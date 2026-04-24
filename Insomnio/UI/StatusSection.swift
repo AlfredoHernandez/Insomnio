@@ -28,14 +28,14 @@ struct StatusSection: View {
 				))
 				.toggleStyle(.switch)
 				.tint(.green)
+				.controlSize(.regular)
 				.labelsHidden()
 			}
 		}
 		.background {
-			if isActive {
-				RoundedRectangle(cornerRadius: 10, style: .continuous)
-					.fill(.green.opacity(0.08))
-			}
+			RoundedRectangle(cornerRadius: LiquidGlassStyle.cornerRadius, style: .continuous)
+				.fill(isActive ? .green.opacity(0.08) : .clear)
+				.allowsHitTesting(false)
 		}
 	}
 }

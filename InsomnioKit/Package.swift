@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
 	name: "InsomnioKit",
-	platforms: [.macOS(.v14)],
+	platforms: [.macOS(.v26)],
 	products: [
 		.library(name: "CursorPattern", targets: ["CursorPattern"]),
 		.library(name: "RuleStore", targets: ["RuleStore"]),

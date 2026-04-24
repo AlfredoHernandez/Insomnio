@@ -70,12 +70,8 @@ struct CursorPatternSection: View {
 							}
 							.frame(maxWidth: .infinity)
 							.padding(.vertical, 8)
-							.background(
-								cursorPattern == pattern
-									? Color.accentColor.opacity(0.15)
-									: Color.clear,
-								in: RoundedRectangle(cornerRadius: 6),
-							)
+							.background(Color.clear, in: RoundedRectangle(cornerRadius: 6))
+							.liquidGlassSelectionBackground(isSelected: cursorPattern == pattern, cornerRadius: 6)
 						}
 						.buttonStyle(.plain)
 					}

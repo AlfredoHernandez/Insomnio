@@ -29,60 +29,62 @@ struct InsomnioView: View {
 			VStack(alignment: .leading, spacing: 12) {
 				AccessibilityPermissionBanner(checker: accessibilityPermissionChecker)
 
-				StatusSection(isActive: insomniac.isActive, onToggle: {
-					insomniac.toggle(from: .mainWindow)
-				})
+				liquidGlassContainer(spacing: 12) {
+					StatusSection(isActive: insomniac.isActive, onToggle: {
+						insomniac.toggle(from: .mainWindow)
+					})
 
-				ModeSection(mode: $insomniac.mode, isDisabled: insomniac.isActive)
+					ModeSection(mode: $insomniac.mode, isDisabled: insomniac.isActive)
 
-				if insomniac.mode == .moveCursor {
-					IntervalSection(interval: $insomniac.interval, isDisabled: insomniac.isActive)
+					if insomniac.mode == .moveCursor {
+						IntervalSection(interval: $insomniac.interval, isDisabled: insomniac.isActive)
 
-					CursorPatternSection(
-						cursorPattern: $insomniac.cursorPattern,
-						isDisabled: insomniac.isActive,
+						CursorPatternSection(
+							cursorPattern: $insomniac.cursorPattern,
+							isDisabled: insomniac.isActive,
+						)
+						.premiumGated(isPremium: premiumManager.isPremium) {
+							showingPaywall = true
+						}
+					}
+
+					OptionsSection(
+						onlyWhenIdle: $insomniac.onlyWhenIdle,
+						pauseOnBattery: $insomniac.pauseOnBattery,
+						isPreventSleepMode: insomniac.mode == .preventSleep,
+						launchAtLoginManager: launchAtLoginManager,
+					)
+
+					AutoStopSection(
+						autoStopEnabled: $insomniac.autoStopEnabled,
+						autoStopDuration: $insomniac.autoStopDuration,
+						isRunning: insomniac.autoStopIsRunning,
+						remainingTime: insomniac.autoStopRemainingTime,
 					)
 					.premiumGated(isPremium: premiumManager.isPremium) {
 						showingPaywall = true
 					}
-				}
 
-				OptionsSection(
-					onlyWhenIdle: $insomniac.onlyWhenIdle,
-					pauseOnBattery: $insomniac.pauseOnBattery,
-					isPreventSleepMode: insomniac.mode == .preventSleep,
-					launchAtLoginManager: launchAtLoginManager,
-				)
+					ScheduleSection(scheduleEvaluator: scheduleEvaluator)
+						.premiumGated(isPremium: premiumManager.isPremium) {
+							showingPaywall = true
+						}
 
-				AutoStopSection(
-					autoStopEnabled: $insomniac.autoStopEnabled,
-					autoStopDuration: $insomniac.autoStopDuration,
-					isRunning: insomniac.autoStopIsRunning,
-					remainingTime: insomniac.autoStopRemainingTime,
-				)
-				.premiumGated(isPremium: premiumManager.isPremium) {
-					showingPaywall = true
-				}
+					AppRulesSection(appRulesEvaluator: appRulesEvaluator, availableApps: availableApps)
+						.premiumGated(isPremium: premiumManager.isPremium) {
+							showingPaywall = true
+						}
 
-				ScheduleSection(scheduleEvaluator: scheduleEvaluator)
-					.premiumGated(isPremium: premiumManager.isPremium) {
-						showingPaywall = true
+					if insomniac.activationCount > 0 {
+						FeedbackSection(
+							activationCount: insomniac.activationCount,
+							lastActivation: insomniac.lastActivation,
+						)
 					}
 
-				AppRulesSection(appRulesEvaluator: appRulesEvaluator, availableApps: availableApps)
-					.premiumGated(isPremium: premiumManager.isPremium) {
+					PremiumSection(isPremium: premiumManager.isPremium) {
 						showingPaywall = true
 					}
-
-				if insomniac.activationCount > 0 {
-					FeedbackSection(
-						activationCount: insomniac.activationCount,
-						lastActivation: insomniac.lastActivation,
-					)
-				}
-
-				PremiumSection(isPremium: premiumManager.isPremium) {
-					showingPaywall = true
 				}
 
 				HStack {
