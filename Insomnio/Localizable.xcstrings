@@ -178,6 +178,9 @@
         }
       }
     },
+    "Active minutes" : {
+
+    },
     "apprules_desc" : {
       "localizations" : {
         "en" : {
@@ -518,6 +521,121 @@
         }
       }
     },
+    "hero_add_rule" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add rule"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir regla"
+          }
+        }
+      }
+    },
+    "hero_add_schedule" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add schedule"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir horario"
+          }
+        }
+      }
+    },
+    "hero_autostop_remaining %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ remaining"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ restantes"
+          }
+        }
+      }
+    },
+    "hero_status_active" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activo"
+          }
+        }
+      }
+    },
+    "hero_status_idle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idle"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inactivo"
+          }
+        }
+      }
+    },
+    "hero_subtitle_active" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Mac will stay awake"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu Mac seguirá despierta"
+          }
+        }
+      }
+    },
+    "hero_subtitle_idle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toggle to keep your Mac awake"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activa para mantener tu Mac despierta"
+          }
+        }
+      }
+    },
+    "Hour" : {
+
+    },
     "Insomnio" : {
 
     },
@@ -677,6 +795,166 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mantiene tu Mac despierta sin mover el cursor"
+          }
+        }
+      }
+    },
+    "next_up_active_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currently"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualmente"
+          }
+        }
+      }
+    },
+    "next_up_active_value" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keeping your Mac awake"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manteniendo tu Mac despierta"
+          }
+        }
+      }
+    },
+    "next_up_autostop_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-stop"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detención automática"
+          }
+        }
+      }
+    },
+    "next_up_autostop_value %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stops in %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detiene en %@"
+          }
+        }
+      }
+    },
+    "next_up_idle_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next up"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siguiente"
+          }
+        }
+      }
+    },
+    "next_up_idle_value" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No scheduled sessions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin sesiones programadas"
+          }
+        }
+      }
+    },
+    "next_up_manage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestionar"
+          }
+        }
+      }
+    },
+    "next_up_schedule_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheduled"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programado"
+          }
+        }
+      }
+    },
+    "next_up_schedule_value %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld active rule(s)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld regla(s) activa(s)"
+          }
+        }
+      }
+    },
+    "next_up_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next up"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siguiente"
           }
         }
       }
@@ -1097,6 +1375,38 @@
         }
       }
     },
+    "recent_activity_empty" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No activity yet. Toggle Insomnio to start tracking."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin actividad. Activa Insomnio para empezar."
+          }
+        }
+      }
+    },
+    "recent_activity_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last 24 hours"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Últimas 24 horas"
+          }
+        }
+      }
+    },
     "schedule_add_title" : {
       "localizations" : {
         "en" : {
@@ -1241,6 +1551,23 @@
         }
       }
     },
+    "settings_dashboard_activations" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activations"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activaciones"
+          }
+        }
+      }
+    },
     "settings_dashboard_mode" : {
       "localizations" : {
         "en" : {
@@ -1274,6 +1601,7 @@
       }
     },
     "settings_dashboard_off" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1290,6 +1618,7 @@
       }
     },
     "settings_dashboard_quick_actions_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1306,6 +1635,7 @@
       }
     },
     "settings_dashboard_source" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1322,6 +1652,7 @@
       }
     },
     "settings_dashboard_timer" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1369,34 +1700,18 @@
         }
       }
     },
-    "settings_dashboard_activations" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activations"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activaciones"
-          }
-        }
-      }
-    },
     "settings_sidebar_general" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "General"
+            "value" : "Settings"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "General"
+            "value" : "Ajustes"
           }
         }
       }
@@ -1413,22 +1728,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mantener activo"
-          }
-        }
-      }
-    },
-    "settings_sidebar_status" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Status"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Estado"
           }
         }
       }

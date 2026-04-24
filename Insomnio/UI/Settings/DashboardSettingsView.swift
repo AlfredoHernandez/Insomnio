@@ -4,6 +4,7 @@
 
 import AppRules
 import AutoStop
+import Combine
 import Insomniac
 import Premium
 import Schedule
@@ -14,8 +15,11 @@ struct DashboardSettingsView: View {
 	let premiumManager: any PremiumManager
 	let scheduleEvaluator: any ScheduleEvaluator
 	let appRulesEvaluator: any AppRulesEvaluator
-	@Binding var selection: SettingsDestination?
+	@Binding var selection: SettingsDestination
 	@Binding var showingPaywall: Bool
+
+	@State private var now: Date = .now
+	private let ticker = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
 
 	private var modeLabel: LocalizedStringKey {
 		insomniac.mode == .moveCursor ? "mode_move_cursor" : "mode_prevent_sleep"
@@ -23,140 +27,96 @@ struct DashboardSettingsView: View {
 
 	var body: some View {
 		ScrollView {
-			VStack(alignment: .leading, spacing: 12) {
-				liquidGlassContainer(spacing: 12) {
-					StatusSection(isActive: insomniac.isActive, onToggle: {
-						insomniac.toggle(from: .mainWindow)
-					})
+			VStack(alignment: .leading, spacing: 16) {
+				HeroCard(insomniac: insomniac)
 
+				HStack(alignment: .top, spacing: 16) {
+					NextUpCard(
+						insomniac: insomniac,
+						scheduleRulesCount: scheduleEvaluator.rules.count,
+						onManageSchedule: { selection = .automation },
+					)
 					monitorCard
-					quickActionsCard
 				}
 
-				if insomniac.activationCount > 0 {
-					FeedbackSection(activationCount: insomniac.activationCount, lastActivation: insomniac.lastActivation)
-						.padding(.horizontal, 4)
+				RecentActivityCard(
+					events: insomniac.recentActivations,
+					isActive: insomniac.isActive,
+					now: now,
+				)
+
+				if !premiumManager.isPremium {
+					unlockButton
 				}
 			}
 			.padding(20)
 		}
+		.onReceive(ticker) { now = $0 }
 	}
 
 	private var monitorCard: some View {
 		CardView {
-			VStack(alignment: .leading, spacing: 10) {
+			VStack(alignment: .leading, spacing: 12) {
 				liquidGlassSectionTitle("settings_dashboard_monitor_title", systemImage: "waveform.path.ecg")
 
-				LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
-					MetricTile(
-						title: "enable_label",
-						value: AnyView(Text(insomniac.isActive ? "status_active" : "status_inactive")),
-						isEmphasized: insomniac.isActive,
-					)
-
+				LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
 					MetricTile(
 						title: "settings_dashboard_mode",
 						value: AnyView(Text(modeLabel)),
 					)
 
-					MetricTile(
-						title: "settings_dashboard_timer",
-						value: AnyView(timerValueView),
-					)
-
-					MetricTile(
-						title: "settings_dashboard_activations",
-						value: AnyView(Text("\(insomniac.activationCount)").monospacedDigit()),
-					)
-
-					MetricTile(
-						title: "schedule_title",
-						value: AnyView(Text("\(scheduleEvaluator.rules.count)").monospacedDigit()),
-					)
-
-					MetricTile(
-						title: "apprules_title",
-						value: AnyView(Text("\(appRulesEvaluator.rules.count)").monospacedDigit()),
-					)
-
-					if insomniac.isActive, let source = insomniac.activationSource {
-						MetricTile(
-							title: "settings_dashboard_source",
-							value: AnyView(ActivationSourcePill(source: source)),
-						)
-						.gridCellColumns(2)
-					}
+					scheduleTile
+					appRulesTile
 				}
 			}
 		}
 	}
 
-	private var timerValueView: some View {
-		Group {
-			if insomniac.autoStopIsRunning {
-				Text(insomniac.autoStopRemainingTime.formattedCountdown)
-					.monospacedDigit()
-			} else if insomniac.autoStopEnabled {
-				Text(autoStopDurationLabel)
-			} else {
-				Text("settings_dashboard_off")
+	@ViewBuilder
+	private var scheduleTile: some View {
+		if !scheduleEvaluator.rules.isEmpty {
+			MetricTile(
+				title: "schedule_title",
+				value: AnyView(Text("\(scheduleEvaluator.rules.count)").monospacedDigit()),
+			)
+		} else {
+			MetricCTATile(
+				title: "schedule_title",
+				ctaLabel: "hero_add_schedule",
+				systemImage: "plus",
+			) {
+				selection = .automation
 			}
 		}
 	}
 
-	private var autoStopDurationLabel: LocalizedStringKey {
-		switch insomniac.autoStopDuration {
-		case .thirtyMinutes: "autostop_30min"
-		case .oneHour: "autostop_1hour"
-		case .twoHours: "autostop_2hours"
-		case .fourHours: "autostop_4hours"
+	@ViewBuilder
+	private var appRulesTile: some View {
+		if !appRulesEvaluator.rules.isEmpty {
+			MetricTile(
+				title: "apprules_title",
+				value: AnyView(Text("\(appRulesEvaluator.rules.count)").monospacedDigit()),
+			)
+		} else {
+			MetricCTATile(
+				title: "apprules_title",
+				ctaLabel: "hero_add_rule",
+				systemImage: "plus",
+			) {
+				selection = .automation
+			}
 		}
 	}
 
-	private var quickActionsCard: some View {
-		CardView {
-			VStack(alignment: .leading, spacing: 10) {
-				liquidGlassSectionTitle("settings_dashboard_quick_actions_title", systemImage: "bolt.fill")
-
-				HStack(spacing: 10) {
-					Button {
-						selection = .keepAwake
-					} label: {
-						Label(SettingsDestination.keepAwake.title, systemImage: SettingsDestination.keepAwake.systemImage)
-							.frame(maxWidth: .infinity)
-					}
-					.liquidGlassPrimaryButton()
-
-					Button {
-						selection = .automation
-					} label: {
-						Label(SettingsDestination.automation.title, systemImage: SettingsDestination.automation.systemImage)
-							.frame(maxWidth: .infinity)
-					}
-					.liquidGlassPrimaryButton()
-
-					Button {
-						selection = .general
-					} label: {
-						Label(SettingsDestination.general.title, systemImage: SettingsDestination.general.systemImage)
-							.frame(maxWidth: .infinity)
-					}
-					.liquidGlassPrimaryButton()
-				}
-				.controlSize(.regular)
-
-				if !premiumManager.isPremium {
-					Button {
-						showingPaywall = true
-					} label: {
-						Label("premium_unlock_title", systemImage: "star.fill")
-							.frame(maxWidth: .infinity)
-					}
-					.liquidGlassPrimaryButton()
-					.controlSize(.large)
-				}
-			}
+	private var unlockButton: some View {
+		Button {
+			showingPaywall = true
+		} label: {
+			Label("premium_unlock_title", systemImage: "star.fill")
+				.frame(maxWidth: .infinity)
 		}
+		.liquidGlassPrimaryButton()
+		.controlSize(.large)
 	}
 }
 
@@ -181,8 +141,35 @@ private struct MetricTile: View {
 	}
 }
 
+private struct MetricCTATile: View {
+	let title: LocalizedStringKey
+	let ctaLabel: LocalizedStringKey
+	let systemImage: String
+	let action: () -> Void
+
+	var body: some View {
+		Button(action: action) {
+			VStack(alignment: .leading, spacing: 6) {
+				Text(title)
+					.font(LiquidGlassStyle.metricLabelFont)
+					.foregroundStyle(.secondary)
+
+				Label(ctaLabel, systemImage: systemImage)
+					.font(.system(size: 13, weight: .medium, design: .rounded))
+					.foregroundStyle(.primary)
+					.lineLimit(1)
+					.minimumScaleFactor(0.75)
+			}
+			.frame(maxWidth: .infinity, alignment: .leading)
+		}
+		.buttonStyle(.plain)
+		.liquidGlassMetricTile()
+		.contentShape(Rectangle())
+	}
+}
+
 #Preview {
-	@Previewable @State var selection: SettingsDestination? = .dashboard
+	@Previewable @State var selection: SettingsDestination = .dashboard
 	@Previewable @State var showingPaywall = false
 	DashboardSettingsView(
 		insomniac: Insomniac(
@@ -196,5 +183,5 @@ private struct MetricTile: View {
 		selection: $selection,
 		showingPaywall: $showingPaywall,
 	)
-	.frame(width: 700, height: 520)
+	.frame(width: 760, height: 640)
 }

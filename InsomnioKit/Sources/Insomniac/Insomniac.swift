@@ -50,6 +50,11 @@ public final class Insomniac {
 	public var onToggle: (() -> Void)?
 	public private(set) var activationCount: Int = 0
 	public private(set) var lastActivation: Date?
+	/// Rolling log of the most recent activation sessions, oldest-first. Capped at ``recentActivationsCapacity``.
+	public private(set) var recentActivations: [ActivationEvent] = []
+
+	/// Max number of sessions kept in ``recentActivations``.
+	public static let recentActivationsCapacity: Int = 50
 
 	public var autoStopRemainingTime: TimeInterval {
 		autoStopTimer?.remainingTime ?? 0
@@ -99,6 +104,7 @@ public final class Insomniac {
 		activationSource = pendingActivationSource ?? .menuBar
 		pendingActivationSource = nil
 		isActive = true
+		recordActivationStart()
 		switch mode {
 		case .moveCursor:
 			scheduleTimer()
@@ -124,6 +130,7 @@ public final class Insomniac {
 	}
 
 	public func stop() {
+		let wasActive = isActive
 		isActive = false
 		activationSource = nil
 		pendingActivationSource = nil
@@ -134,6 +141,9 @@ public final class Insomniac {
 		wasOnBattery = false
 		sleepPreventer.releaseAssertion()
 		autoStopTimer?.cancel()
+		if wasActive {
+			recordActivationEnd()
+		}
 	}
 
 	public func keepAwake() {
@@ -155,6 +165,26 @@ public final class Insomniac {
 	}
 
 	// MARK: - Private
+
+	private func recordActivationStart() {
+		let source = activationSource ?? .menuBar
+		let event = ActivationEvent(startDate: now(), source: source)
+		recentActivations.append(event)
+		if recentActivations.count > Self.recentActivationsCapacity {
+			recentActivations.removeFirst(recentActivations.count - Self.recentActivationsCapacity)
+		}
+	}
+
+	private func recordActivationEnd() {
+		guard let last = recentActivations.last, last.endDate == nil else { return }
+		let closed = ActivationEvent(
+			id: last.id,
+			startDate: last.startDate,
+			endDate: now(),
+			source: last.source,
+		)
+		recentActivations[recentActivations.count - 1] = closed
+	}
 
 	private func scheduleTimer() {
 		timer?.invalidate()

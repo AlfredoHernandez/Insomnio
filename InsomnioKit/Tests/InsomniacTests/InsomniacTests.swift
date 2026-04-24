@@ -110,6 +110,58 @@ struct InsomniacTests {
 		#expect(sut.activationSource == nil)
 	}
 
+	// MARK: - Recent activations ring buffer
+
+	@Test
+	func `Init recent activations is empty`() {
+		let (sut, _, _) = makeSUT()
+
+		#expect(sut.recentActivations.isEmpty)
+	}
+
+	@Test
+	func `Start records an activation event with start date and source`() {
+		let startDate = Date(timeIntervalSince1970: 1000)
+		let (sut, _, _) = makeSUT(now: { startDate })
+
+		sut.toggle(from: .mainWindow)
+
+		#expect(sut.recentActivations.count == 1)
+		#expect(sut.recentActivations.last?.startDate == startDate)
+		#expect(sut.recentActivations.last?.source == .mainWindow)
+		#expect(sut.recentActivations.last?.endDate == nil)
+	}
+
+	@Test
+	func `Stop closes the last activation event with end date`() {
+		var currentDate = Date(timeIntervalSince1970: 1000)
+		let (sut, _, _) = makeSUT(now: { currentDate })
+
+		sut.toggle(from: .menuBar)
+		currentDate = Date(timeIntervalSince1970: 1300)
+		sut.stop()
+
+		#expect(sut.recentActivations.count == 1)
+		#expect(sut.recentActivations.last?.endDate == Date(timeIntervalSince1970: 1300))
+		#expect(sut.recentActivations.last?.duration == 300)
+	}
+
+	@Test
+	func `Ring buffer caps recent activations to most recent 50 events`() {
+		var secondsFromEpoch: TimeInterval = 0
+		let (sut, _, _) = makeSUT(now: { Date(timeIntervalSince1970: secondsFromEpoch) })
+
+		for _ in 0 ..< 60 {
+			secondsFromEpoch += 1
+			sut.start()
+			secondsFromEpoch += 1
+			sut.stop()
+		}
+
+		#expect(sut.recentActivations.count == 50)
+		#expect(sut.recentActivations.first?.startDate == Date(timeIntervalSince1970: 21))
+	}
+
 	@Test
 	func `Start sets isActive to true`() {
 		let (sut, _, _) = makeSUT()
