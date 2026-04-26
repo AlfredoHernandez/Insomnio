@@ -486,6 +486,69 @@ struct InsomniacTests {
 		#expect(sleepPreventer.receivedMessages == [])
 	}
 
+	@Test
+	func `Power check tick after plugging in creates assertion and increments count`() {
+		let powerSourceProvider = PowerSourceProviderSpy()
+		let timerScheduler = TimerSchedulerSpy()
+		let (sut, _, sleepPreventer) = makeSUT(
+			powerSourceProvider: powerSourceProvider,
+			timerScheduler: timerScheduler,
+		)
+		sut.mode = .preventSleep
+		sut.pauseOnBattery = true
+		powerSourceProvider.stubbedIsOnBattery = true
+		sut.start()
+
+		powerSourceProvider.stubbedIsOnBattery = false
+		timerScheduler.fire(at: 0)
+
+		#expect(sleepPreventer.receivedMessages == [.createAssertion])
+		#expect(sut.activationCount == 1)
+		#expect(sut.lastActivation != nil)
+	}
+
+	@Test
+	func `Power check tick after unplugging releases assertion`() {
+		let powerSourceProvider = PowerSourceProviderSpy()
+		let timerScheduler = TimerSchedulerSpy()
+		let (sut, _, sleepPreventer) = makeSUT(
+			powerSourceProvider: powerSourceProvider,
+			timerScheduler: timerScheduler,
+		)
+		sut.mode = .preventSleep
+		sut.pauseOnBattery = true
+		powerSourceProvider.stubbedIsOnBattery = false
+		sut.start()
+
+		powerSourceProvider.stubbedIsOnBattery = true
+		timerScheduler.fire(at: 0)
+
+		#expect(sleepPreventer.receivedMessages == [.createAssertion, .releaseAssertion])
+	}
+
+	@Test
+	func `Power check tick uses injected clock for lastActivation when plugging in`() {
+		let powerSourceProvider = PowerSourceProviderSpy()
+		let timerScheduler = TimerSchedulerSpy()
+		let pluggedInDate = Date(timeIntervalSince1970: 1_700_000_500)
+		var currentDate = Date(timeIntervalSince1970: 1_700_000_000)
+		let (sut, _, _) = makeSUT(
+			powerSourceProvider: powerSourceProvider,
+			timerScheduler: timerScheduler,
+			now: { currentDate },
+		)
+		sut.mode = .preventSleep
+		sut.pauseOnBattery = true
+		powerSourceProvider.stubbedIsOnBattery = true
+		sut.start()
+
+		currentDate = pluggedInDate
+		powerSourceProvider.stubbedIsOnBattery = false
+		timerScheduler.fire(at: 0)
+
+		#expect(sut.lastActivation == pluggedInDate)
+	}
+
 	// MARK: - Cursor Pattern Tests
 
 	@Test

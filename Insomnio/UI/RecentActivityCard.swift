@@ -75,7 +75,7 @@ struct RecentActivityCard: View {
 						.foregroundStyle(.primary)
 						.frame(width: 58, alignment: .leading)
 
-					Text(sourceLabel(event.source))
+					Text(event.source.titleKey)
 						.font(.system(size: 11))
 						.foregroundStyle(.secondary)
 
@@ -127,24 +127,13 @@ struct RecentActivityCard: View {
 			.sorted { $0.hour < $1.hour }
 	}
 
-	private func sourceLabel(_ source: Insomniac.ActivationSource) -> LocalizedStringKey {
-		switch source {
-		case .menuBar: "activation_source_pill_menu_bar"
-		case .mainWindow: "activation_source_pill_main_window"
-		case .globalShortcut: "activation_source_pill_keyboard_shortcut"
-		case .shortcutsIntent: "activation_source_pill_shortcuts"
-		case .automation: "activation_source_pill_automation"
-		}
-	}
-
 	private func durationLabel(for event: ActivationEvent) -> String {
-		let duration = event.duration ?? now.timeIntervalSince(event.startDate)
-		let minutes = Int(duration / 60)
-		if minutes < 1 { return "< 1m" }
-		if minutes < 60 { return "\(minutes)m" }
-		let hours = minutes / 60
-		let remaining = minutes % 60
-		return remaining == 0 ? "\(hours)h" : "\(hours)h \(remaining)m"
+		let seconds = event.duration ?? now.timeIntervalSince(event.startDate)
+		if seconds < 60 {
+			return String(localized: "duration_less_than_minute")
+		}
+		return Duration.seconds(seconds)
+			.formatted(.units(allowed: [.hours, .minutes], width: .abbreviated))
 	}
 }
 

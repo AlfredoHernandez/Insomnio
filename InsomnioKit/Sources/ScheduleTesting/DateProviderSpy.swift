@@ -11,15 +11,7 @@ public final class DateProviderSpy: DateProvider {
 
 	public init() {}
 
-	public func currentWeekday() -> Weekday {
-		stubbedWeekday
-	}
-
-	public func currentHour() -> Int {
-		stubbedHour
-	}
-
-	public func currentMinute() -> Int {
-		stubbedMinute
+	public func now() -> DateSnapshot {
+		DateSnapshot(weekday: stubbedWeekday, hour: stubbedHour, minute: stubbedMinute)
 	}
 }

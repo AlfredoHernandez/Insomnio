@@ -367,6 +367,22 @@
         }
       }
     },
+    "duration_less_than_minute" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "< 1 min"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "< 1 min"
+          }
+        }
+      }
+    },
     "autostop_duration_label" : {
       "localizations" : {
         "en" : {
@@ -1375,23 +1391,6 @@
         }
       }
     },
-    "settings_dashboard_activations" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activations"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activaciones"
-          }
-        }
-      }
-    },
     "settings_dashboard_mode" : {
       "localizations" : {
         "en" : {
@@ -1420,74 +1419,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Monitoreo"
-          }
-        }
-      }
-    },
-    "settings_dashboard_off" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Off"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apagado"
-          }
-        }
-      }
-    },
-    "settings_dashboard_quick_actions_title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quick actions"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Acciones rápidas"
-          }
-        }
-      }
-    },
-    "settings_dashboard_source" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Source"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Origen"
-          }
-        }
-      }
-    },
-    "settings_dashboard_timer" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Timer"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Temporizador"
           }
         }
       }

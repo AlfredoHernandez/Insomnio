@@ -3,7 +3,6 @@
 //
 
 import AppRules
-import AutoStop
 import Combine
 import Insomniac
 import Schedule

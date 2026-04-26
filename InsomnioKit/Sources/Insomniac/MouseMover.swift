@@ -5,6 +5,7 @@
 import CoreGraphics
 
 public protocol MouseMover {
+	@discardableResult
 	func moveMouseTo(_ point: CGPoint) -> Bool
 	func currentMouseLocation() -> CGPoint
 }

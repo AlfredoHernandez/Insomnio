@@ -106,7 +106,7 @@ struct MenuBarView: View {
 			}
 			.controlSize(.large)
 			.keyboardShortcut("s")
-			.liquidGlassPrimaryButtonStyle()
+			.liquidGlassPrimaryButton()
 			.liquidGlassID("primaryAction", in: glassNamespace)
 		}
 	}
@@ -121,10 +121,6 @@ struct MenuBarView: View {
 }
 
 private extension View {
-	func liquidGlassPrimaryButtonStyle() -> some View {
-		buttonStyle(.glass)
-	}
-
 	func liquidGlassID<ID: Hashable & Sendable>(_ id: ID, in namespace: Namespace.ID) -> some View {
 		glassEffectID(id, in: namespace)
 	}

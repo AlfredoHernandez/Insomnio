@@ -18,10 +18,9 @@ public final class RuleBasedScheduleEvaluator: ScheduleEvaluator {
 	}
 
 	public func shouldBeActive() -> Bool {
-		let weekday = dateProvider.currentWeekday()
-		let hour = dateProvider.currentHour()
-		let minute = dateProvider.currentMinute()
-		let currentMinutes = hour * 60 + minute
+		let snapshot = dateProvider.now()
+		let weekday = snapshot.weekday
+		let currentMinutes = snapshot.hour * 60 + snapshot.minute
 
 		return rules.contains { rule in
 			guard rule.isEnabled else { return false }

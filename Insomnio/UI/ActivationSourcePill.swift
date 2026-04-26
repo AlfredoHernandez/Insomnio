@@ -11,7 +11,7 @@ struct ActivationSourcePill: View {
 
 	var body: some View {
 		Label {
-			Text(titleKey)
+			Text(source.titleKey)
 		} icon: {
 			Image(systemName: source.systemSymbolName)
 		}
@@ -20,12 +20,16 @@ struct ActivationSourcePill: View {
 		.foregroundStyle(.primary)
 		.padding(.horizontal, 10)
 		.padding(.vertical, 5)
-		.accessibilityLabel(Text(titleKey))
+		.accessibilityLabel(Text(source.titleKey))
 		.glassEffect(.regular, in: Capsule())
 	}
+}
 
-	private var titleKey: LocalizedStringKey {
-		switch source {
+// MARK: - Presentation
+
+extension Insomniac.ActivationSource {
+	var titleKey: LocalizedStringKey {
+		switch self {
 		case .menuBar: "activation_source_pill_menu_bar"
 		case .mainWindow: "activation_source_pill_main_window"
 		case .globalShortcut: "activation_source_pill_keyboard_shortcut"
@@ -33,11 +37,7 @@ struct ActivationSourcePill: View {
 		case .automation: "activation_source_pill_automation"
 		}
 	}
-}
 
-// MARK: - Symbols
-
-private extension Insomniac.ActivationSource {
 	var systemSymbolName: String {
 		switch self {
 		case .menuBar: "menubar.rectangle"

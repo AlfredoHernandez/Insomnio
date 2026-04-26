@@ -40,7 +40,7 @@ final class AppCoordinator {
 		let controller = MenuBarPopoverController(initialState: .idle) {
 			MenuBarView(
 				insomniac: dependencies.insomniac,
-				activateApp: { NSApplication.shared.activate(ignoringOtherApps: true) },
+				activateApp: { NSApplication.shared.activate() },
 				quitApp: { NSApplication.shared.terminate(nil) },
 			)
 		}

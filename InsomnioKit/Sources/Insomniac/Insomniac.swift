@@ -110,6 +110,9 @@ public final class Insomniac {
 			scheduleTimer()
 
 		case .preventSleep:
+			// activationCount tracks each sleep-prevention assertion
+			// (start + battery↔AC transitions). In .moveCursor, it instead
+			// tracks each cursor nudge from keepAwake().
 			if pauseOnBattery, let powerSourceProvider, powerSourceProvider.isOnBatteryPower() {
 				wasOnBattery = true
 				schedulePowerCheckTimer()

@@ -17,7 +17,7 @@ public final class FoundationAutoStopTimer: AutoStopTimer {
 	private var onExpired: (() -> Void)?
 
 	public init(
-		timerScheduler: any TimerScheduler = FoundationTimerScheduler(),
+		timerScheduler: any TimerScheduler,
 		now: @escaping () -> Date = { Date() },
 	) {
 		self.timerScheduler = timerScheduler
