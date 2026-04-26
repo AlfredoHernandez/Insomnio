@@ -47,6 +47,9 @@ public final class Insomniac {
 	public var autoStopEnabled: Bool = false
 	public var autoStopDuration: AutoStopDuration = .oneHour
 	public var cursorPattern: CursorPattern = .nudge
+	/// Single-subscriber hook fired on each `toggle(from:)` call. Owned by
+	/// `AutomationCoordinator` to track manual overrides — assigning from app
+	/// code will silently clobber the manual-override wiring, so don't.
 	public var onToggle: (() -> Void)?
 	public private(set) var activationCount: Int = 0
 	public private(set) var lastActivation: Date?
@@ -149,7 +152,11 @@ public final class Insomniac {
 		}
 	}
 
+	/// - Important: exposed via SPI for testing; not part of the public API.
+	/// Called by the internal cursor-move timer.
+	@_spi(Testing)
 	public func keepAwake() {
+		guard mode == .moveCursor else { return }
 		if pauseOnBattery, let powerSourceProvider, powerSourceProvider.isOnBatteryPower() {
 			return
 		}

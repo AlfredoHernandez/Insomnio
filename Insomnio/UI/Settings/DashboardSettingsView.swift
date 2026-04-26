@@ -3,7 +3,6 @@
 //
 
 import AppRules
-import Combine
 import Insomniac
 import Schedule
 import SwiftUI
@@ -13,9 +12,6 @@ struct DashboardSettingsView: View {
 	let scheduleEvaluator: any ScheduleEvaluator
 	let appRulesEvaluator: any AppRulesEvaluator
 	@Binding var selection: SettingsDestination
-
-	@State private var now: Date = .now
-	private let ticker = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
 
 	private var modeLabel: LocalizedStringKey {
 		insomniac.mode == .moveCursor ? "mode_move_cursor" : "mode_prevent_sleep"
@@ -35,15 +31,16 @@ struct DashboardSettingsView: View {
 					monitorCard
 				}
 
-				RecentActivityCard(
-					events: insomniac.recentActivations,
-					isActive: insomniac.isActive,
-					now: now,
-				)
+				TimelineView(.periodic(from: .now, by: 60)) { context in
+					RecentActivityCard(
+						events: insomniac.recentActivations,
+						isActive: insomniac.isActive,
+						now: context.date,
+					)
+				}
 			}
 			.padding(20)
 		}
-		.onReceive(ticker) { now = $0 }
 	}
 
 	private var monitorCard: some View {

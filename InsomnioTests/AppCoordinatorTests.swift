@@ -4,10 +4,13 @@
 
 @testable import Insomnio
 import AppKit
+import AppRulesTesting
 import Automation
 import Insomniac
 import InsomniacTesting
+import ScheduleTesting
 import Testing
+import TestSupport
 import TimerSchedulerTesting
 
 struct AppCoordinatorTests {
@@ -66,6 +69,19 @@ struct AppCoordinatorTests {
 		#expect(spies.insomniac.isActive == false)
 	}
 
+	// MARK: - Memory Leak Tracking
+
+	@Test
+	func `AppCoordinator does not leak after start and termination`() {
+		assertNoLeaks {
+			let (sut, spies) = makeSUT()
+			sut.start()
+			NotificationCenter.default.post(name: NSApplication.willTerminateNotification, object: nil)
+			IntentDependencies.performer = nil
+			return [sut, spies.insomniac, spies.automation, spies.shortcut]
+		}
+	}
+
 	// MARK: - Helpers
 
 	private struct Spies {
@@ -84,8 +100,8 @@ struct AppCoordinatorTests {
 		let shortcut = GlobalShortcutManagerSpy()
 		let dependencies = AppDependencies(
 			insomniac: insomniac,
-			scheduleEvaluator: ScheduleEvaluatorPreviewStub(),
-			appRulesEvaluator: AppRulesEvaluatorPreviewStub(),
+			scheduleEvaluator: ScheduleEvaluatorSpy(),
+			appRulesEvaluator: AppRulesEvaluatorSpy(),
 			automationCoordinator: automation,
 			shortcutManager: shortcut,
 			launchAtLoginManager: LaunchAtLoginManagerPreviewStub(),

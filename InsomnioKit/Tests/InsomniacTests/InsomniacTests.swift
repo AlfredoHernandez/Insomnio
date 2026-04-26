@@ -7,7 +7,7 @@ import AutoStopTesting
 import CoreGraphics
 import CursorPattern
 import Foundation
-import Insomniac
+@_spi(Testing) import Insomniac
 import InsomniacTesting
 import Testing
 import TestSupport

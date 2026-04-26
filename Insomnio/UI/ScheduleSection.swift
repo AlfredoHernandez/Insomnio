@@ -101,8 +101,18 @@ private struct ScheduleRuleRow: View {
 	}
 
 	private var timeRangeText: String {
-		String(format: "%d:%02d – %d:%02d", rule.startHour, rule.startMinute, rule.endHour, rule.endMinute)
+		let start = dateFrom(hour: rule.startHour, minute: rule.startMinute)
+		let end = dateFrom(hour: rule.endHour, minute: rule.endMinute)
+		let format = Date.FormatStyle(date: .omitted, time: .shortened)
+		return "\(start.formatted(format)) – \(end.formatted(format))"
 	}
+}
+
+private func dateFrom(hour: Int, minute: Int) -> Date {
+	var components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+	components.hour = hour
+	components.minute = minute
+	return Calendar.current.date(from: components) ?? Date()
 }
 
 // MARK: - ScheduleRuleEditor
@@ -180,13 +190,6 @@ private struct ScheduleRuleEditor: View {
 			startTime = dateFrom(hour: rule.startHour, minute: rule.startMinute)
 			endTime = dateFrom(hour: rule.endHour, minute: rule.endMinute)
 		}
-	}
-
-	private func dateFrom(hour: Int, minute: Int) -> Date {
-		var components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
-		components.hour = hour
-		components.minute = minute
-		return Calendar.current.date(from: components) ?? Date()
 	}
 }
 

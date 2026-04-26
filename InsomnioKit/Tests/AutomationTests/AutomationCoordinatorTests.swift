@@ -71,6 +71,20 @@ struct AutomationCoordinatorTests {
 	}
 
 	@Test
+	func `Toggle from user fires onToggle hook setting manual override`() {
+		let (sut, schedule, _, insomniac, _) = makeSUT()
+		schedule.stubbedShouldBeActive = true
+		sut.evaluate()
+		#expect(insomniac.isActive == true)
+
+		insomniac.toggle(from: .menuBar)
+		#expect(insomniac.isActive == false)
+
+		sut.evaluate()
+		#expect(insomniac.isActive == false)
+	}
+
+	@Test
 	func `Evaluate clears manual override when automation agrees with state`() {
 		let (sut, schedule, _, insomniac, _) = makeSUT()
 		schedule.stubbedShouldBeActive = true

@@ -32,8 +32,9 @@ final class AppCoordinator {
 		hasStarted = true
 
 		IntentDependencies.performer = AutomationCoordinatorIntentPerformer(insomniac: dependencies.insomniac)
-		dependencies.shortcutManager.registerShortcut { [dependencies] in
-			dependencies.insomniac.toggle(from: .globalShortcut)
+		let insomniac = dependencies.insomniac
+		dependencies.shortcutManager.registerShortcut { [weak insomniac] in
+			insomniac?.toggle(from: .globalShortcut)
 		}
 		dependencies.automationCoordinator.startMonitoring()
 
