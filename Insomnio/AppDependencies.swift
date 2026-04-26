@@ -6,10 +6,9 @@ import AccessibilityPermission
 import AppRules
 import Automation
 import AutoStop
-import Foundation
+import AutoUpdate
 import Insomniac
 import LaunchAtLogin
-import Premium
 import RuleStore
 import Schedule
 import Shortcut
@@ -17,13 +16,13 @@ import TimerScheduler
 
 struct AppDependencies {
 	let insomniac: Insomniac
-	let premiumManager: any PremiumManager
 	let scheduleEvaluator: any ScheduleEvaluator
 	let appRulesEvaluator: any AppRulesEvaluator
 	let automationCoordinator: any AutomationCoordinating
 	let shortcutManager: any GlobalShortcutManager
 	let launchAtLoginManager: any LaunchAtLoginManager
 	let accessibilityPermissionChecker: any AccessibilityPermissionChecker
+	let updateController: any UpdateController
 	let availableApps: () -> [AppInfo]
 
 	static func create() -> AppDependencies {
@@ -55,17 +54,15 @@ struct AppDependencies {
 			timerScheduler: timerScheduler,
 		)
 
-		let premiumManager: any PremiumManager = StoreKitPremiumManager()
-
 		return AppDependencies(
 			insomniac: insomniac,
-			premiumManager: premiumManager,
 			scheduleEvaluator: scheduleEvaluator,
 			appRulesEvaluator: appRulesEvaluator,
 			automationCoordinator: automationCoordinator,
 			shortcutManager: NSEventGlobalShortcutManager(),
 			launchAtLoginManager: SMAppServiceLaunchAtLoginManager(),
 			accessibilityPermissionChecker: AXAccessibilityPermissionChecker(),
+			updateController: SparkleUpdateController(),
 			availableApps: { NSWorkspaceAppInfoProvider.runningRegularApps() },
 		)
 	}

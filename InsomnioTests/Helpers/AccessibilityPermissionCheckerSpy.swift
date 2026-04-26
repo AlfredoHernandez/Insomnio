@@ -5,7 +5,6 @@
 @testable import Insomnio
 import AccessibilityPermission
 
-@MainActor
 final class AccessibilityPermissionCheckerSpy: AccessibilityPermissionChecker {
 	var isGranted: Bool
 	private(set) var promptCount = 0

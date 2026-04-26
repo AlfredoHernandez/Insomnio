@@ -5,10 +5,9 @@
 import Foundation
 import Testing
 
-@MainActor
 public func assertNoLeaks(
 	sourceLocation: SourceLocation = #_sourceLocation,
-	_ body: @MainActor () -> [AnyObject],
+	_ body: () -> [AnyObject],
 ) {
 	var weakRefs: [() -> AnyObject?] = []
 	autoreleasepool {

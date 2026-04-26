@@ -6,7 +6,6 @@
 import Foundation
 import Schedule
 
-@MainActor
 final class ScheduleEvaluatorPreviewStub: @MainActor ScheduleEvaluator {
 	var rules: [ScheduleRule] = []
 	var stubbedShouldBeActive = false

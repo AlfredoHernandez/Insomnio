@@ -11,7 +11,6 @@ import Testing
 import TestSupport
 import TimerSchedulerTesting
 
-@MainActor
 struct AutomationCoordinatorTests {
 	@Test
 	func `Evaluate with no automation does not start`() {
@@ -30,6 +29,7 @@ struct AutomationCoordinatorTests {
 		sut.evaluate()
 
 		#expect(insomniac.isActive == true)
+		#expect(insomniac.activationSource == .automation)
 	}
 
 	@Test
@@ -40,6 +40,7 @@ struct AutomationCoordinatorTests {
 		sut.evaluate()
 
 		#expect(insomniac.isActive == true)
+		#expect(insomniac.activationSource == .automation)
 	}
 
 	@Test
@@ -70,6 +71,20 @@ struct AutomationCoordinatorTests {
 	}
 
 	@Test
+	func `Toggle from user fires onToggle hook setting manual override`() {
+		let (sut, schedule, _, insomniac, _) = makeSUT()
+		schedule.stubbedShouldBeActive = true
+		sut.evaluate()
+		#expect(insomniac.isActive == true)
+
+		insomniac.toggle(from: .menuBar)
+		#expect(insomniac.isActive == false)
+
+		sut.evaluate()
+		#expect(insomniac.isActive == false)
+	}
+
+	@Test
 	func `Evaluate clears manual override when automation agrees with state`() {
 		let (sut, schedule, _, insomniac, _) = makeSUT()
 		schedule.stubbedShouldBeActive = true
@@ -83,6 +98,7 @@ struct AutomationCoordinatorTests {
 		schedule.stubbedShouldBeActive = true
 		sut.evaluate()
 		#expect(insomniac.isActive == true)
+		#expect(insomniac.activationSource == .automation)
 	}
 
 	@Test
@@ -94,6 +110,7 @@ struct AutomationCoordinatorTests {
 		sut.evaluate()
 
 		#expect(insomniac.isActive == true)
+		#expect(insomniac.activationSource == .automation)
 	}
 
 	@Test
@@ -132,6 +149,7 @@ struct AutomationCoordinatorTests {
 		timerScheduler.fire(at: 0)
 
 		#expect(insomniac.isActive == true)
+		#expect(insomniac.activationSource == .automation)
 	}
 
 	@Test

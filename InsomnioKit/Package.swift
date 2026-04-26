@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
 	name: "InsomnioKit",
-	platforms: [.macOS(.v14)],
+	platforms: [.macOS(.v26)],
 	products: [
 		.library(name: "CursorPattern", targets: ["CursorPattern"]),
 		.library(name: "RuleStore", targets: ["RuleStore"]),
@@ -11,12 +11,12 @@ let package = Package(
 		.library(name: "TimerScheduler", targets: ["TimerScheduler"]),
 		.library(name: "AccessibilityPermission", targets: ["AccessibilityPermission"]),
 		.library(name: "Shortcut", targets: ["Shortcut"]),
-		.library(name: "Premium", targets: ["Premium"]),
 		.library(name: "AutoStop", targets: ["AutoStop"]),
 		.library(name: "Schedule", targets: ["Schedule"]),
 		.library(name: "AppRules", targets: ["AppRules"]),
 		.library(name: "Insomniac", targets: ["Insomniac"]),
 		.library(name: "Automation", targets: ["Automation"]),
+		.library(name: "AutoUpdate", targets: ["AutoUpdate"]),
 		.library(name: "TestSupport", targets: ["TestSupport"]),
 		.library(name: "TimerSchedulerTesting", targets: ["TimerSchedulerTesting"]),
 		.library(name: "ScheduleTesting", targets: ["ScheduleTesting"]),
@@ -26,6 +26,9 @@ let package = Package(
 		.library(name: "AutoStopTesting", targets: ["AutoStopTesting"]),
 		.library(name: "ShortcutTesting", targets: ["ShortcutTesting"]),
 	],
+	dependencies: [
+		.package(url: "https://github.com/sparkle-project/Sparkle.git", from: "2.7.0"),
+	],
 	targets: [
 		.target(name: "CursorPattern"),
 		.target(name: "RuleStore"),
@@ -33,12 +36,12 @@ let package = Package(
 		.target(name: "TimerScheduler"),
 		.target(name: "AccessibilityPermission"),
 		.target(name: "Shortcut"),
-		.target(name: "Premium"),
 		.target(name: "AutoStop", dependencies: ["TimerScheduler"]),
 		.target(name: "Schedule", dependencies: ["RuleStore"]),
 		.target(name: "AppRules", dependencies: ["RuleStore"]),
 		.target(name: "Insomniac", dependencies: ["AutoStop", "CursorPattern", "TimerScheduler"]),
 		.target(name: "Automation", dependencies: ["AppRules", "Insomniac", "Schedule", "TimerScheduler"]),
+		.target(name: "AutoUpdate", dependencies: [.product(name: "Sparkle", package: "Sparkle")]),
 		.target(name: "TestSupport"),
 		.target(name: "TimerSchedulerTesting", dependencies: ["TimerScheduler"]),
 		.target(name: "ScheduleTesting", dependencies: ["Schedule"]),
@@ -61,7 +64,6 @@ let package = Package(
 			dependencies: ["Automation", "AppRulesTesting", "Insomniac", "InsomniacTesting", "ScheduleTesting", "TestSupport", "TimerSchedulerTesting"],
 		),
 		.testTarget(name: "ShortcutTests", dependencies: ["Shortcut", "ShortcutTesting", "TestSupport"]),
-		.testTarget(name: "PremiumTests", dependencies: ["Premium", "TestSupport"]),
 	],
 	swiftLanguageModes: [.v6],
 )

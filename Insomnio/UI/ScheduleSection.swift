@@ -13,23 +13,22 @@ struct ScheduleSection: View {
 		CardView {
 			VStack(alignment: .leading, spacing: 8) {
 				HStack {
-					Label("schedule_title", systemImage: "calendar.badge.clock")
-						.font(.subheadline.bold())
+					liquidGlassSectionTitle("schedule_title", systemImage: "calendar.badge.clock")
 					Spacer()
 					Button { isAddingRule = true } label: {
 						Image(systemName: "plus.circle")
 					}
-					.buttonStyle(.plain)
+					.liquidGlassIconButton()
 				}
 
 				Text("schedule_desc")
-					.font(.system(size: 11))
-					.foregroundStyle(.tertiary)
+					.font(LiquidGlassStyle.sectionBodyFont)
+					.foregroundStyle(LiquidGlassStyle.sectionHintStyle)
 
 				if scheduleEvaluator.rules.isEmpty {
 					Text("schedule_empty")
-						.font(.system(size: 11))
-						.foregroundStyle(.secondary)
+						.font(LiquidGlassStyle.sectionBodyFont)
+						.foregroundStyle(LiquidGlassStyle.sectionBodyStyle)
 						.padding(.vertical, 4)
 				} else {
 					ForEach(scheduleEvaluator.rules) { rule in
@@ -102,8 +101,18 @@ private struct ScheduleRuleRow: View {
 	}
 
 	private var timeRangeText: String {
-		String(format: "%d:%02d – %d:%02d", rule.startHour, rule.startMinute, rule.endHour, rule.endMinute)
+		let start = dateFrom(hour: rule.startHour, minute: rule.startMinute)
+		let end = dateFrom(hour: rule.endHour, minute: rule.endMinute)
+		let format = Date.FormatStyle(date: .omitted, time: .shortened)
+		return "\(start.formatted(format)) – \(end.formatted(format))"
 	}
+}
+
+private func dateFrom(hour: Int, minute: Int) -> Date {
+	var components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+	components.hour = hour
+	components.minute = minute
+	return Calendar.current.date(from: components) ?? Date()
 }
 
 // MARK: - ScheduleRuleEditor
@@ -181,13 +190,6 @@ private struct ScheduleRuleEditor: View {
 			startTime = dateFrom(hour: rule.startHour, minute: rule.startMinute)
 			endTime = dateFrom(hour: rule.endHour, minute: rule.endMinute)
 		}
-	}
-
-	private func dateFrom(hour: Int, minute: Int) -> Date {
-		var components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
-		components.hour = hour
-		components.minute = minute
-		return Calendar.current.date(from: components) ?? Date()
 	}
 }
 

@@ -7,7 +7,6 @@ import AccessibilityPermission
 import SwiftUI
 import Testing
 
-@MainActor
 struct AccessibilityPermissionBannerTests {
 	@Test
 	func `Banner hides when permission is granted at init`() {

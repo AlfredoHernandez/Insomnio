@@ -4,14 +4,15 @@
 
 @testable import Insomnio
 import AppKit
+import AppRulesTesting
 import Automation
 import Insomniac
 import InsomniacTesting
+import ScheduleTesting
 import Testing
 import TestSupport
 import TimerSchedulerTesting
 
-@MainActor
 struct AppCoordinatorTests {
 	@Test
 	func `Start registers shortcut`() {
@@ -29,16 +30,6 @@ struct AppCoordinatorTests {
 		sut.start()
 
 		#expect(spies.automation.receivedMessages == [.startMonitoring])
-	}
-
-	@Test
-	func `Start loads products via premium manager`() async {
-		let (sut, spies) = makeSUT()
-
-		sut.start()
-		await sut.bootstrapTask?.value
-
-		#expect(spies.premium.receivedMessages.contains(.loadProducts))
 	}
 
 	@Test
@@ -63,50 +54,68 @@ struct AppCoordinatorTests {
 	}
 
 	@Test
-	func `willTerminate notification stops automation and insomniac`() async {
+	func `willTerminate notification stops automation and insomniac`() {
 		let (sut, spies) = makeSUT()
 		sut.start()
 		spies.insomniac.start()
 		#expect(spies.insomniac.isActive == true)
 
+		// `AppCoordinator` installs the observer with `queue: nil`, so posting
+		// from the main actor runs the handler synchronously before this
+		// `post(_:)` call returns — no awaiting required.
 		NotificationCenter.default.post(name: NSApplication.willTerminateNotification, object: nil)
-		await waitUntil { spies.automation.receivedMessages.contains(.stopMonitoring) }
 
 		#expect(spies.automation.receivedMessages.contains(.stopMonitoring))
 		#expect(spies.insomniac.isActive == false)
+	}
+
+	// MARK: - Memory Leak Tracking
+
+	@Test
+	func `AppCoordinator does not leak after start and termination`() {
+		assertNoLeaks {
+			let (sut, spies) = makeSUT()
+			sut.start()
+			NotificationCenter.default.post(name: NSApplication.willTerminateNotification, object: nil)
+			// Clear the process-global App Intents performer set by `start()` so
+			// the SUT's `Insomniac` is not retained beyond this test scope.
+			IntentDependencies.performer = nil
+			return [sut, spies.insomniac, spies.automation, spies.shortcut]
+		}
 	}
 
 	// MARK: - Helpers
 
 	private struct Spies {
 		let insomniac: Insomniac
-		let premium: PremiumManagerSpy
 		let automation: AutomationCoordinatingSpy
 		let shortcut: GlobalShortcutManagerSpy
 	}
 
 	private func makeSUT() -> (AppCoordinator, Spies) {
+		// Reset the process-global App Intents performer so a previous test's
+		// `Insomniac` is not retained across tests via the static reference.
+		IntentDependencies.performer = nil
 		let insomniac = Insomniac(
 			mouseMover: MouseMoverSpy(),
 			sleepPreventer: SleepPreventerSpy(),
 			timerScheduler: TimerSchedulerSpy(),
 		)
-		let premium = PremiumManagerSpy()
 		let automation = AutomationCoordinatingSpy()
 		let shortcut = GlobalShortcutManagerSpy()
 		let dependencies = AppDependencies(
 			insomniac: insomniac,
-			premiumManager: premium,
-			scheduleEvaluator: ScheduleEvaluatorPreviewStub(),
-			appRulesEvaluator: AppRulesEvaluatorPreviewStub(),
+			scheduleEvaluator: ScheduleEvaluatorSpy(),
+			appRulesEvaluator: AppRulesEvaluatorSpy(),
 			automationCoordinator: automation,
 			shortcutManager: shortcut,
 			launchAtLoginManager: LaunchAtLoginManagerPreviewStub(),
 			accessibilityPermissionChecker: AccessibilityPermissionCheckerPreviewStub(),
+			updateController: UpdateControllerPreviewStub(),
 			availableApps: { [] },
 		)
 		let sut = AppCoordinator(dependencies: dependencies)
-		let spies = Spies(insomniac: insomniac, premium: premium, automation: automation, shortcut: shortcut)
+		let spies = Spies(insomniac: insomniac, automation: automation, shortcut: shortcut)
 		return (sut, spies)
 	}
 }

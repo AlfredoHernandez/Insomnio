@@ -14,6 +14,15 @@ public final class Insomniac {
 		case preventSleep
 	}
 
+	/// Where the current awake session was turned on from (menu bar, Shortcuts, etc.).
+	public enum ActivationSource: String, Sendable, Equatable {
+		case menuBar
+		case mainWindow
+		case globalShortcut
+		case shortcutsIntent
+		case automation
+	}
+
 	private let mouseMover: any MouseMover
 	private let sleepPreventer: any SleepPreventer
 	private let idleTimeProvider: (any IdleTimeProvider)?
@@ -24,10 +33,13 @@ public final class Insomniac {
 	private var timer: TimerCancellable?
 	private var powerCheckTimer: TimerCancellable?
 	private var wasOnBattery = false
+	private var pendingActivationSource: ActivationSource?
 
 	public static let idleThreshold: TimeInterval = 5.0
 
 	public private(set) var isActive: Bool = false
+	/// Set when `isActive` becomes `true`; cleared on `stop()`.
+	public private(set) var activationSource: ActivationSource?
 	public var mode: Mode = .moveCursor
 	public var interval: TimeInterval = 30.0
 	public var onlyWhenIdle: Bool = false
@@ -35,9 +47,17 @@ public final class Insomniac {
 	public var autoStopEnabled: Bool = false
 	public var autoStopDuration: AutoStopDuration = .oneHour
 	public var cursorPattern: CursorPattern = .nudge
+	/// Single-subscriber hook fired on each `toggle(from:)` call. Owned by
+	/// `AutomationCoordinator` to track manual overrides — assigning from app
+	/// code will silently clobber the manual-override wiring, so don't.
 	public var onToggle: (() -> Void)?
 	public private(set) var activationCount: Int = 0
 	public private(set) var lastActivation: Date?
+	/// Rolling log of the most recent activation sessions, oldest-first. Capped at ``recentActivationsCapacity``.
+	public private(set) var recentActivations: [ActivationEvent] = []
+
+	/// Max number of sessions kept in ``recentActivations``.
+	public static let recentActivationsCapacity: Int = 50
 
 	public var autoStopRemainingTime: TimeInterval {
 		autoStopTimer?.remainingTime ?? 0
@@ -65,19 +85,37 @@ public final class Insomniac {
 		self.now = now
 	}
 
-	public func toggle() {
-		isActive ? stop() : start()
+	/// Toggles awake state. When turning on, `source` is stored for UI (e.g. menu bar pill).
+	public func toggle(from source: ActivationSource = .menuBar) {
+		if isActive {
+			stop()
+		} else {
+			pendingActivationSource = source
+			start()
+		}
 		onToggle?()
+	}
+
+	/// Call immediately before `start()` when activation is not routed through `toggle(from:)`
+	/// (for example automation turning the model on).
+	public func registerActivationSource(_ source: ActivationSource) {
+		pendingActivationSource = source
 	}
 
 	public func start() {
 		guard !isActive else { return }
+		activationSource = pendingActivationSource ?? .menuBar
+		pendingActivationSource = nil
 		isActive = true
+		recordActivationStart()
 		switch mode {
 		case .moveCursor:
 			scheduleTimer()
 
 		case .preventSleep:
+			// activationCount tracks each sleep-prevention assertion
+			// (start + battery↔AC transitions). In .moveCursor, it instead
+			// tracks each cursor nudge from keepAwake().
 			if pauseOnBattery, let powerSourceProvider, powerSourceProvider.isOnBatteryPower() {
 				wasOnBattery = true
 				schedulePowerCheckTimer()
@@ -98,7 +136,10 @@ public final class Insomniac {
 	}
 
 	public func stop() {
+		let wasActive = isActive
 		isActive = false
+		activationSource = nil
+		pendingActivationSource = nil
 		timer?.invalidate()
 		timer = nil
 		powerCheckTimer?.invalidate()
@@ -106,9 +147,16 @@ public final class Insomniac {
 		wasOnBattery = false
 		sleepPreventer.releaseAssertion()
 		autoStopTimer?.cancel()
+		if wasActive {
+			recordActivationEnd()
+		}
 	}
 
+	/// - Important: exposed via SPI for testing; not part of the public API.
+	/// Called by the internal cursor-move timer.
+	@_spi(Testing)
 	public func keepAwake() {
+		guard mode == .moveCursor else { return }
 		if pauseOnBattery, let powerSourceProvider, powerSourceProvider.isOnBatteryPower() {
 			return
 		}
@@ -127,6 +175,26 @@ public final class Insomniac {
 	}
 
 	// MARK: - Private
+
+	private func recordActivationStart() {
+		let source = activationSource ?? .menuBar
+		let event = ActivationEvent(startDate: now(), source: source)
+		recentActivations.append(event)
+		if recentActivations.count > Self.recentActivationsCapacity {
+			recentActivations.removeFirst(recentActivations.count - Self.recentActivationsCapacity)
+		}
+	}
+
+	private func recordActivationEnd() {
+		guard let last = recentActivations.last, last.endDate == nil else { return }
+		let closed = ActivationEvent(
+			id: last.id,
+			startDate: last.startDate,
+			endDate: now(),
+			source: last.source,
+		)
+		recentActivations[recentActivations.count - 1] = closed
+	}
 
 	private func scheduleTimer() {
 		timer?.invalidate()

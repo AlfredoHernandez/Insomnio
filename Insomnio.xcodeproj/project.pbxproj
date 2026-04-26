@@ -13,7 +13,6 @@
 		AA01010101010101AA000015 /* TimerScheduler in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000012 /* TimerScheduler */; };
 		AA01010101010101AA000016 /* AccessibilityPermission in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000013 /* AccessibilityPermission */; };
 		AA01010101010101AA000017 /* Shortcut in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000014 /* Shortcut */; };
-		AA01010101010101AA000018 /* Premium in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000019 /* Premium */; };
 		AA01010101010101AA000021 /* AutoStop in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000020 /* AutoStop */; };
 		AA01010101010101AA000023 /* Schedule in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000022 /* Schedule */; };
 		AA01010101010101AA000025 /* AppRules in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000024 /* AppRules */; };
@@ -22,6 +21,10 @@
 		AA01010101010101AA000031 /* TestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000030 /* TestSupport */; };
 		AA01010101010101AA000033 /* InsomniacTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000032 /* InsomniacTesting */; };
 		AA01010101010101AA000035 /* TimerSchedulerTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000034 /* TimerSchedulerTesting */; };
+		AA01010101010101AA000037 /* AutoStopTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000036 /* AutoStopTesting */; };
+		AA01010101010101AA000039 /* ScheduleTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000038 /* ScheduleTesting */; };
+		AA01010101010101AA000041 /* AppRulesTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000040 /* AppRulesTesting */; };
+		AA01010101010101AA000043 /* AutoUpdate in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000042 /* AutoUpdate */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,12 +66,12 @@
 				AA01010101010101AA000015 /* TimerScheduler in Frameworks */,
 				AA01010101010101AA000016 /* AccessibilityPermission in Frameworks */,
 				AA01010101010101AA000017 /* Shortcut in Frameworks */,
-				AA01010101010101AA000018 /* Premium in Frameworks */,
 				AA01010101010101AA000021 /* AutoStop in Frameworks */,
 				AA01010101010101AA000023 /* Schedule in Frameworks */,
 				AA01010101010101AA000025 /* AppRules in Frameworks */,
 				AA01010101010101AA000027 /* Insomniac in Frameworks */,
 				AA01010101010101AA000029 /* Automation in Frameworks */,
+				AA01010101010101AA000043 /* AutoUpdate in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +82,9 @@
 				AA01010101010101AA000031 /* TestSupport in Frameworks */,
 				AA01010101010101AA000033 /* InsomniacTesting in Frameworks */,
 				AA01010101010101AA000035 /* TimerSchedulerTesting in Frameworks */,
+				AA01010101010101AA000037 /* AutoStopTesting in Frameworks */,
+				AA01010101010101AA000039 /* ScheduleTesting in Frameworks */,
+				AA01010101010101AA000041 /* AppRulesTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,12 +135,12 @@
 				AA01010101010101AA000012 /* TimerScheduler */,
 				AA01010101010101AA000013 /* AccessibilityPermission */,
 				AA01010101010101AA000014 /* Shortcut */,
-				AA01010101010101AA000019 /* Premium */,
 				AA01010101010101AA000020 /* AutoStop */,
 				AA01010101010101AA000022 /* Schedule */,
 				AA01010101010101AA000024 /* AppRules */,
 				AA01010101010101AA000026 /* Insomniac */,
 				AA01010101010101AA000028 /* Automation */,
+				AA01010101010101AA000042 /* AutoUpdate */,
 			);
 			productName = Insomnio;
 			productReference = 384DA6602F4295FE0059E034 /* Insomnio.app */;
@@ -161,6 +167,9 @@
 				AA01010101010101AA000030 /* TestSupport */,
 				AA01010101010101AA000032 /* InsomniacTesting */,
 				AA01010101010101AA000034 /* TimerSchedulerTesting */,
+				AA01010101010101AA000036 /* AutoStopTesting */,
+				AA01010101010101AA000038 /* ScheduleTesting */,
+				AA01010101010101AA000040 /* AppRulesTesting */,
 			);
 			productName = InsomnioTests;
 			productReference = 384DA66D2F4295FE0059E034 /* InsomnioTests.xctest */;
@@ -306,8 +315,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 0.1.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -366,8 +375,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 0.1.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -399,15 +408,13 @@
 				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Insomnio/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.alfredohdz.Insomnio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -444,15 +451,13 @@
 				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Insomnio/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.alfredohdz.Insomnio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -474,7 +479,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HS399QXLRD;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.alfredohdz.InsomnioTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
@@ -496,7 +501,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HS399QXLRD;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.alfredohdz.InsomnioTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
@@ -574,10 +579,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Shortcut;
 		};
-		AA01010101010101AA000019 /* Premium */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Premium;
-		};
 		AA01010101010101AA000020 /* AutoStop */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AutoStop;
@@ -609,6 +610,22 @@
 		AA01010101010101AA000034 /* TimerSchedulerTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TimerSchedulerTesting;
+		};
+		AA01010101010101AA000036 /* AutoStopTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AutoStopTesting;
+		};
+		AA01010101010101AA000038 /* ScheduleTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleTesting;
+		};
+		AA01010101010101AA000040 /* AppRulesTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppRulesTesting;
+		};
+		AA01010101010101AA000042 /* AutoUpdate */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AutoUpdate;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

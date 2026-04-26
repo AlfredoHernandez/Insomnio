@@ -6,7 +6,6 @@ import AutoStop
 import Foundation
 import Testing
 
-@MainActor
 struct AutoStopDurationTests {
 	@Test(arguments: [
 		(AutoStopDuration.thirtyMinutes, TimeInterval(1800)),

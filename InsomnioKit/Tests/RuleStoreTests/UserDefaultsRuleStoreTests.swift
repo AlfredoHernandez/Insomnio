@@ -7,7 +7,6 @@ import RuleStore
 import Testing
 import TestSupport
 
-@MainActor
 struct UserDefaultsRuleStoreTests {
 	@Test
 	func `Load returns empty array when no data stored`() {

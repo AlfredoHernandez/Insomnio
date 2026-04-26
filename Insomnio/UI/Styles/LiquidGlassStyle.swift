@@ -1,0 +1,83 @@
+//
+//  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
+//
+
+import SwiftUI
+
+enum LiquidGlassStyle {
+	static let cornerRadius: CGFloat = 14
+	static let cardPadding: CGFloat = 14
+	// Keep strokes very subtle to stay “pro” (A) while still showing glass depth (B).
+	static let cardStrokeOpacity: Double = 0.08
+	static let cardStrokeWidth: CGFloat = 0.5
+	static let iconButtonSize: CGFloat = 26
+	static let sectionTitleFont: Font = .subheadline.bold()
+	static let sectionBodyFont: Font = .system(size: 11)
+	static let sectionBodyStyle: AnyShapeStyle = .init(.secondary)
+	static let sectionHintStyle: AnyShapeStyle = .init(.tertiary)
+	static let metricValueFont: Font = .system(size: 20, weight: .semibold, design: .rounded)
+	static let metricLabelFont: Font = .system(size: 11, weight: .medium)
+	static let metricCornerRadius: CGFloat = 12
+}
+
+extension View {
+	func liquidGlassCard() -> some View {
+		frame(maxWidth: .infinity, alignment: .leading)
+			.padding(LiquidGlassStyle.cardPadding)
+			.glassEffect(.regular, in: RoundedRectangle(cornerRadius: LiquidGlassStyle.cornerRadius, style: .continuous))
+			.overlay {
+				RoundedRectangle(cornerRadius: LiquidGlassStyle.cornerRadius, style: .continuous)
+					.strokeBorder(.white.opacity(LiquidGlassStyle.cardStrokeOpacity), lineWidth: LiquidGlassStyle.cardStrokeWidth)
+			}
+	}
+
+	func liquidGlassContainer(spacing: CGFloat, @ViewBuilder content: () -> some View) -> some View {
+		GlassEffectContainer(spacing: spacing) {
+			content()
+		}
+	}
+
+	func liquidGlassPrimaryButton() -> some View {
+		buttonStyle(.glass)
+	}
+
+	func liquidGlassIconButton() -> some View {
+		buttonStyle(.glass)
+			.controlSize(.mini)
+			.frame(width: LiquidGlassStyle.iconButtonSize, height: LiquidGlassStyle.iconButtonSize)
+	}
+
+	@ViewBuilder
+	func liquidGlassSelectionBackground(isSelected: Bool, cornerRadius: CGFloat = 8) -> some View {
+		if isSelected {
+			glassEffect(.regular, in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+				.overlay {
+					RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+						.strokeBorder(.white.opacity(0.14), lineWidth: 0.5)
+				}
+		} else {
+			self
+		}
+	}
+
+	func liquidGlassSectionTitle(_ title: LocalizedStringKey, systemImage: String? = nil) -> some View {
+		Group {
+			if let systemImage {
+				Label(title, systemImage: systemImage)
+			} else {
+				Text(title)
+			}
+		}
+		.font(LiquidGlassStyle.sectionTitleFont)
+	}
+
+	func liquidGlassMetricTile() -> some View {
+		padding(12)
+			.frame(maxWidth: .infinity, alignment: .leading)
+			.glassEffect(.regular, in: RoundedRectangle(cornerRadius: LiquidGlassStyle.metricCornerRadius, style: .continuous))
+			.overlay {
+				RoundedRectangle(cornerRadius: LiquidGlassStyle.metricCornerRadius, style: .continuous)
+					.strokeBorder(.white.opacity(0.08), lineWidth: 0.5)
+			}
+	}
+}

@@ -14,23 +14,22 @@ struct AppRulesSection: View {
 		CardView {
 			VStack(alignment: .leading, spacing: 8) {
 				HStack {
-					Label("apprules_title", systemImage: "app.badge")
-						.font(.subheadline.bold())
+					liquidGlassSectionTitle("apprules_title", systemImage: "app.badge")
 					Spacer()
 					Button { showingAppPicker = true } label: {
 						Image(systemName: "plus.circle")
 					}
-					.buttonStyle(.plain)
+					.liquidGlassIconButton()
 				}
 
 				Text("apprules_desc")
-					.font(.system(size: 11))
-					.foregroundStyle(.tertiary)
+					.font(LiquidGlassStyle.sectionBodyFont)
+					.foregroundStyle(LiquidGlassStyle.sectionHintStyle)
 
 				if appRulesEvaluator.rules.isEmpty {
 					Text("apprules_empty")
-						.font(.system(size: 11))
-						.foregroundStyle(.secondary)
+						.font(LiquidGlassStyle.sectionBodyFont)
+						.foregroundStyle(LiquidGlassStyle.sectionBodyStyle)
 						.padding(.vertical, 4)
 				} else {
 					ForEach(appRulesEvaluator.rules) { rule in

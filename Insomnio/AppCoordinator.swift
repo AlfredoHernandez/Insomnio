@@ -5,20 +5,14 @@
 import AppKit
 import Automation
 import Insomniac
-import Premium
 import Shortcut
 import SwiftUI
 
-@MainActor
 final class AppCoordinator {
 	private let dependencies: AppDependencies
 	private var hasStarted = false
 	private var menuBarController: MenuBarPopoverController?
 	private nonisolated(unsafe) var terminationObserver: (any NSObjectProtocol)?
-	/// The unstructured task kicked off by `start()` to load StoreKit products.
-	/// Exposed so tests can `await` its completion deterministically instead of
-	/// polling with `Task.yield()`.
-	private(set) var bootstrapTask: Task<Void, Never>?
 
 	init(dependencies: AppDependencies) {
 		self.dependencies = dependencies
@@ -37,18 +31,17 @@ final class AppCoordinator {
 		guard !hasStarted else { return }
 		hasStarted = true
 
-		dependencies.shortcutManager.registerShortcut { [dependencies] in
-			dependencies.insomniac.toggle()
+		IntentDependencies.performer = AutomationCoordinatorIntentPerformer(insomniac: dependencies.insomniac)
+		let insomniac = dependencies.insomniac
+		dependencies.shortcutManager.registerShortcut { [weak insomniac] in
+			insomniac?.toggle(from: .globalShortcut)
 		}
 		dependencies.automationCoordinator.startMonitoring()
-		bootstrapTask = Task { [dependencies] in
-			await dependencies.premiumManager.loadProducts()
-		}
 
 		let controller = MenuBarPopoverController(initialState: .idle) {
 			MenuBarView(
 				insomniac: dependencies.insomniac,
-				activateApp: { NSApplication.shared.activate(ignoringOtherApps: true) },
+				activateApp: { NSApplication.shared.activate() },
 				quitApp: { NSApplication.shared.terminate(nil) },
 			)
 		}
@@ -61,20 +54,28 @@ final class AppCoordinator {
 	func makeMainView() -> some View {
 		InsomnioView(
 			insomniac: dependencies.insomniac,
-			premiumManager: dependencies.premiumManager,
 			scheduleEvaluator: dependencies.scheduleEvaluator,
 			appRulesEvaluator: dependencies.appRulesEvaluator,
 			launchAtLoginManager: dependencies.launchAtLoginManager,
 			accessibilityPermissionChecker: dependencies.accessibilityPermissionChecker,
+			updateController: dependencies.updateController,
 			availableApps: dependencies.availableApps,
 		)
 	}
 
 	private func observeTermination() {
+		// `queue: nil` dispatches the handler synchronously on the posting
+		// thread. `NSApplication.willTerminateNotification` is always posted
+		// by AppKit on the main thread, so the handler lands on the main
+		// actor and `MainActor.assumeIsolated` is a safe compiler bridge.
+		// Synchronous delivery also lets tests observe the side effects
+		// immediately after `post(...)` without any polling.
+		// Capturing `dependencies` explicitly (value-ish struct) avoids
+		// retaining `self`.
 		terminationObserver = NotificationCenter.default.addObserver(
 			forName: NSApplication.willTerminateNotification,
 			object: nil,
-			queue: .main,
+			queue: nil,
 		) { [dependencies] _ in
 			MainActor.assumeIsolated {
 				dependencies.automationCoordinator.stopMonitoring()

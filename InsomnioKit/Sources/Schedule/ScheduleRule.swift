@@ -50,20 +50,9 @@ public enum Weekday: Int, Codable, CaseIterable, Comparable {
 	}
 
 	public var shortLabel: String {
-		switch self {
-		case .sunday: "D"
-
-		case .monday: "L"
-
-		case .tuesday: "M"
-
-		case .wednesday: "X"
-
-		case .thursday: "J"
-
-		case .friday: "V"
-
-		case .saturday: "S"
-		}
+		let symbols = Calendar.current.veryShortStandaloneWeekdaySymbols
+		let index = rawValue - 1
+		guard symbols.indices.contains(index) else { return "" }
+		return symbols[index]
 	}
 }

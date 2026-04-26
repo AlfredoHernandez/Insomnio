@@ -7,13 +7,12 @@ import AutoStopTesting
 import CoreGraphics
 import CursorPattern
 import Foundation
-import Insomniac
+@_spi(Testing) import Insomniac
 import InsomniacTesting
 import Testing
 import TestSupport
 import TimerSchedulerTesting
 
-@MainActor
 struct InsomniacTests {
 	@Test
 	func `Init does not message mouse mover upon creation`() {
@@ -62,6 +61,105 @@ struct InsomniacTests {
 		let (sut, _, _) = makeSUT()
 
 		#expect(sut.lastActivation == nil)
+	}
+
+	// MARK: - Activation source
+
+	@Test
+	func `Init activation source is nil`() {
+		let (sut, _, _) = makeSUT()
+
+		#expect(sut.activationSource == nil)
+	}
+
+	@Test
+	func `Start assigns menu bar activation source by default`() {
+		let (sut, _, _) = makeSUT()
+
+		sut.start()
+
+		#expect(sut.activationSource == .menuBar)
+	}
+
+	@Test
+	func `Register activation source then start records that source`() {
+		let (sut, _, _) = makeSUT()
+
+		sut.registerActivationSource(.automation)
+		sut.start()
+
+		#expect(sut.activationSource == .automation)
+	}
+
+	@Test
+	func `Toggle from source records activation source when turning on`() {
+		let (sut, _, _) = makeSUT()
+
+		sut.toggle(from: .globalShortcut)
+
+		#expect(sut.activationSource == .globalShortcut)
+	}
+
+	@Test
+	func `Stop clears activation source`() {
+		let (sut, _, _) = makeSUT()
+		sut.toggle(from: .mainWindow)
+
+		sut.stop()
+
+		#expect(sut.activationSource == nil)
+	}
+
+	// MARK: - Recent activations ring buffer
+
+	@Test
+	func `Init recent activations is empty`() {
+		let (sut, _, _) = makeSUT()
+
+		#expect(sut.recentActivations.isEmpty)
+	}
+
+	@Test
+	func `Start records an activation event with start date and source`() {
+		let startDate = Date(timeIntervalSince1970: 1000)
+		let (sut, _, _) = makeSUT(now: { startDate })
+
+		sut.toggle(from: .mainWindow)
+
+		#expect(sut.recentActivations.count == 1)
+		#expect(sut.recentActivations.last?.startDate == startDate)
+		#expect(sut.recentActivations.last?.source == .mainWindow)
+		#expect(sut.recentActivations.last?.endDate == nil)
+	}
+
+	@Test
+	func `Stop closes the last activation event with end date`() {
+		var currentDate = Date(timeIntervalSince1970: 1000)
+		let (sut, _, _) = makeSUT(now: { currentDate })
+
+		sut.toggle(from: .menuBar)
+		currentDate = Date(timeIntervalSince1970: 1300)
+		sut.stop()
+
+		#expect(sut.recentActivations.count == 1)
+		#expect(sut.recentActivations.last?.endDate == Date(timeIntervalSince1970: 1300))
+		#expect(sut.recentActivations.last?.duration == 300)
+	}
+
+	@Test
+	func `Ring buffer caps recent activations to most recent 50 events`() {
+		var secondsFromEpoch: TimeInterval = 0
+		let (sut, _, _) = makeSUT(now: { Date(timeIntervalSince1970: secondsFromEpoch) })
+
+		for _ in 0 ..< 60 {
+			secondsFromEpoch += 1
+			sut.start()
+			secondsFromEpoch += 1
+			sut.stop()
+		}
+
+		#expect(sut.recentActivations.count == 50)
+		#expect(sut.recentActivations.first?.startDate == Date(timeIntervalSince1970: 21))
 	}
 
 	@Test
@@ -150,13 +248,13 @@ struct InsomniacTests {
 	}
 
 	@Test
-	func `Stop releases assertion`() {
+	func `Stop in moveCursor mode does not message sleep preventer`() {
 		let (sut, _, sleepPreventer) = makeSUT()
 
 		sut.start()
 		sut.stop()
 
-		#expect(sleepPreventer.receivedMessages == [.releaseAssertion])
+		#expect(sleepPreventer.receivedMessages == [])
 	}
 
 	@Test
@@ -386,6 +484,69 @@ struct InsomniacTests {
 		timerScheduler.fire(at: 0)
 
 		#expect(sleepPreventer.receivedMessages == [])
+	}
+
+	@Test
+	func `Power check tick after plugging in creates assertion and increments count`() {
+		let powerSourceProvider = PowerSourceProviderSpy()
+		let timerScheduler = TimerSchedulerSpy()
+		let (sut, _, sleepPreventer) = makeSUT(
+			powerSourceProvider: powerSourceProvider,
+			timerScheduler: timerScheduler,
+		)
+		sut.mode = .preventSleep
+		sut.pauseOnBattery = true
+		powerSourceProvider.stubbedIsOnBattery = true
+		sut.start()
+
+		powerSourceProvider.stubbedIsOnBattery = false
+		timerScheduler.fire(at: 0)
+
+		#expect(sleepPreventer.receivedMessages == [.createAssertion])
+		#expect(sut.activationCount == 1)
+		#expect(sut.lastActivation != nil)
+	}
+
+	@Test
+	func `Power check tick after unplugging releases assertion`() {
+		let powerSourceProvider = PowerSourceProviderSpy()
+		let timerScheduler = TimerSchedulerSpy()
+		let (sut, _, sleepPreventer) = makeSUT(
+			powerSourceProvider: powerSourceProvider,
+			timerScheduler: timerScheduler,
+		)
+		sut.mode = .preventSleep
+		sut.pauseOnBattery = true
+		powerSourceProvider.stubbedIsOnBattery = false
+		sut.start()
+
+		powerSourceProvider.stubbedIsOnBattery = true
+		timerScheduler.fire(at: 0)
+
+		#expect(sleepPreventer.receivedMessages == [.createAssertion, .releaseAssertion])
+	}
+
+	@Test
+	func `Power check tick uses injected clock for lastActivation when plugging in`() {
+		let powerSourceProvider = PowerSourceProviderSpy()
+		let timerScheduler = TimerSchedulerSpy()
+		let pluggedInDate = Date(timeIntervalSince1970: 1_700_000_500)
+		var currentDate = Date(timeIntervalSince1970: 1_700_000_000)
+		let (sut, _, _) = makeSUT(
+			powerSourceProvider: powerSourceProvider,
+			timerScheduler: timerScheduler,
+			now: { currentDate },
+		)
+		sut.mode = .preventSleep
+		sut.pauseOnBattery = true
+		powerSourceProvider.stubbedIsOnBattery = true
+		sut.start()
+
+		currentDate = pluggedInDate
+		powerSourceProvider.stubbedIsOnBattery = false
+		timerScheduler.fire(at: 0)
+
+		#expect(sut.lastActivation == pluggedInDate)
 	}
 
 	// MARK: - Cursor Pattern Tests

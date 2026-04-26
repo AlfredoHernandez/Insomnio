@@ -50,12 +50,11 @@ struct CursorPatternSection: View {
 	var body: some View {
 		CardView {
 			VStack(alignment: .leading, spacing: 8) {
-				Label("pattern_title", systemImage: "cursorarrow.motionlines")
-					.font(.subheadline.bold())
+				liquidGlassSectionTitle("pattern_title", systemImage: "cursorarrow.motionlines")
 
 				Text(cursorPattern.description)
-					.font(.system(size: 11))
-					.foregroundStyle(.secondary)
+					.font(LiquidGlassStyle.sectionBodyFont)
+					.foregroundStyle(LiquidGlassStyle.sectionBodyStyle)
 
 				LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], spacing: 8) {
 					ForEach(CursorPattern.allCases, id: \.self) { pattern in
@@ -70,12 +69,8 @@ struct CursorPatternSection: View {
 							}
 							.frame(maxWidth: .infinity)
 							.padding(.vertical, 8)
-							.background(
-								cursorPattern == pattern
-									? Color.accentColor.opacity(0.15)
-									: Color.clear,
-								in: RoundedRectangle(cornerRadius: 6),
-							)
+							.background(Color.clear, in: RoundedRectangle(cornerRadius: 6))
+							.liquidGlassSelectionBackground(isSelected: cursorPattern == pattern, cornerRadius: 6)
 						}
 						.buttonStyle(.plain)
 					}

@@ -5,7 +5,6 @@
 @testable import Insomnio
 import Automation
 
-@MainActor
 final class AutomationCoordinatingSpy: AutomationCoordinating {
 	enum ReceivedMessage: Equatable {
 		case startMonitoring

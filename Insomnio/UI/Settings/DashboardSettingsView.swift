@@ -1,0 +1,164 @@
+//
+//  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
+//
+
+import AppRules
+import Insomniac
+import Schedule
+import SwiftUI
+
+struct DashboardSettingsView: View {
+	@Bindable var insomniac: Insomniac
+	let scheduleEvaluator: any ScheduleEvaluator
+	let appRulesEvaluator: any AppRulesEvaluator
+	@Binding var selection: SettingsDestination
+
+	private var modeLabel: LocalizedStringKey {
+		insomniac.mode == .moveCursor ? "mode_move_cursor" : "mode_prevent_sleep"
+	}
+
+	var body: some View {
+		ScrollView {
+			VStack(alignment: .leading, spacing: 16) {
+				HeroCard(insomniac: insomniac)
+
+				HStack(alignment: .top, spacing: 16) {
+					NextUpCard(
+						insomniac: insomniac,
+						scheduleRulesCount: scheduleEvaluator.rules.count,
+						onManageSchedule: { selection = .automation },
+					)
+					monitorCard
+				}
+
+				TimelineView(.periodic(from: .now, by: 60)) { context in
+					RecentActivityCard(
+						events: insomniac.recentActivations,
+						isActive: insomniac.isActive,
+						now: context.date,
+					)
+				}
+			}
+			.padding(20)
+		}
+	}
+
+	private var monitorCard: some View {
+		CardView {
+			VStack(alignment: .leading, spacing: 12) {
+				liquidGlassSectionTitle("settings_dashboard_monitor_title", systemImage: "waveform.path.ecg")
+
+				LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+					MetricTile(
+						title: "settings_dashboard_mode",
+						value: AnyView(Text(modeLabel)),
+					)
+
+					scheduleTile
+					appRulesTile
+				}
+			}
+		}
+	}
+
+	@ViewBuilder
+	private var scheduleTile: some View {
+		if !scheduleEvaluator.rules.isEmpty {
+			MetricTile(
+				title: "schedule_title",
+				value: AnyView(Text("\(scheduleEvaluator.rules.count)").monospacedDigit()),
+			)
+		} else {
+			MetricCTATile(
+				title: "schedule_title",
+				ctaLabel: "hero_add_schedule",
+				systemImage: "plus",
+			) {
+				selection = .automation
+			}
+		}
+	}
+
+	@ViewBuilder
+	private var appRulesTile: some View {
+		if !appRulesEvaluator.rules.isEmpty {
+			MetricTile(
+				title: "apprules_title",
+				value: AnyView(Text("\(appRulesEvaluator.rules.count)").monospacedDigit()),
+			)
+		} else {
+			MetricCTATile(
+				title: "apprules_title",
+				ctaLabel: "hero_add_rule",
+				systemImage: "plus",
+			) {
+				selection = .automation
+			}
+		}
+	}
+}
+
+private struct MetricTile: View {
+	let title: LocalizedStringKey
+	let value: AnyView
+	var isEmphasized: Bool = false
+
+	var body: some View {
+		VStack(alignment: .leading, spacing: 6) {
+			Text(title)
+				.font(LiquidGlassStyle.metricLabelFont)
+				.foregroundStyle(.secondary)
+
+			value
+				.font(LiquidGlassStyle.metricValueFont)
+				.foregroundStyle(isEmphasized ? .primary : .secondary)
+				.lineLimit(1)
+				.minimumScaleFactor(0.75)
+		}
+		.liquidGlassMetricTile()
+	}
+}
+
+private struct MetricCTATile: View {
+	let title: LocalizedStringKey
+	let ctaLabel: LocalizedStringKey
+	let systemImage: String
+	let action: () -> Void
+
+	var body: some View {
+		Button(action: action) {
+			VStack(alignment: .leading, spacing: 6) {
+				Text(title)
+					.font(LiquidGlassStyle.metricLabelFont)
+					.foregroundStyle(.secondary)
+
+				Label(ctaLabel, systemImage: systemImage)
+					.font(.system(size: 13, weight: .medium, design: .rounded))
+					.foregroundStyle(.primary)
+					.lineLimit(1)
+					.minimumScaleFactor(0.75)
+			}
+			.frame(maxWidth: .infinity, alignment: .leading)
+		}
+		.buttonStyle(.plain)
+		.liquidGlassMetricTile()
+		.contentShape(Rectangle())
+	}
+}
+
+#if DEBUG
+#Preview {
+	@Previewable @State var selection: SettingsDestination = .dashboard
+	DashboardSettingsView(
+		insomniac: Insomniac(
+			mouseMover: MouseMoverPreviewStub(),
+			sleepPreventer: SleepPreventerPreviewStub(),
+			timerScheduler: TimerSchedulerPreviewStub(),
+		),
+		scheduleEvaluator: ScheduleEvaluatorPreviewStub(),
+		appRulesEvaluator: AppRulesEvaluatorPreviewStub(),
+		selection: $selection,
+	)
+	.frame(width: 760, height: 640)
+}
+#endif

@@ -17,7 +17,15 @@ public final class UserDefaultsRuleStore<Rule: Codable>: RuleStore {
 
 	public func loadRules() -> [Rule] {
 		guard let data = defaults.data(forKey: key) else { return [] }
-		return (try? JSONDecoder().decode([Rule].self, from: data)) ?? []
+		do {
+			return try JSONDecoder().decode([Rule].self, from: data)
+		} catch {
+			// Surface decode failures (e.g., schema drift between app versions)
+			// so silent rule loss is observable in Console.app and crash reports.
+			// Returning an empty list preserves existing fail-safe behaviour.
+			logger.error("Failed to decode rules: \(error.localizedDescription, privacy: .public)")
+			return []
+		}
 	}
 
 	public func saveRules(_ rules: [Rule]) {

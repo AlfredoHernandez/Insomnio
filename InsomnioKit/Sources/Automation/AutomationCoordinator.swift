@@ -68,6 +68,7 @@ public final class AutomationCoordinator: AutomationCoordinating {
 
 		if automationWantsActive, !insomniac.isActive {
 			logger.info("Automation activating Insomniac")
+			insomniac.registerActivationSource(.automation)
 			insomniac.start()
 		} else if !automationWantsActive, insomniac.isActive {
 			logger.info("Automation deactivating Insomniac")
