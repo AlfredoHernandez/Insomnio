@@ -58,6 +58,7 @@ final class AppCoordinator {
 			appRulesEvaluator: dependencies.appRulesEvaluator,
 			launchAtLoginManager: dependencies.launchAtLoginManager,
 			accessibilityPermissionChecker: dependencies.accessibilityPermissionChecker,
+			updateController: dependencies.updateController,
 			availableApps: dependencies.availableApps,
 		)
 	}

@@ -111,6 +111,7 @@ struct AppCoordinatorTests {
 			shortcutManager: shortcut,
 			launchAtLoginManager: LaunchAtLoginManagerPreviewStub(),
 			accessibilityPermissionChecker: AccessibilityPermissionCheckerPreviewStub(),
+			updateController: UpdateControllerPreviewStub(),
 			availableApps: { [] },
 		)
 		let sut = AppCoordinator(dependencies: dependencies)

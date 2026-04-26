@@ -2,6 +2,7 @@
 //  Copyright © 2026 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
+import AutoUpdate
 import Insomniac
 import LaunchAtLogin
 import SwiftUI
@@ -9,6 +10,20 @@ import SwiftUI
 struct GeneralSettingsView: View {
 	@Bindable var insomniac: Insomniac
 	let launchAtLoginManager: any LaunchAtLoginManager
+	let updateController: any UpdateController
+
+	@State private var automaticallyChecksForUpdates: Bool
+
+	init(
+		insomniac: Insomniac,
+		launchAtLoginManager: any LaunchAtLoginManager,
+		updateController: any UpdateController,
+	) {
+		self.insomniac = insomniac
+		self.launchAtLoginManager = launchAtLoginManager
+		self.updateController = updateController
+		_automaticallyChecksForUpdates = State(initialValue: updateController.automaticallyChecksForUpdates)
+	}
 
 	private var appVersion: String {
 		Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
@@ -26,6 +41,10 @@ struct GeneralSettingsView: View {
 					)
 				}
 
+				liquidGlassContainer(spacing: 12) {
+					updatesSection
+				}
+
 				HStack {
 					Text("version_label \(appVersion)")
 						.font(.caption)
@@ -41,6 +60,22 @@ struct GeneralSettingsView: View {
 			.padding(20)
 		}
 	}
+
+	private var updatesSection: some View {
+		VStack(alignment: .leading, spacing: 8) {
+			liquidGlassSectionTitle("settings_updates_title", systemImage: "arrow.down.circle")
+
+			Toggle("settings_updates_automatic", isOn: $automaticallyChecksForUpdates)
+				.onChange(of: automaticallyChecksForUpdates) { _, newValue in
+					updateController.automaticallyChecksForUpdates = newValue
+				}
+
+			Button("settings_updates_check_now") {
+				updateController.checkForUpdates()
+			}
+			.disabled(!updateController.canCheckForUpdates)
+		}
+	}
 }
 
 #if DEBUG
@@ -52,6 +87,7 @@ struct GeneralSettingsView: View {
 			timerScheduler: TimerSchedulerPreviewStub(),
 		),
 		launchAtLoginManager: LaunchAtLoginManagerPreviewStub(),
+		updateController: UpdateControllerPreviewStub(),
 	)
 	.frame(width: 700, height: 520)
 }

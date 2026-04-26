@@ -6,13 +6,18 @@
 #   scripts/build.sh                              # signed for this Mac, leaves .app in build/export
 #   scripts/build.sh --install                    # also copies to /Applications
 #   scripts/build.sh --method developer-id        # sign with Developer ID (for distribution)
-#   scripts/build.sh --method developer-id --notarize --install
+#   scripts/build.sh --method developer-id --notarize --sign-update
 #
 # Notarization requires the env vars:
 #   APPLE_ID         your Apple ID email
 #   APPLE_TEAM_ID    Developer Team ID (currently HS399QXLRD)
 #   APPLE_PASSWORD   app-specific password from appleid.apple.com
 # Or, alternatively, a notarytool keychain profile name in NOTARY_PROFILE.
+#
+# --sign-update produces a Sparkle EdDSA signature using the private key
+# stored in your keychain by `generate_keys`. Prints the appcast `<enclosure>`
+# attributes so you can paste them into appcast.xml — or run
+# `scripts/generate_appcast.sh` afterwards to regenerate the feed.
 #
 
 set -euo pipefail
@@ -25,6 +30,7 @@ PROJECT="Insomnio.xcodeproj"
 CONFIGURATION="Release"
 EXPORT_METHOD="mac-application"   # mac-application | developer-id
 NOTARIZE=false
+SIGN_UPDATE=false
 INSTALL=false
 BUILD_DIR="build"
 ARCHIVE_PATH="${BUILD_DIR}/Insomnio.xcarchive"
@@ -44,12 +50,16 @@ while [[ $# -gt 0 ]]; do
             NOTARIZE=true
             shift
             ;;
+        --sign-update)
+            SIGN_UPDATE=true
+            shift
+            ;;
         --install)
             INSTALL=true
             shift
             ;;
         --help|-h)
-            sed -n '3,18p' "$0" | sed 's/^# \{0,1\}//'
+            sed -n '3,22p' "$0" | sed 's/^# \{0,1\}//'
             exit 0
             ;;
         *)
@@ -78,6 +88,18 @@ err() { printf "\033[1;31m✘\033[0m %s\n" "$*" >&2; }
 
 # Move to repo root regardless of where the script was called from.
 cd "$(dirname "$0")/.."
+
+# Locate Sparkle's bundled tools (downloaded by SPM into .build artifacts).
+sparkle_bin() {
+    local tool="$1"
+    local candidate
+    candidate=$(find InsomnioKit/.build/artifacts -type f -name "$tool" -path "*/Sparkle/bin/$tool" 2>/dev/null | head -1)
+    if [[ -z "$candidate" ]]; then
+        err "Sparkle tool '$tool' not found. Run 'cd InsomnioKit && swift build --target AutoUpdate' once to populate the artifacts cache."
+        exit 1
+    fi
+    printf "%s" "$candidate"
+}
 
 # ---------------------------------------------------------------------------
 # 1. Clean build dir
@@ -126,13 +148,6 @@ xcodebuild archive \
     -scheme "$SCHEME" \
     -configuration "$CONFIGURATION" \
     -destination "generic/platform=macOS" \
-    -archivePath "$ARCHIVE_PATH" \
-    | xcbeautify --quiet 2>/dev/null || \
-xcodebuild archive \
-    -project "$PROJECT" \
-    -scheme "$SCHEME" \
-    -configuration "$CONFIGURATION" \
-    -destination "generic/platform=macOS" \
     -archivePath "$ARCHIVE_PATH"
 
 ok "Archive created at $ARCHIVE_PATH"
@@ -157,12 +172,13 @@ VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "${APP_
 BUILD=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "${APP_PATH}/Contents/Info.plist")
 log "Built Insomnio ${VERSION} (${BUILD})"
 
+ZIP_PATH="${BUILD_DIR}/Insomnio-${VERSION}.zip"
+
 # ---------------------------------------------------------------------------
 # 5. Notarize (optional, developer-id only)
 # ---------------------------------------------------------------------------
 if $NOTARIZE; then
     log "Zipping for notarization"
-    ZIP_PATH="${BUILD_DIR}/Insomnio-${VERSION}.zip"
     /usr/bin/ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
 
     log "Submitting to Apple notary service (this can take several minutes)"
@@ -192,7 +208,24 @@ if $NOTARIZE; then
 fi
 
 # ---------------------------------------------------------------------------
-# 6. Install to /Applications (optional)
+# 6. Sign update for Sparkle (optional)
+# ---------------------------------------------------------------------------
+if $SIGN_UPDATE; then
+    if [[ ! -f "$ZIP_PATH" ]]; then
+        log "Zipping app for Sparkle signature"
+        /usr/bin/ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
+    fi
+
+    log "Signing update with Sparkle EdDSA key (from keychain)"
+    SIGN_UPDATE_BIN=$(sparkle_bin sign_update)
+    SIGN_LINE=$("$SIGN_UPDATE_BIN" "$ZIP_PATH")
+    ok "Sparkle signature line:"
+    printf "    %s\n" "$SIGN_LINE"
+    log "Use scripts/generate_appcast.sh to regenerate appcast.xml from build/"
+fi
+
+# ---------------------------------------------------------------------------
+# 7. Install to /Applications (optional)
 # ---------------------------------------------------------------------------
 if $INSTALL; then
     log "Installing to /Applications/"

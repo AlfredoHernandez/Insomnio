@@ -6,6 +6,7 @@ import AccessibilityPermission
 import AppRules
 import Automation
 import AutoStop
+import AutoUpdate
 import Insomniac
 import LaunchAtLogin
 import RuleStore
@@ -21,6 +22,7 @@ struct AppDependencies {
 	let shortcutManager: any GlobalShortcutManager
 	let launchAtLoginManager: any LaunchAtLoginManager
 	let accessibilityPermissionChecker: any AccessibilityPermissionChecker
+	let updateController: any UpdateController
 	let availableApps: () -> [AppInfo]
 
 	static func create() -> AppDependencies {
@@ -60,6 +62,7 @@ struct AppDependencies {
 			shortcutManager: NSEventGlobalShortcutManager(),
 			launchAtLoginManager: SMAppServiceLaunchAtLoginManager(),
 			accessibilityPermissionChecker: AXAccessibilityPermissionChecker(),
+			updateController: SparkleUpdateController(),
 			availableApps: { NSWorkspaceAppInfoProvider.runningRegularApps() },
 		)
 	}

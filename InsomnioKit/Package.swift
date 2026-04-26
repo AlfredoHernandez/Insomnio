@@ -16,6 +16,7 @@ let package = Package(
 		.library(name: "AppRules", targets: ["AppRules"]),
 		.library(name: "Insomniac", targets: ["Insomniac"]),
 		.library(name: "Automation", targets: ["Automation"]),
+		.library(name: "AutoUpdate", targets: ["AutoUpdate"]),
 		.library(name: "TestSupport", targets: ["TestSupport"]),
 		.library(name: "TimerSchedulerTesting", targets: ["TimerSchedulerTesting"]),
 		.library(name: "ScheduleTesting", targets: ["ScheduleTesting"]),
@@ -24,6 +25,9 @@ let package = Package(
 		.library(name: "InsomniacTesting", targets: ["InsomniacTesting"]),
 		.library(name: "AutoStopTesting", targets: ["AutoStopTesting"]),
 		.library(name: "ShortcutTesting", targets: ["ShortcutTesting"]),
+	],
+	dependencies: [
+		.package(url: "https://github.com/sparkle-project/Sparkle.git", from: "2.7.0"),
 	],
 	targets: [
 		.target(name: "CursorPattern"),
@@ -37,6 +41,7 @@ let package = Package(
 		.target(name: "AppRules", dependencies: ["RuleStore"]),
 		.target(name: "Insomniac", dependencies: ["AutoStop", "CursorPattern", "TimerScheduler"]),
 		.target(name: "Automation", dependencies: ["AppRules", "Insomniac", "Schedule", "TimerScheduler"]),
+		.target(name: "AutoUpdate", dependencies: [.product(name: "Sparkle", package: "Sparkle")]),
 		.target(name: "TestSupport"),
 		.target(name: "TimerSchedulerTesting", dependencies: ["TimerScheduler"]),
 		.target(name: "ScheduleTesting", dependencies: ["Schedule"]),

@@ -1,0 +1,71 @@
+name: Release
+
+# Trigger on a `v*` tag (e.g. `v1.0.0`). The tag's name becomes the release
+# name. The workflow builds, signs, notarizes, signs-with-Sparkle, generates
+# appcast.xml, and publishes a GitHub Release with the zip + appcast.
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write   # required to create the release
+
+jobs:
+  release:
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode 26
+        run: sudo xcode-select -switch /Applications/Xcode_26.app
+
+      - name: Resolve SPM packages (populates Sparkle artifacts)
+        working-directory: InsomnioKit
+        run: swift build --target AutoUpdate
+
+      - name: Import Developer ID signing certificate
+        uses: apple-actions/import-codesign-certs@v3
+        with:
+          p12-file-base64: ${{ secrets.DEVELOPER_ID_CERT_P12_BASE64 }}
+          p12-password: ${{ secrets.DEVELOPER_ID_CERT_P12_PASSWORD }}
+          keychain: build
+          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+
+      - name: Import Sparkle EdDSA private key
+        env:
+          SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
+        run: |
+          # The private key is stored as a single line, paired with the
+          # public key in the app bundle. `sign_update` reads it from the
+          # keychain under the generic-password account "ed25519".
+          echo -n "$SPARKLE_ED_PRIVATE_KEY" | xxd -r -p > /tmp/sparkle_priv.key
+          security add-generic-password \
+              -a ed25519 \
+              -s "https://sparkle-project.org" \
+              -w "$SPARKLE_ED_PRIVATE_KEY" \
+              -A \
+              build.keychain
+
+      - name: Build, notarize, and sign update
+        env:
+          NOTARY_PROFILE: ""
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        run: ./scripts/build.sh --method developer-id --notarize --sign-update
+
+      - name: Generate appcast.xml
+        env:
+          APPCAST_DOWNLOAD_PREFIX: "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/"
+        run: ./scripts/generate_appcast.sh build
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            build/Insomnio-*.zip
+            build/appcast.xml
+          generate_release_notes: true

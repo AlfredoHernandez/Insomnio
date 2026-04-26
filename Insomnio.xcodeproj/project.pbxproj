@@ -24,6 +24,7 @@
 		AA01010101010101AA000037 /* AutoStopTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000036 /* AutoStopTesting */; };
 		AA01010101010101AA000039 /* ScheduleTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000038 /* ScheduleTesting */; };
 		AA01010101010101AA000041 /* AppRulesTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000040 /* AppRulesTesting */; };
+		AA01010101010101AA000043 /* AutoUpdate in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000042 /* AutoUpdate */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 				AA01010101010101AA000025 /* AppRules in Frameworks */,
 				AA01010101010101AA000027 /* Insomniac in Frameworks */,
 				AA01010101010101AA000029 /* Automation in Frameworks */,
+				AA01010101010101AA000043 /* AutoUpdate in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +140,7 @@
 				AA01010101010101AA000024 /* AppRules */,
 				AA01010101010101AA000026 /* Insomniac */,
 				AA01010101010101AA000028 /* Automation */,
+				AA01010101010101AA000042 /* AutoUpdate */,
 			);
 			productName = Insomnio;
 			productReference = 384DA6602F4295FE0059E034 /* Insomnio.app */;
@@ -405,10 +408,8 @@
 				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Insomnio/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -450,10 +451,8 @@
 				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Insomnio/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -623,6 +622,10 @@
 		AA01010101010101AA000040 /* AppRulesTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppRulesTesting;
+		};
+		AA01010101010101AA000042 /* AutoUpdate */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AutoUpdate;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -4,6 +4,7 @@
 
 import AccessibilityPermission
 import AppRules
+import AutoUpdate
 import Insomniac
 import LaunchAtLogin
 import Schedule
@@ -15,6 +16,7 @@ struct InsomnioView: View {
 	let appRulesEvaluator: any AppRulesEvaluator
 	let launchAtLoginManager: any LaunchAtLoginManager
 	let accessibilityPermissionChecker: any AccessibilityPermissionChecker
+	let updateController: any UpdateController
 	let availableApps: () -> [AppInfo]
 	@State private var selection: SettingsDestination = .dashboard
 
@@ -67,6 +69,7 @@ struct InsomnioView: View {
 			GeneralSettingsView(
 				insomniac: insomniac,
 				launchAtLoginManager: launchAtLoginManager,
+				updateController: updateController,
 			)
 		}
 	}
@@ -80,6 +83,7 @@ struct InsomnioView: View {
 		appRulesEvaluator: AppRulesEvaluatorPreviewStub(),
 		launchAtLoginManager: LaunchAtLoginManagerPreviewStub(),
 		accessibilityPermissionChecker: AccessibilityPermissionCheckerPreviewStub(),
+		updateController: UpdateControllerPreviewStub(),
 		availableApps: { [] },
 	)
 }
