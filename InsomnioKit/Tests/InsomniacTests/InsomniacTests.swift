@@ -248,13 +248,13 @@ struct InsomniacTests {
 	}
 
 	@Test
-	func `Stop releases assertion`() {
+	func `Stop in moveCursor mode does not message sleep preventer`() {
 		let (sut, _, sleepPreventer) = makeSUT()
 
 		sut.start()
 		sut.stop()
 
-		#expect(sleepPreventer.receivedMessages == [.releaseAssertion])
+		#expect(sleepPreventer.receivedMessages == [])
 	}
 
 	@Test

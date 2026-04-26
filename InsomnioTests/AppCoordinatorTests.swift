@@ -77,6 +77,8 @@ struct AppCoordinatorTests {
 			let (sut, spies) = makeSUT()
 			sut.start()
 			NotificationCenter.default.post(name: NSApplication.willTerminateNotification, object: nil)
+			// Clear the process-global App Intents performer set by `start()` so
+			// the SUT's `Insomniac` is not retained beyond this test scope.
 			IntentDependencies.performer = nil
 			return [sut, spies.insomniac, spies.automation, spies.shortcut]
 		}
@@ -91,6 +93,9 @@ struct AppCoordinatorTests {
 	}
 
 	private func makeSUT() -> (AppCoordinator, Spies) {
+		// Reset the process-global App Intents performer so a previous test's
+		// `Insomniac` is not retained across tests via the static reference.
+		IntentDependencies.performer = nil
 		let insomniac = Insomniac(
 			mouseMover: MouseMoverSpy(),
 			sleepPreventer: SleepPreventerSpy(),
