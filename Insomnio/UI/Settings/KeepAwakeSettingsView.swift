@@ -30,6 +30,7 @@ struct KeepAwakeSettingsView: View {
 	}
 }
 
+#if DEBUG
 #Preview {
 	KeepAwakeSettingsView(
 		insomniac: Insomniac(
@@ -40,3 +41,4 @@ struct KeepAwakeSettingsView: View {
 	)
 	.frame(width: 700, height: 520)
 }
+#endif

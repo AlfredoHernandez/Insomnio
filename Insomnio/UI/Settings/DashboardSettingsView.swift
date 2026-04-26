@@ -146,6 +146,7 @@ private struct MetricCTATile: View {
 	}
 }
 
+#if DEBUG
 #Preview {
 	@Previewable @State var selection: SettingsDestination = .dashboard
 	DashboardSettingsView(
@@ -160,3 +161,4 @@ private struct MetricCTATile: View {
 	)
 	.frame(width: 760, height: 640)
 }
+#endif

@@ -89,6 +89,7 @@ struct NextUpCard: View {
 	}
 }
 
+#if DEBUG
 #Preview {
 	NextUpCard(
 		insomniac: Insomniac(
@@ -102,3 +103,4 @@ struct NextUpCard: View {
 	.padding()
 	.frame(width: 640)
 }
+#endif

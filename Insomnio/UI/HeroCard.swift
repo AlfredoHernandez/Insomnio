@@ -120,6 +120,7 @@ struct HeroCard: View {
 	}
 }
 
+#if DEBUG
 #Preview("Active") {
 	let insomniac = Insomniac(
 		mouseMover: MouseMoverPreviewStub(),
@@ -141,3 +142,4 @@ struct HeroCard: View {
 	.padding()
 	.frame(width: 640)
 }
+#endif

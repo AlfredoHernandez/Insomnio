@@ -72,6 +72,7 @@ struct InsomnioView: View {
 	}
 }
 
+#if DEBUG
 #Preview {
 	InsomnioView(
 		insomniac: Insomniac(mouseMover: MouseMoverPreviewStub(), sleepPreventer: SleepPreventerPreviewStub(), timerScheduler: TimerSchedulerPreviewStub()),
@@ -82,3 +83,4 @@ struct InsomnioView: View {
 		availableApps: { [] },
 	)
 }
+#endif

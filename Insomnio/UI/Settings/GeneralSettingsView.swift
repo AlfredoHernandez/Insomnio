@@ -43,6 +43,7 @@ struct GeneralSettingsView: View {
 	}
 }
 
+#if DEBUG
 #Preview {
 	GeneralSettingsView(
 		insomniac: Insomniac(
@@ -54,3 +55,4 @@ struct GeneralSettingsView: View {
 	)
 	.frame(width: 700, height: 520)
 }
+#endif

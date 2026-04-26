@@ -34,6 +34,7 @@ struct AutomationSettingsView: View {
 	}
 }
 
+#if DEBUG
 #Preview {
 	AutomationSettingsView(
 		insomniac: Insomniac(
@@ -47,3 +48,4 @@ struct AutomationSettingsView: View {
 	)
 	.frame(width: 700, height: 520)
 }
+#endif

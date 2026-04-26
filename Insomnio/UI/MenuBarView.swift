@@ -112,6 +112,7 @@ struct MenuBarView: View {
 	}
 }
 
+#if DEBUG
 #Preview {
 	MenuBarView(insomniac: Insomniac(
 		mouseMover: MouseMoverPreviewStub(),
@@ -119,6 +120,7 @@ struct MenuBarView: View {
 		timerScheduler: TimerSchedulerPreviewStub(),
 	))
 }
+#endif
 
 private extension View {
 	func liquidGlassID<ID: Hashable & Sendable>(_ id: ID, in namespace: Namespace.ID) -> some View {
