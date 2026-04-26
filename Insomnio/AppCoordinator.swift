@@ -5,7 +5,6 @@
 import AppKit
 import Automation
 import Insomniac
-import Premium
 import Shortcut
 import SwiftUI
 
@@ -14,10 +13,6 @@ final class AppCoordinator {
 	private var hasStarted = false
 	private var menuBarController: MenuBarPopoverController?
 	private nonisolated(unsafe) var terminationObserver: (any NSObjectProtocol)?
-	/// The unstructured task kicked off by `start()` to load StoreKit products.
-	/// Exposed so tests can `await` its completion deterministically instead of
-	/// polling with `Task.yield()`.
-	private(set) var bootstrapTask: Task<Void, Never>?
 
 	init(dependencies: AppDependencies) {
 		self.dependencies = dependencies
@@ -41,9 +36,6 @@ final class AppCoordinator {
 			dependencies.insomniac.toggle(from: .globalShortcut)
 		}
 		dependencies.automationCoordinator.startMonitoring()
-		bootstrapTask = Task { [dependencies] in
-			await dependencies.premiumManager.loadProducts()
-		}
 
 		let controller = MenuBarPopoverController(initialState: .idle) {
 			MenuBarView(
@@ -61,7 +53,6 @@ final class AppCoordinator {
 	func makeMainView() -> some View {
 		InsomnioView(
 			insomniac: dependencies.insomniac,
-			premiumManager: dependencies.premiumManager,
 			scheduleEvaluator: dependencies.scheduleEvaluator,
 			appRulesEvaluator: dependencies.appRulesEvaluator,
 			launchAtLoginManager: dependencies.launchAtLoginManager,

@@ -6,19 +6,16 @@ import AccessibilityPermission
 import AppRules
 import Insomniac
 import LaunchAtLogin
-import Premium
 import Schedule
 import SwiftUI
 
 struct InsomnioView: View {
 	@Bindable var insomniac: Insomniac
-	let premiumManager: any PremiumManager
 	let scheduleEvaluator: any ScheduleEvaluator
 	let appRulesEvaluator: any AppRulesEvaluator
 	let launchAtLoginManager: any LaunchAtLoginManager
 	let accessibilityPermissionChecker: any AccessibilityPermissionChecker
 	let availableApps: () -> [AppInfo]
-	@State private var showingPaywall = false
 	@State private var selection: SettingsDestination = .dashboard
 
 	var body: some View {
@@ -41,12 +38,6 @@ struct InsomnioView: View {
 					.labelsHidden()
 				}
 			}
-			.task {
-				await premiumManager.refreshStatus()
-			}
-			.sheet(isPresented: $showingPaywall) {
-				PaywallView(premiumManager: premiumManager)
-			}
 		}
 	}
 
@@ -56,36 +47,26 @@ struct InsomnioView: View {
 		case .dashboard:
 			DashboardSettingsView(
 				insomniac: insomniac,
-				premiumManager: premiumManager,
 				scheduleEvaluator: scheduleEvaluator,
 				appRulesEvaluator: appRulesEvaluator,
 				selection: $selection,
-				showingPaywall: $showingPaywall,
 			)
 
 		case .keepAwake:
-			KeepAwakeSettingsView(
-				insomniac: insomniac,
-				premiumManager: premiumManager,
-				showingPaywall: $showingPaywall,
-			)
+			KeepAwakeSettingsView(insomniac: insomniac)
 
 		case .automation:
 			AutomationSettingsView(
 				insomniac: insomniac,
-				premiumManager: premiumManager,
 				scheduleEvaluator: scheduleEvaluator,
 				appRulesEvaluator: appRulesEvaluator,
 				availableApps: availableApps,
-				showingPaywall: $showingPaywall,
 			)
 
 		case .general:
 			GeneralSettingsView(
 				insomniac: insomniac,
-				premiumManager: premiumManager,
 				launchAtLoginManager: launchAtLoginManager,
-				showingPaywall: $showingPaywall,
 			)
 		}
 	}
@@ -94,7 +75,6 @@ struct InsomnioView: View {
 #Preview {
 	InsomnioView(
 		insomniac: Insomniac(mouseMover: MouseMoverPreviewStub(), sleepPreventer: SleepPreventerPreviewStub(), timerScheduler: TimerSchedulerPreviewStub()),
-		premiumManager: PremiumManagerPreviewStub(),
 		scheduleEvaluator: ScheduleEvaluatorPreviewStub(),
 		appRulesEvaluator: AppRulesEvaluatorPreviewStub(),
 		launchAtLoginManager: LaunchAtLoginManagerPreviewStub(),

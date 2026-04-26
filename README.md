@@ -30,7 +30,7 @@ The project follows a **Clean Architecture** pattern with clear separation betwe
 ```
 Insomnio/
   <Feature>/Feature/        -- Protocols and models (zero platform imports)
-  <Feature>/Infrastructure/ -- Concrete implementations (CoreGraphics, IOKit, StoreKit, etc.)
+  <Feature>/Infrastructure/ -- Concrete implementations (CoreGraphics, IOKit, etc.)
   UI/                       -- SwiftUI views and view modifiers
   AppDependencies.swift     -- Composition Root
   AppCoordinator.swift      -- App startup and navigation
@@ -49,21 +49,8 @@ Every dependency is injected as a protocol. Infrastructure implementations are c
 | **AppRules** | Rules that activate based on running applications |
 | **RuleStore** | Generic persistence for any `Codable` rule type |
 | **CursorPattern** | Strategy pattern with four cursor movement implementations |
-| **Premium** | In-app purchases via StoreKit 2 (monthly, yearly, lifetime) |
 | **Shortcut** | Global keyboard shortcut registration |
 | **LaunchAtLogin** | Launch-at-login via SMAppService |
-
-## Premium
-
-Premium features (cursor patterns, auto-stop, schedule, per-app rules) are gated behind a subscription or one-time purchase:
-
-| Plan | Type |
-|---|---|
-| Monthly | Auto-renewable subscription |
-| Yearly | Auto-renewable subscription |
-| Lifetime | Non-consumable (one-time purchase) |
-
-A `Products.storekit` configuration file is included for local testing with simulated purchases and a 7-day free trial on subscriptions.
 
 ## Testing
 
@@ -82,7 +69,7 @@ git clone <repo-url>
 open Insomnio.xcodeproj
 ```
 
-Select the **Insomnio** scheme and run (Cmd+R). The StoreKit configuration is already set in the shared scheme for local purchase testing.
+Select the **Insomnio** scheme and run (Cmd+R).
 
 ## License
 

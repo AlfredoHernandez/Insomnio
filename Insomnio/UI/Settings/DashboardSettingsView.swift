@@ -6,17 +6,14 @@ import AppRules
 import AutoStop
 import Combine
 import Insomniac
-import Premium
 import Schedule
 import SwiftUI
 
 struct DashboardSettingsView: View {
 	@Bindable var insomniac: Insomniac
-	let premiumManager: any PremiumManager
 	let scheduleEvaluator: any ScheduleEvaluator
 	let appRulesEvaluator: any AppRulesEvaluator
 	@Binding var selection: SettingsDestination
-	@Binding var showingPaywall: Bool
 
 	@State private var now: Date = .now
 	private let ticker = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
@@ -44,10 +41,6 @@ struct DashboardSettingsView: View {
 					isActive: insomniac.isActive,
 					now: now,
 				)
-
-				if !premiumManager.isPremium {
-					unlockButton
-				}
 			}
 			.padding(20)
 		}
@@ -107,17 +100,6 @@ struct DashboardSettingsView: View {
 			}
 		}
 	}
-
-	private var unlockButton: some View {
-		Button {
-			showingPaywall = true
-		} label: {
-			Label("premium_unlock_title", systemImage: "star.fill")
-				.frame(maxWidth: .infinity)
-		}
-		.liquidGlassPrimaryButton()
-		.controlSize(.large)
-	}
 }
 
 private struct MetricTile: View {
@@ -170,18 +152,15 @@ private struct MetricCTATile: View {
 
 #Preview {
 	@Previewable @State var selection: SettingsDestination = .dashboard
-	@Previewable @State var showingPaywall = false
 	DashboardSettingsView(
 		insomniac: Insomniac(
 			mouseMover: MouseMoverPreviewStub(),
 			sleepPreventer: SleepPreventerPreviewStub(),
 			timerScheduler: TimerSchedulerPreviewStub(),
 		),
-		premiumManager: PremiumManagerPreviewStub(),
 		scheduleEvaluator: ScheduleEvaluatorPreviewStub(),
 		appRulesEvaluator: AppRulesEvaluatorPreviewStub(),
 		selection: $selection,
-		showingPaywall: $showingPaywall,
 	)
 	.frame(width: 760, height: 640)
 }

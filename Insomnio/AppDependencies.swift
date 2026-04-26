@@ -9,7 +9,6 @@ import AutoStop
 import Foundation
 import Insomniac
 import LaunchAtLogin
-import Premium
 import RuleStore
 import Schedule
 import Shortcut
@@ -17,7 +16,6 @@ import TimerScheduler
 
 struct AppDependencies {
 	let insomniac: Insomniac
-	let premiumManager: any PremiumManager
 	let scheduleEvaluator: any ScheduleEvaluator
 	let appRulesEvaluator: any AppRulesEvaluator
 	let automationCoordinator: any AutomationCoordinating
@@ -55,11 +53,8 @@ struct AppDependencies {
 			timerScheduler: timerScheduler,
 		)
 
-		let premiumManager: any PremiumManager = StoreKitPremiumManager()
-
 		return AppDependencies(
 			insomniac: insomniac,
-			premiumManager: premiumManager,
 			scheduleEvaluator: scheduleEvaluator,
 			appRulesEvaluator: appRulesEvaluator,
 			automationCoordinator: automationCoordinator,

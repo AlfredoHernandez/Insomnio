@@ -3,13 +3,10 @@
 //
 
 import Insomniac
-import Premium
 import SwiftUI
 
 struct KeepAwakeSettingsView: View {
 	@Bindable var insomniac: Insomniac
-	let premiumManager: any PremiumManager
-	@Binding var showingPaywall: Bool
 
 	var body: some View {
 		ScrollView {
@@ -24,9 +21,6 @@ struct KeepAwakeSettingsView: View {
 							cursorPattern: $insomniac.cursorPattern,
 							isDisabled: insomniac.isActive,
 						)
-						.premiumGated(isPremium: premiumManager.isPremium) {
-							showingPaywall = true
-						}
 					}
 				}
 			}
@@ -37,15 +31,12 @@ struct KeepAwakeSettingsView: View {
 }
 
 #Preview {
-	@Previewable @State var showingPaywall = false
 	KeepAwakeSettingsView(
 		insomniac: Insomniac(
 			mouseMover: MouseMoverPreviewStub(),
 			sleepPreventer: SleepPreventerPreviewStub(),
 			timerScheduler: TimerSchedulerPreviewStub(),
 		),
-		premiumManager: PremiumManagerPreviewStub(),
-		showingPaywall: $showingPaywall,
 	)
 	.frame(width: 700, height: 520)
 }

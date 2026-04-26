@@ -13,7 +13,6 @@
 		AA01010101010101AA000015 /* TimerScheduler in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000012 /* TimerScheduler */; };
 		AA01010101010101AA000016 /* AccessibilityPermission in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000013 /* AccessibilityPermission */; };
 		AA01010101010101AA000017 /* Shortcut in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000014 /* Shortcut */; };
-		AA01010101010101AA000018 /* Premium in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000019 /* Premium */; };
 		AA01010101010101AA000021 /* AutoStop in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000020 /* AutoStop */; };
 		AA01010101010101AA000023 /* Schedule in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000022 /* Schedule */; };
 		AA01010101010101AA000025 /* AppRules in Frameworks */ = {isa = PBXBuildFile; productRef = AA01010101010101AA000024 /* AppRules */; };
@@ -64,7 +63,6 @@
 				AA01010101010101AA000015 /* TimerScheduler in Frameworks */,
 				AA01010101010101AA000016 /* AccessibilityPermission in Frameworks */,
 				AA01010101010101AA000017 /* Shortcut in Frameworks */,
-				AA01010101010101AA000018 /* Premium in Frameworks */,
 				AA01010101010101AA000021 /* AutoStop in Frameworks */,
 				AA01010101010101AA000023 /* Schedule in Frameworks */,
 				AA01010101010101AA000025 /* AppRules in Frameworks */,
@@ -131,7 +129,6 @@
 				AA01010101010101AA000012 /* TimerScheduler */,
 				AA01010101010101AA000013 /* AccessibilityPermission */,
 				AA01010101010101AA000014 /* Shortcut */,
-				AA01010101010101AA000019 /* Premium */,
 				AA01010101010101AA000020 /* AutoStop */,
 				AA01010101010101AA000022 /* Schedule */,
 				AA01010101010101AA000024 /* AppRules */,
@@ -576,10 +573,6 @@
 		AA01010101010101AA000014 /* Shortcut */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Shortcut;
-		};
-		AA01010101010101AA000019 /* Premium */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Premium;
 		};
 		AA01010101010101AA000020 /* AutoStop */ = {
 			isa = XCSwiftPackageProductDependency;

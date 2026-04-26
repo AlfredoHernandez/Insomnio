@@ -4,14 +4,11 @@
 
 import Insomniac
 import LaunchAtLogin
-import Premium
 import SwiftUI
 
 struct GeneralSettingsView: View {
 	@Bindable var insomniac: Insomniac
-	let premiumManager: any PremiumManager
 	let launchAtLoginManager: any LaunchAtLoginManager
-	@Binding var showingPaywall: Bool
 
 	private var appVersion: String {
 		Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
@@ -27,10 +24,6 @@ struct GeneralSettingsView: View {
 						isPreventSleepMode: insomniac.mode == .preventSleep,
 						launchAtLoginManager: launchAtLoginManager,
 					)
-
-					PremiumSection(isPremium: premiumManager.isPremium) {
-						showingPaywall = true
-					}
 				}
 
 				HStack {
@@ -51,16 +44,13 @@ struct GeneralSettingsView: View {
 }
 
 #Preview {
-	@Previewable @State var showingPaywall = false
 	GeneralSettingsView(
 		insomniac: Insomniac(
 			mouseMover: MouseMoverPreviewStub(),
 			sleepPreventer: SleepPreventerPreviewStub(),
 			timerScheduler: TimerSchedulerPreviewStub(),
 		),
-		premiumManager: PremiumManagerPreviewStub(),
 		launchAtLoginManager: LaunchAtLoginManagerPreviewStub(),
-		showingPaywall: $showingPaywall,
 	)
 	.frame(width: 700, height: 520)
 }

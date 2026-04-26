@@ -11,7 +11,6 @@ let package = Package(
 		.library(name: "TimerScheduler", targets: ["TimerScheduler"]),
 		.library(name: "AccessibilityPermission", targets: ["AccessibilityPermission"]),
 		.library(name: "Shortcut", targets: ["Shortcut"]),
-		.library(name: "Premium", targets: ["Premium"]),
 		.library(name: "AutoStop", targets: ["AutoStop"]),
 		.library(name: "Schedule", targets: ["Schedule"]),
 		.library(name: "AppRules", targets: ["AppRules"]),
@@ -33,7 +32,6 @@ let package = Package(
 		.target(name: "TimerScheduler"),
 		.target(name: "AccessibilityPermission"),
 		.target(name: "Shortcut"),
-		.target(name: "Premium"),
 		.target(name: "AutoStop", dependencies: ["TimerScheduler"]),
 		.target(name: "Schedule", dependencies: ["RuleStore"]),
 		.target(name: "AppRules", dependencies: ["RuleStore"]),
@@ -61,7 +59,6 @@ let package = Package(
 			dependencies: ["Automation", "AppRulesTesting", "Insomniac", "InsomniacTesting", "ScheduleTesting", "TestSupport", "TimerSchedulerTesting"],
 		),
 		.testTarget(name: "ShortcutTests", dependencies: ["Shortcut", "ShortcutTesting", "TestSupport"]),
-		.testTarget(name: "PremiumTests", dependencies: ["Premium", "TestSupport"]),
 	],
 	swiftLanguageModes: [.v6],
 )

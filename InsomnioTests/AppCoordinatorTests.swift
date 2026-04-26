@@ -30,16 +30,6 @@ struct AppCoordinatorTests {
 	}
 
 	@Test
-	func `Start loads products via premium manager`() async {
-		let (sut, spies) = makeSUT()
-
-		sut.start()
-		await sut.bootstrapTask?.value
-
-		#expect(spies.premium.receivedMessages.contains(.loadProducts))
-	}
-
-	@Test
 	func `Start is idempotent and does not re-register on second call`() {
 		let (sut, spies) = makeSUT()
 
@@ -80,7 +70,6 @@ struct AppCoordinatorTests {
 
 	private struct Spies {
 		let insomniac: Insomniac
-		let premium: PremiumManagerSpy
 		let automation: AutomationCoordinatingSpy
 		let shortcut: GlobalShortcutManagerSpy
 	}
@@ -91,12 +80,10 @@ struct AppCoordinatorTests {
 			sleepPreventer: SleepPreventerSpy(),
 			timerScheduler: TimerSchedulerSpy(),
 		)
-		let premium = PremiumManagerSpy()
 		let automation = AutomationCoordinatingSpy()
 		let shortcut = GlobalShortcutManagerSpy()
 		let dependencies = AppDependencies(
 			insomniac: insomniac,
-			premiumManager: premium,
 			scheduleEvaluator: ScheduleEvaluatorPreviewStub(),
 			appRulesEvaluator: AppRulesEvaluatorPreviewStub(),
 			automationCoordinator: automation,
@@ -106,7 +93,7 @@ struct AppCoordinatorTests {
 			availableApps: { [] },
 		)
 		let sut = AppCoordinator(dependencies: dependencies)
-		let spies = Spies(insomniac: insomniac, premium: premium, automation: automation, shortcut: shortcut)
+		let spies = Spies(insomniac: insomniac, automation: automation, shortcut: shortcut)
 		return (sut, spies)
 	}
 }
