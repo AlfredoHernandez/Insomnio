@@ -232,9 +232,18 @@ if $SIGN_UPDATE; then
         /usr/bin/ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
     fi
 
-    log "Signing update with Sparkle EdDSA key (from keychain)"
     SIGN_UPDATE_BIN=$(sparkle_bin sign_update)
-    SIGN_LINE=$("$SIGN_UPDATE_BIN" "$ZIP_PATH")
+    if [[ -n "${SPARKLE_ED_PRIVATE_KEY:-}" ]]; then
+        # CI path: read the key from the env var via stdin so we never touch
+        # the keychain (which would trigger a blocking GUI prompt on a
+        # headless runner).
+        log "Signing update with Sparkle EdDSA key (from \$SPARKLE_ED_PRIVATE_KEY)"
+        SIGN_LINE=$(printf "%s" "$SPARKLE_ED_PRIVATE_KEY" | "$SIGN_UPDATE_BIN" --ed-key-file - "$ZIP_PATH")
+    else
+        # Local dev path: sign_update reads the key from the macOS keychain.
+        log "Signing update with Sparkle EdDSA key (from keychain)"
+        SIGN_LINE=$("$SIGN_UPDATE_BIN" "$ZIP_PATH")
+    fi
     ok "Sparkle signature line:"
     printf "    %s\n" "$SIGN_LINE"
     log "Use scripts/generate_appcast.sh to regenerate appcast.xml from build/"

@@ -47,10 +47,21 @@ fi
 # generate_appcast scans the directory, produces sparkle/<bundle>.xml in there
 # with all releases it can read. Every Insomnio-*.zip will be ingested.
 log "Generating appcast from ${INPUT_DIR}/"
-"$GENERATE_APPCAST" \
-    --download-url-prefix "$DOWNLOAD_PREFIX" \
-    ${APPCAST_FULL_RELEASE_NOTES_URL:+--full-release-notes-url "$APPCAST_FULL_RELEASE_NOTES_URL"} \
-    "$INPUT_DIR"
+if [[ -n "${SPARKLE_ED_PRIVATE_KEY:-}" ]]; then
+    # CI path: read the key from env var via stdin to avoid keychain prompts
+    # on headless runners.
+    printf "%s" "$SPARKLE_ED_PRIVATE_KEY" | "$GENERATE_APPCAST" \
+        --ed-key-file - \
+        --download-url-prefix "$DOWNLOAD_PREFIX" \
+        ${APPCAST_FULL_RELEASE_NOTES_URL:+--full-release-notes-url "$APPCAST_FULL_RELEASE_NOTES_URL"} \
+        "$INPUT_DIR"
+else
+    # Local dev path: generate_appcast reads the key from the macOS keychain.
+    "$GENERATE_APPCAST" \
+        --download-url-prefix "$DOWNLOAD_PREFIX" \
+        ${APPCAST_FULL_RELEASE_NOTES_URL:+--full-release-notes-url "$APPCAST_FULL_RELEASE_NOTES_URL"} \
+        "$INPUT_DIR"
+fi
 
 APPCAST_PATH="${INPUT_DIR}/appcast.xml"
 if [[ ! -f "$APPCAST_PATH" ]]; then

@@ -36,32 +36,22 @@ jobs:
           keychain: build
           keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
 
-      - name: Import Sparkle EdDSA private key
-        env:
-          SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
-        run: |
-          # `sign_update` looks up the key in the macOS keychain using
-          # service "https://sparkle-project.org" and account "ed25519".
-          # The secret value is the base64-encoded 32-byte private key as
-          # produced by `generate_keys -x`.
-          security add-generic-password \
-              -a ed25519 \
-              -s "https://sparkle-project.org" \
-              -w "$SPARKLE_ED_PRIVATE_KEY" \
-              -A \
-              build.keychain-db
-
       - name: Build, notarize, and sign update
         env:
           NOTARY_PROFILE: ""
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           APPLE_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          # `sign_update` reads the key from stdin via --ed-key-file -, so we
+          # bypass the keychain entirely. Storing the key in the keychain on a
+          # headless runner triggers a blocking GUI prompt that hangs the job.
+          SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
         run: ./scripts/build.sh --method developer-id --notarize --sign-update
 
       - name: Generate appcast.xml
         env:
           APPCAST_DOWNLOAD_PREFIX: "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/"
+          SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
         run: ./scripts/generate_appcast.sh build
 
       - name: Create GitHub Release
