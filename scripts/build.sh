@@ -143,12 +143,28 @@ EOF
 # 3. Archive
 # ---------------------------------------------------------------------------
 log "Archiving (${CONFIGURATION})"
+
+# When signing for distribution we override the project's Automatic signing
+# (which expects an "Apple Development" cert) to Manual + Developer ID. CI
+# only has the Developer ID cert imported; this lets the archive sign
+# directly with it instead of failing on a missing Mac Development cert.
+SIGNING_OVERRIDES=()
+if [[ "$EXPORT_METHOD" == "developer-id" ]]; then
+    SIGNING_OVERRIDES=(
+        CODE_SIGN_STYLE=Manual
+        CODE_SIGN_IDENTITY="Developer ID Application"
+        DEVELOPMENT_TEAM=HS399QXLRD
+        PROVISIONING_PROFILE_SPECIFIER=""
+    )
+fi
+
 xcodebuild archive \
     -project "$PROJECT" \
     -scheme "$SCHEME" \
     -configuration "$CONFIGURATION" \
     -destination "generic/platform=macOS" \
-    -archivePath "$ARCHIVE_PATH"
+    -archivePath "$ARCHIVE_PATH" \
+    "${SIGNING_OVERRIDES[@]}"
 
 ok "Archive created at $ARCHIVE_PATH"
 
