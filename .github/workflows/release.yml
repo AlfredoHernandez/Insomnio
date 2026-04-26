@@ -38,16 +38,16 @@ jobs:
         env:
           SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
         run: |
-          # The private key is stored as a single line, paired with the
-          # public key in the app bundle. `sign_update` reads it from the
-          # keychain under the generic-password account "ed25519".
-          echo -n "$SPARKLE_ED_PRIVATE_KEY" | xxd -r -p > /tmp/sparkle_priv.key
+          # `sign_update` looks up the key in the macOS keychain using
+          # service "https://sparkle-project.org" and account "ed25519".
+          # The secret value is the base64-encoded 32-byte private key as
+          # produced by `generate_keys -x`.
           security add-generic-password \
               -a ed25519 \
               -s "https://sparkle-project.org" \
               -w "$SPARKLE_ED_PRIVATE_KEY" \
               -A \
-              build.keychain
+              build.keychain-db
 
       - name: Build, notarize, and sign update
         env:
